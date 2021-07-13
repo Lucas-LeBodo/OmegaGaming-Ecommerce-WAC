@@ -1,10 +1,4 @@
-import './App.css';
-import Home from './Pages/User/Home';
-import Register from './Pages/User/Register';
-import Login from './Pages/User/Login';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-
-
+import './Styles/Style.scss';
 
 function App() {
   return (
