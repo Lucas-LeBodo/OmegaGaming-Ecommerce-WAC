@@ -6,9 +6,9 @@ import { BrowserRouter, Route, Switch} from "react-router-dom";
 import NavBar from '../Components/NavBar';
 
 // import page
-import Home from './Pages/User/Home';
-import Register from './Pages/User/Register';
-import Login from './Pages/User/Login';
+import Home from '../Pages/User/Home';
+import Register from '../Pages/User/Register';
+import Login from '../Pages/User/Login';
 
 // Router
 
