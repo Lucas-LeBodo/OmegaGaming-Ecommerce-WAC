@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Form from 'react-bootstrap/form';
-import Button from 'react-bootstrap/button';
-import {Container, Row, Col} from 'react-bootstrap';
+import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 
 
 export default class register extends Component {
-    //render(){
-        // return (
-            
-        // )}
+    render(){
+        return (
+            <h1>Salut</h1>
+        )}
 }
 
 
