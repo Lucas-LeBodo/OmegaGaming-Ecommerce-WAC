@@ -1,11 +1,11 @@
-import './App.css';
+import './Styles/Style.scss';
+import Router from './Router/router';
 
 function App() {
   return (
-    <div className="App">
-        <h1>Bonjour</h1>
-    </div>
-  );
+    <Router/>
+  )
+ 
 }
 
 export default App;
