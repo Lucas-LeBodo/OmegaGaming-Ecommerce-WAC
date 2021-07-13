@@ -16,9 +16,9 @@ class UsersController extends AbstractController
     #[Route('/', name: 'users_index', methods: ['GET'])]
     public function index(UsersRepository $usersRepository): Response
     {
-        return $this->render('users/index.html.twig', [
+        return json_encode($this->render('users/index.html.twig', [
             'users' => $usersRepository->findAll(),
-        ]);
+        ]));
     }
 
     #[Route('/new', name: 'users_new', methods: ['GET', 'POST'])]
@@ -45,9 +45,9 @@ class UsersController extends AbstractController
     #[Route('/{id}', name: 'users_show', methods: ['GET'])]
     public function show(Users $user): Response
     {
-        return $this->render('users/show.html.twig', [
+        return json_encode($this->render('users/show.html.twig', [
             'user' => $user,
-        ]);
+        ]));
     }
 
     #[Route('/{id}/edit', name: 'users_edit', methods: ['GET', 'POST'])]
