@@ -4,10 +4,10 @@ import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 
 
 export default class register extends Component {
-    render(){
-        return (
-            <h1>Salut</h1>
-        )}
+    // render(){
+    //     return (
+          
+    //     )}
 }
 
 
