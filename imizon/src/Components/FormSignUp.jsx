@@ -18,6 +18,7 @@ export default function FormSignUp () {
         <Container fluid className="signup">
             <Form>
                 <h3>Sign up</h3>
+                <hr id="hr-form"></hr>
                 <div className="form-group">
                     <label>First name</label>
                     <input type="text" className="form-control" placeholder="First name" onChange={ (event)=>{ setName(event.target.value)}} required/>
