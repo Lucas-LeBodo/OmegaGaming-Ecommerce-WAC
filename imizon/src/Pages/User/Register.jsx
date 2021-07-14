@@ -1,4 +1,6 @@
-import React, { useEffect, useState, Fragment } from "react"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Container, Row, Col, Button, Form} from 'react-bootstrap';
+import React, {Component, useEffect, useState, Fragment } from "react"
 import Form from 'react-bootstrap/form';
 import Button from 'react-bootstrap/button';
 import axios from 'axios';
