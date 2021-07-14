@@ -35,10 +35,10 @@ class Register extends React.Component {
         {
             axios.post('https://127.0.0.1:8000/api/users',
                 {
-                    email: this.state.email,
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
-                    password: this.state.password
+                    LastName: this.state.lastName,  
+                    FirstName: this.state.firstName,
+                    Email: this.state.email,
+                    Password: this.state.password
                 }
             ).then(res => {
                 console.log(res.data);
