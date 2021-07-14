@@ -17,7 +17,7 @@ export default function FormSignUp () {
     return (
         <Container fluid className="signup">
             <Form>
-                <h3>Sign up</h3>
+                <h3>Sign Up</h3>
                 <hr id="hr-form"></hr>
                 <div className="form-group">
                     <label>First name</label>
