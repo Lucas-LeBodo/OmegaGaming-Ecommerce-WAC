@@ -6,11 +6,14 @@
 label, h3, p, Link{
     color: #F6F6F6;
 }
-button{
-    background-color: #91929A !important
+.btn-custom{
+    background-color: #91929A !important;
+    color: #F6F6F6;
 }
-button:hover{
+
+.btn-custom:hover{
     background-color: #EE2B47 !important;
+    color: #F6F6F6;
 }
 #hr-form{
     background-color:#EE2B47 !important;
