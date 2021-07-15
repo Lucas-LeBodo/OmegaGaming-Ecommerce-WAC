@@ -16,7 +16,7 @@ export default function FormSignUp () {
     // fetch a faire a l'api 
     if (password == confPassword) 
         {
-            axios.post('http://127.0.0.1:8000/api/users',{
+            axios.post('https://127.0.0.1:8000/api/users',{
                 LastName : lastName, 
                 FirstName : name,
                 Email : email,
