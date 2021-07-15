@@ -1,0 +1,62 @@
+$darkblue: #30475eff; 
+$darkgrey: #2c2e3eff;
+$lightblue: #939FAA; 
+$lightgrey: #91929aff; 
+$red: #ee2b47ff;
+$purpel: #8F3953;
+$white: #f6f6f6ff; 
+
+.logbox{
+    width: 100%;
+    display: flex;
+    height: 3em;
+    flex-direction: row;
+    justify-content:  space-between;
+    background-color: $darkblue;
+    align-items: center;
+
+    .loglist  {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0.6em;
+        width: 5rem;
+        height: 2em;
+        color: $darkgrey;
+        background-color: $white; 
+        border-radius: 5px;
+    }
+
+    .loglist a:hover {
+        text-decoration: none;
+        background-color: $lightgrey; 
+        color: $white;
+    }
+
+    h2 {
+        color: $white;
+        text-decoration: bold;
+        padding-left: 1em;
+    }
+}
+
+.navbox {
+    display: flex;
+    flex-direction: row;
+    height: 1.5em;
+    background-color: $darkgrey;
+
+    a {
+        color: white;
+        margin-left: 2em;
+    }
+
+    a:hover {
+        color: white;
+    }
+}
