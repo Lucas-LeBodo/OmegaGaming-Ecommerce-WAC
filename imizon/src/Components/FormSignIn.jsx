@@ -28,7 +28,7 @@ export default function FormSignIn() {
                     <input type="password" className="form-control" placeholder="Enter password" onChange={ (event)=>{ setPassword(event.target.value)}} required/>
                 </div>
 
-                <button type="submit" className="btn btn-primary btn-block" onClick={ submit } >Sign Up</button>
+                <div type="submit" className="btn btn-block btn-custom" onClick={ submit } >Sign Up</div>
                 <p className="forgot-password text-right">
                     <Link to={'/register'} className="nav-link">sign up</Link>
                 </p>
