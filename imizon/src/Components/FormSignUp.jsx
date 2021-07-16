@@ -10,17 +10,17 @@ export default function FormSignUp () {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [ confPassword, setConfPassword] = useState('');
+    const [confPassword, setConfPassword] = useState('');
 
     const submit = () => {
     // fetch a faire a l'api 
     if (password == confPassword) 
         {
-            axios.post('https://127.0.0.1:8000/api/users',{
-                LastName : lastName, 
-                FirstName : name,
-                Email : email,
-                Password : password
+            axios.post('https://localhost:8000/api/users',{
+                lastName : lastName, 
+                firstName : name,
+                email : email,
+                password : password
             }
             ).then((response) => {
                 console.log(response)
@@ -28,11 +28,11 @@ export default function FormSignUp () {
                 console.log(error)
             })
         }
-        setEmail('');
-        setName('');
-        setLastName('');
-        setPassword('');
-        setConfPassword('');
+        // setEmail('');
+        // setName('');
+        // setLastName('');
+        // setPassword('');
+        // setConfPassword('');
   }
 
     return (

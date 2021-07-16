@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Form} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './FormSingUp.scss';
+import axios from 'axios';
 
 export default function FormSignIn() {
     const [email, setEmail] = useState('');
@@ -10,6 +11,15 @@ export default function FormSignIn() {
     
     const submit = () => {
         // fetch a faire a l'api 
+        axios.post('https://localhost:8000/authentication_token',{
+                email : email,
+                password : password
+            }
+            ).then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error)
+            })
     
     }
 
