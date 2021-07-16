@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Entity;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 use App\Repository\ArticlesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
+ * 
+ * @ApiResource(
+ * )
  */
 class Articles
 {
