@@ -16,11 +16,19 @@ export default function FormSignIn() {
                 password : password
             }
             ).then((response) => {
-                console.log(response)
+                parseJwt(response.data.token);
             }).catch((error) => {
                 console.log(error)
             })
     
+    }
+
+    function parseJwt(token) {
+        console.log(token);
+        if (!token) { return; }
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace('-', '+').replace('_', '/');
+        console.log(JSON.parse(window.atob(base64)));
     }
 
     return (
