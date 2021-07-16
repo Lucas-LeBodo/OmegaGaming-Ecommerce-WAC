@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Form} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import './FormSingUp.scss';
+import '../Styles/FormSingUp.scss';
 import axios from 'axios';
 
 export default function FormSignIn() {
