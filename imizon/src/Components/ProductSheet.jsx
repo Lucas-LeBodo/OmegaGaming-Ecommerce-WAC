@@ -1,4 +1,7 @@
+// librairie
+import { useState } from 'react'
 import { Container, Row, Col } from "react-bootstrap";
+import axios from 'axios';
 
 //image slider 
 import Image1 from '../Styles/Assets/testpc.jpeg';
@@ -15,7 +18,50 @@ import DescriptionLongProduct from './ProductSheet/DescriptionLongProduct'
 import ImgDescriptionLongProduct from './ProductSheet/ImageDescLong'
 
 
+// il faudra encore faire la liaison avec les page d'ajout au panier / achat immediat 
+
+
+
 export default function ProductSheet () {
+    const [article, setArticle] = useState('')
+
+    // ici il faudra changer {id} pour afficher un articles
+    axios.get("http://localhost:8000/api/articles/{id}").then((response) => { setArticle(response.data)})
+
+    if(article != ''){
+        return (
+            <Container fluid id="product_sheet">
+                <Row className="style_card">
+                    <CarouselProduct img1={Image1} img2={Image2}/>
+                    <InformationsProduct 
+                        title={article.Title} 
+                        description={article.Description}
+                        price={article.Price}
+                        stock='12'/>
+                </Row>
+
+                <Row className="style_card">
+                    <Col>
+                        <Row> 
+                            <Col id="title_product">
+                                <div> - Descriptif - </div>
+                                
+                            </Col> 
+                        </Row>
+                        <Row>
+                            <DescriptionLongProduct/>
+                            <ImgDescriptionLongProduct
+                                id="img"
+                                img={ImageDesc}
+                            />
+                        </Row>
+                    </Col>
+                    
+                </Row>
+            </Container>
+        )
+    
+    }
     return(
         <Container fluid id="product_sheet">
             <Row className="style_card">
