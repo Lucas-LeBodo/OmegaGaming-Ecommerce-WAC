@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Form} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import '../Styles/FormSingUp.scss';
 import axios from 'axios';
 
@@ -11,6 +11,7 @@ export default function FormSignUp () {
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [confPassword, setConfPassword] = useState('');
+    const history = useHistory();
 
     const submit = () => {
     // fetch a faire a l'api 
@@ -23,7 +24,7 @@ export default function FormSignUp () {
                 password : password
             }
             ).then((response) => {
-                console.log(response)
+                history.push("/login");
             }).catch((error) => {
                 console.log(error)
             })
