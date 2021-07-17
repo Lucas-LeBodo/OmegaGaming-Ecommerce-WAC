@@ -8,15 +8,27 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use App\Controller\MeController;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  *
- * @ApiResource(
- *     normalizationContext={"groups"={"user:read"}},
- *     denormalizationContext={"groups"={"user:write"}}
- * )
  */
+
+ #[ApiResource(
+    collectionOperations: [
+        'me' => [
+             'pagination_enabled' => false,
+             'path' => '/me',
+             'method' => 'get',
+             'controller' => MeController::class,
+             'read' => false,
+        ],
+        'post'
+    ],
+    normalizationContext: ['groups' => ["user:read"]],
+    denormalizationContext: ["groups" => ["user:write"]]
+ )]
 class User implements UserInterface
 {
     /**
