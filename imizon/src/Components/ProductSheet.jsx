@@ -4,9 +4,9 @@ import { Container, Row, Col } from "react-bootstrap";
 import axios from 'axios';
 
 //image slider 
-import Image1 from '../Styles/Assets/testpc.jpeg';
-import Image2 from '../Styles/Assets/testpc2.jpeg';
-import ImageDesc from '../Styles/Assets/descLong.jpeg'
+import Image1 from '../Styles/assets/testpc.jpeg';
+import Image2 from '../Styles/assets/testpc2.jpeg';
+import ImageDesc from '../Styles/assets/descLong.jpeg'
 
 // css
 import '../Styles/ProductSheet.scss';

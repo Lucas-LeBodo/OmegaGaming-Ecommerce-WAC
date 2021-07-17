@@ -12,7 +12,7 @@ export default function FormSignIn() {
     
     const submit = () => {
         // fetch a faire a l'api 
-        axios.post('https://localhost:8000/authentication_token',{
+        axios.post('http://localhost:8000/authentication_token',{
                 email : email,
                 password : password
             }
@@ -31,7 +31,7 @@ export default function FormSignIn() {
         const base64 = base64Url.replace('-', '+').replace('_', '/');
         let username = JSON.parse(window.atob(base64)).username;
         let roles = JSON.parse(window.atob(base64)).roles;
-        axios.get('https://localhost:8000/api/me', {
+        axios.get('http://localhost:8000/api/me', {
             params: {username: username}
         }).then((response) => {
             let name = response.data.firstName + " " + response.data.lastName
