@@ -84,7 +84,7 @@ export default function ProductSheet () {
                 <Col>
                     <Row> 
                         <Col id="title_product">
-                            <div> - Descriptif - </div>
+                            <div className="margin"> - Descriptif - </div>
                             
                         </Col> 
                     </Row>
