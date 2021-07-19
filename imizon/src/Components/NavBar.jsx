@@ -10,7 +10,8 @@ function NavBar(props) {
     let panier = '';
     let jwt = localStorage.jwt
     let role = '';
-    
+    let nameUser = localStorage.name
+    let user = ''
     const infoUser = (jwt) => {
         let split = jwt.split('.');
         let info = base64_decode(split[1]);
@@ -34,6 +35,8 @@ function NavBar(props) {
     if(jwt){
         panier = <Link to={'#'} >Panier</Link>
         logout = <Link to={'/'}  onClick={() => {localStorage.clear();}}>Logout</Link>
+         user = nameUser.split(' ')
+         user = <Link to={'#'} >{user[0]}</Link>
         infoUser(jwt)
     }
 
@@ -46,14 +49,16 @@ function NavBar(props) {
                 <div className={'loglist'}>
                     {loginPath}
                     {registerPath}
+                    {user}
                     {panier}
                     {logout}
+                    
                 </div>
             </div>
             <div className={'navbox'}>
                 <Link to={'/'} >Home</Link>
-                <Link to={'/'} >Page 2</Link>
-                <Link to={'/'} >Page 3</Link>
+                {/* <Link to={'/'} >Page 2</Link>
+                <Link to={'/'} >Page 3</Link> */}
             </div>
         </Fragment>
     );

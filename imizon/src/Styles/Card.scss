@@ -3,7 +3,7 @@ $darkgrey: #2c2e3eff;
 $lightblue: #939FAA; 
 $lightgrey: #91929aff; 
 $red: #ee2b47ff;
-$purpel: #8F3953;
+$purple: #8F3953;
 $white: #f6f6f6ff; 
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
@@ -67,13 +67,17 @@ p {
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        background-color: $purpel;
+        background-color: $purple;
         font-size: 25px;
         border-radius: 50px;
         color: $white;
         align-content: center;
         cursor: pointer;
         width: 3em;
+
+        a{
+            color: $white !important;
+        }
     }
   
 }

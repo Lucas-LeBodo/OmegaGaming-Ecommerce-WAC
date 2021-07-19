@@ -17,7 +17,7 @@ export default function FormSignUp () {
     // fetch a faire a l'api 
     if (password == confPassword) 
         {
-            axios.post('https://localhost:8000/api/users',{
+            axios.post('http://localhost:8000/api/users',{
                 lastName : lastName, 
                 firstName : name,
                 email : email,
@@ -29,11 +29,11 @@ export default function FormSignUp () {
                 console.log(error)
             })
         }
-        // setEmail('');
-        // setName('');
-        // setLastName('');
-        // setPassword('');
-        // setConfPassword('');
+        setEmail('');
+        setName('');
+        setLastName('');
+        setPassword('');
+        setConfPassword(''); 
   }
 
     return (
