@@ -46,6 +46,11 @@ class Articles
      */
     private $Price;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $stock;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +112,18 @@ class Articles
     public function setPrice(int $Price): self
     {
         $this->Price = $Price;
+
+        return $this;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): self
+    {
+        $this->stock = $stock;
 
         return $this;
     }
