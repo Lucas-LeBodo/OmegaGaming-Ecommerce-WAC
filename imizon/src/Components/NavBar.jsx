@@ -11,7 +11,8 @@ function NavBar(props) {
     let jwt = localStorage.jwt
     let role = '';
     let nameUser = localStorage.name
-    let user = ''
+    let user = '';
+    
     const infoUser = (jwt) => {
         let split = jwt.split('.');
         let info = base64_decode(split[1]);
