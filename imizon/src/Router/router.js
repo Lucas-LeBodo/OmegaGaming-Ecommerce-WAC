@@ -11,6 +11,8 @@ import Register from '../Pages/User/Register';
 import Login from '../Pages/User/Login';
 import Product from '../Pages/User/Product';
 
+import ProtectedRoute from './Components/ProtectedRoute'
+
 // Router
 
 const AppRouter = () => {
@@ -22,7 +24,7 @@ const AppRouter = () => {
                     <Route path='/' component={Home} exact={true} />
                     <Route path='/register' component={Register} />
                     <Route path='/login' component={Login} /> 
-                    <Route path='/product' component={Product} /> 
+                    <ProtectedRoute path='/product' component={Product} />  
                 </Switch>
             </Fragment>
         </BrowserRouter>

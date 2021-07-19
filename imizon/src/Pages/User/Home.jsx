@@ -46,15 +46,16 @@ const Home = () => {
     let result;
     if(row){
         result = row.map((cards, index) => {
+            
         return (
-            <div className="row" >
+            <div key={Math.random(0, 24)} className="row" >
                 {renderCards(cards)} 
             </div>
         )
         })
     }
-    console.log("result")
-    console.log(result)
+    // console.log("result")
+    // console.log(result)
     return (
         <Fragment>
             <Container>
