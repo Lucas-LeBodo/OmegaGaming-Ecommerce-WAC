@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { Link, useLocation } from "react-router-dom";
 import '../Styles/NavBar.scss';
 import {decode as base64_decode} from 'base-64';
+
 function NavBar(props) {
     let pathname = useLocation().pathname;
     let loginPath = '';
@@ -12,6 +13,7 @@ function NavBar(props) {
     let role = '';
     let nameUser = localStorage.name
     let user = ''
+
     const infoUser = (jwt) => {
         let split = jwt.split('.');
         let info = base64_decode(split[1]);
