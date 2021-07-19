@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, Fragment} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Form} from 'react-bootstrap';
 import {Link, useHistory} from 'react-router-dom';
@@ -43,7 +43,7 @@ export default function FormSignIn() {
     }
 
     return (
-        <Container fluid className="signup">
+        <Fragment>
             <Form>
                 <h3>Sign In</h3>
                 <hr id="hr-form"></hr>
@@ -62,6 +62,6 @@ export default function FormSignIn() {
                     <Link to={'/register'} className="nav-link">sign up</Link>
                 </p>
             </Form>
-        </Container>
+        </Fragment>
     )
 }
