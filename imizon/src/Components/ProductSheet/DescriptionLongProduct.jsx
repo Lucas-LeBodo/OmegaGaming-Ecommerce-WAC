@@ -5,7 +5,7 @@ export default function description (props) {
     return(
         <Col id="description_product">
             <Row> 
-                <div> 
+                <div className="margin"> 
                     <p>
                         <b>Intel Core i5 10600K :</b> Turbulent, 
                         bagarreur et hyperactif, le processeur 
