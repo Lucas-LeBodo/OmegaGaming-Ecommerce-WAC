@@ -1,48 +1,66 @@
 <?php
 
 namespace App\Entity;
-use ApiPlatform\Core\Annotation\ApiResource;
 
-use App\Repository\ArticlesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use App\Repository\ArticlesRepository;
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
  * 
- * @ApiResource(
- * )
  */
+
+#[ApiResource(
+    normalizationContext: ['groups' => ["article:read"]],
+    denormalizationContext: ["groups" => ["article:write"]]
+ )]
+
 class Articles
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups("article:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"article:read", "article:write"})
+     * 
      */
     private $Title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"article:read", "article:write"})
      */
     private $Description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"article:read", "article:write"})
      */
     private $Image;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"article:read", "article:write"})
      */
     private $Feature;
 
     /**
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"article:read", "article:write"})
      */
     private $Price;
 

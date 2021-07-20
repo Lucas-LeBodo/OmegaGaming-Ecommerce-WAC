@@ -23,12 +23,12 @@ const AppRouter = () => {
                 <NavBar />
                 <Switch>
                     <Route path='/' component={Home} exact={true} />
-                    <Route path='/register' component={Register} />
-                    <Route path='/login' component={Login} /> 
-                    <Route path='/product' component={Product} />
-                    <Route path='/admin' component={HomeAdmin} />
-                    <Route path='/admin/create_article' component={CreateArticle} />
-                    <Route path='/show_articles' component={ShowArticles} />
+                    <Route path='/register' exact component={Register} />
+                    <Route path='/login' exact component={Login} /> 
+                    <Route path='/product' exact component={Product} />
+                    <Route path='/admin' exact component={HomeAdmin} />
+                    <Route path='/admin/create_article' exact component={CreateArticle} />
+                    <Route path='/admin/show_articles' exact component={ShowArticles} />
                 </Switch>
             </Fragment>
         </BrowserRouter>

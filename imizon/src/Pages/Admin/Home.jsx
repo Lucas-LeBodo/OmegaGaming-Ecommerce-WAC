@@ -11,7 +11,7 @@ const HomeAdmin = () => {
         <Fragment>
             <Container>
             <Link to={'/admin/create_article'} className="nav-link">Créer un article</Link>
-            <Link to={'/show_articles'} className="nav-link">Liste des articles</Link>
+            <Link to={'/admin/show_articles'} className="nav-link">Liste des articles</Link>
             </Container>
         </Fragment>
     )
