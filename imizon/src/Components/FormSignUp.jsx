@@ -51,7 +51,7 @@ export default function FormSignUp () {
                     <div className="signup-btn" onClick={ submit } >Sign Up</div>
                 </div>
                 <div className={"containers-other"}>
-                    <h3>Already registered ?</h3> <Link to={'/login'} className="nav-link">Sign in</Link>
+                    <h3>Already registered ?</h3> <Link to={'/login'} className="nav-link">Sign In</Link>
                 </div>
             </div>
         </Fragment>

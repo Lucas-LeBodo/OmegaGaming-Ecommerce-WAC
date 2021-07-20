@@ -41,7 +41,7 @@ $white: #f6f6f6ff;
 }
 
 .containers-form {
-    margin-top: 5em;
+    margin-top: 8vh;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -53,7 +53,7 @@ $white: #f6f6f6ff;
     .containers-signup{
         display: flex;
         flex-direction: column;
-        width: 40em;
+        width: 50vw;
         height: auto;
         align-items: center;
 
@@ -76,46 +76,43 @@ $white: #f6f6f6ff;
             &::placeholder {
                 color: $white;
             }
-
-            .signup-form:focus {
-                border-bottom: 2px solid $red;
-            }
         }
 
         
 
         .signup-btn {
-        border-radius: 20px;
-        border: 1px solid $darkgrey;
-        background-color: $white;
-        color: $darkgrey;
-        font-size: 12px;
-        text-align: center;
-        font-weight: bold;
-        padding: 1% 3%;
-        letter-spacing: 1px;
-        cursor: pointer;
+            border-radius: 20px;
+            border: 1px solid $darkgrey;
+            background-color: $white;
+            color: $darkgrey;
+            font-size: 12px;
+            text-align: center;
+            font-weight: bold;
+            padding: 1% 3%;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 2rem;
         }
 
         .signup-btn:hover{
-        border: none;
-        background-color: $red;
-        color: $white;
-        -webkit-transition: all 0.2s ease-in-out;
-        -moz-transition: all 0.2s ease-in-out;
-        -o-transition: all 0.2s ease-in-out;
-        transition: all 0.2s ease-in-out;
+            border: none;
+            background-color: $red;
+            color: $white;
+            -webkit-transition: all 0.2s ease-in-out;
+            -moz-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
         }
 
         
     }
 
     .containers-other{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 0 0 0 20em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 50vw;
         
         a {
             font-size: 20px;

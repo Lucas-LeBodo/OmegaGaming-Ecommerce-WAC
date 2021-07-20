@@ -43,25 +43,21 @@ export default function FormSignIn() {
     }
 
     return (
-        <Fragment>
-            <Form>
+    <Fragment>
+        <div className="background-image">
+            <div className="fondu"></div>
+        </div>
+        <div className={"containers-form"}>
+            <div className={"containers-signup"}>
                 <h3>Sign In</h3>
-                <hr id="hr-form"></hr>
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email"onChange={ (event)=>{ setEmail(event.target.value)}} required/>
-                </div>
-
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" onChange={ (event)=>{ setPassword(event.target.value)}} required/>
-                </div>
-
-                <div type="submit" className="btn btn-block btn-custom" onClick={ submit } >Sign Up</div>
-                <p className="forgot-password text-right">
-                    <Link to={'/register'} className="nav-link">sign up</Link>
-                </p>
-            </Form>
-        </Fragment>
+                <input type="email" className="signup-form"  placeholder={"Email"}onChange={ (event)=>{ setEmail(event.target.value)}} required/>
+                <input type="password" className="signup-form"  placeholder={"Password"} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
+                <div type="submit" className="signup-btn" onClick={ submit } >Sign In</div>
+            </div>
+            <p className={"containers-other"}>
+            <h3>You don't have a account ?</h3> <Link to={'/register'} className="nav-link">Sign Up</Link>
+            </p>
+        </div>
+    </Fragment>
     )
 }
