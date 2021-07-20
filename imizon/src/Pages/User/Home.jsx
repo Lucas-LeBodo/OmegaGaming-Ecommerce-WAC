@@ -31,10 +31,12 @@ const Home = () => {
 
     const renderCards = (cards) => {
         let renderCardRow = cards.map((card, index) => {
-            // console.log("info card :")
+            //  console.log("info card :")
+            //  console.log(cards.toString()+"\n")
             // console.log(cards)
           return (
-            <Card />
+            
+            <Card key={index} />
           );
         });
         return renderCardRow
@@ -46,9 +48,9 @@ const Home = () => {
     let result;
     if(row){
         result = row.map((cards, index) => {
-            
+            //console.log(cards.toString()+"\n")
         return (
-            <div key={Math.random(0, 24)} className="row" >
+            <div key={cards.toString()} className="row" >
                 {renderCards(cards)} 
             </div>
         )

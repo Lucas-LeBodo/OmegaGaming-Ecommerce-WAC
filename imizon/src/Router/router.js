@@ -1,6 +1,5 @@
-import React, {Fragment} from 'react';
-import { BrowserRouter, Route, Switch} from "react-router-dom";
-
+import React, {Fragment, useState, useEffect} from 'react';
+import { BrowserRouter, Route, Switch,} from "react-router-dom";
 
 // import Components
 import NavBar from '../Components/NavBar';
@@ -15,7 +14,23 @@ import ProtectedRoute from './Components/ProtectedRoute'
 
 // Router
 
-const AppRouter = () => {
+const AppRouter = (props) => {
+    let token = localStorage.jwt
+    let auth = false
+    let roles = ''
+    let username
+    let pathName = window.location.pathname;
+    if(token){
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace('-', '+').replace('_', '/');
+        username = JSON.parse(window.atob(base64)).username;
+        roles = JSON.parse(window.atob(base64)).roles;
+        if(roles[0] === "ROLE_ADMIN") {
+            auth = true
+        } 
+    }
+    
+    console.log("dans le routeur ", auth)
     return (
         <BrowserRouter>
             <Fragment>
@@ -24,7 +39,7 @@ const AppRouter = () => {
                     <Route path='/' component={Home} exact={true} />
                     <Route path='/register' component={Register} />
                     <Route path='/login' component={Login} /> 
-                    <ProtectedRoute path='/product' component={Product} />  
+                    <ProtectedRoute Auth={auth} username={username} roles={roles[0]} path={pathName}/> 
                 </Switch>
             </Fragment>
         </BrowserRouter>
