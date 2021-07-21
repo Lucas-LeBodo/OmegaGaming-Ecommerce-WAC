@@ -30,7 +30,7 @@ const AppRouter = (props) => {
         } 
     }
     
-    console.log("dans le routeur ", auth)
+    // console.log("dans le routeur ", auth)
     return (
         <BrowserRouter>
             <Fragment>

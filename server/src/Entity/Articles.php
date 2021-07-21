@@ -27,7 +27,7 @@ class Articles
     private $Title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text", length=4294967295)
      */
     private $Description;
 

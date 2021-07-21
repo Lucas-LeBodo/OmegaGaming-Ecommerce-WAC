@@ -20,6 +20,7 @@ final class Version20210719102538 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE articles DROP stock');
         $this->addSql('ALTER TABLE articles ADD stock INT NOT NULL');
     }
 
