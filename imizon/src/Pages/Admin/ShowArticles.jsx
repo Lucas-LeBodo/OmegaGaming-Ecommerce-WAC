@@ -34,43 +34,41 @@ const ShowArticles = () => {
                 }
 
                 let tabArticles = [];
-                console.log(articles)
                 articles.forEach(element => {
                     tabArticles.push(
-                            <div className="article-card" key={element.id + "article_card"}>
-                                <div className="article-img" key={element.id + "div_article_img"}>
-                                    <img src={element.Image} alt={'image'} key={element.id + "article_img"}></img>
-                                </div>
-                                <div className="article-card-content" key={element.id + "article_content_card"}>
-                                    <div className="head-card" key={element.id + "article_head_card"}>
-                                        <div className="article-title" key={element.id + "article_title"}>
-                                            <h3 key={element.id + "article_title_h3"}>{element.Title}</h3>
-                                        </div>
-                                        <div className="article-price" key={element.id + "article_price"}>
-                                            {element.Price} €
-                                        </div>
-                                        <div className="article-stock" key={element.id + "article_stock"}>
-                                           Stock :  {/* ICI POUR LE STOCK */}
-                                        </div>
-                                        <div className="article-id" key={element.id + "article_id"}>
-                                            ID : {element.id}
-                                        </div>
+                        <div className="article-card" key={element.id + "article_card"}>
+                            <div className="article-img" key={element.id + "div_article_img"}>
+                                <img src={element.Image} alt={'image'} key={element.id + "article_img"}></img>
+                            </div>
+                            <div className="article-card-content" key={element.id + "article_content_card"}>
+                                <div className="head-card" key={element.id + "article_head_card"}>
+                                    <div className="article-title" key={element.id + "article_title"}>
+                                        <h3 key={element.id + "article_title_h3"}>{element.Title}</h3>
                                     </div>
-                                    <div className="article-card-footer" key={element.id + "article_card_footer"}>
-                                        <div className="article-desc" key={element.id + "article_desc"}>
-                                            <p key={element.id + "article_desc_p"}>{element.Description}</p>
-                                        </div>
-                                        <div className="article-button" key={element.id + "article_button"}>
-                                            <Link to={'#'} className="nav-link"><AiFillEdit/></Link>
-                                            <Link to={'#'} className="nav-link"><AiFillDelete/></Link>
-                                        </div>
+                                    <div className="article-price" key={element.id + "article_price"}>
+                                        {element.Price} €
+                                    </div>
+                                    <div className="article-stock" key={element.id + "article_stock"}>
+                                       Stock :  {element.Stock}
+                                    </div>
+                                    <div className="article-id" key={element.id + "article_id"}>
+                                        ID : {element.id}
+                                    </div>
+                                </div>
+                                <div className="article-card-footer" key={element.id + "article_card_footer"}>
+                                    <div className="article-desc" key={element.id + "article_desc"}>
+                                        <p key={element.id + "article_desc_p"}>{element.Description}</p>
+                                    </div>
+                                    <div className="article-button" key={element.id + "article_button"}>
+                                        <Link to={'show_article/update/'+element.id} className="nav-link"><AiFillEdit/></Link>
+                                        <Link to={'#'} onClick={() => deleteArticles(element.id)} className="nav-link"><AiFillDelete/></Link>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     )
                 });
                 setArticlesShow(tabArticles);
-                
             }).catch((error) => {
                 console.log(error);
             })
@@ -99,6 +97,17 @@ const ShowArticles = () => {
         <Pagination size="sm">{items}</Pagination>
     </div>
     );
+
+    const deleteArticles = (id) => {
+        console.log(id)
+        axios.delete('https://localhost:8000/api/articles/'+id, {
+            data : {id:id}
+        }).then((response) => {
+            window.location.reload()
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
 
     return (
         <Fragment>

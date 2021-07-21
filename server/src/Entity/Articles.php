@@ -64,6 +64,13 @@ class Articles
      */
     private $Price;
 
+    /**
+     * @ORM\Column(type="integer")
+     * 
+     * @Groups({"article:read", "article:write"})
+     */
+    private $Stock;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,6 +132,17 @@ class Articles
     public function setPrice(int $Price): self
     {
         $this->Price = $Price;
+
+        return $this;
+    }
+    public function getStock(): ?int
+    {
+        return $this->Stock;
+    }
+
+    public function setStock(int $Stock): self
+    {
+        $this->Stock = $Stock;
 
         return $this;
     }

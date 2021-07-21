@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Link, useLocation } from "react-router-dom";
 import '../Styles/NavBar.scss';
 import {decode as base64_decode} from 'base-64';

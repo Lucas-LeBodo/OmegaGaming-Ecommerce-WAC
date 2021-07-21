@@ -13,6 +13,7 @@ import Product from '../Pages/User/Product';
 import HomeAdmin from '../Pages/Admin/Home';
 import CreateArticle from '../Pages/Admin/CreateArticle';
 import ShowArticles from '../Pages/Admin/ShowArticles';
+import UpdateArticle from '../Pages/Admin/UpdateArticle';
 
 // Router
 
@@ -29,6 +30,7 @@ const AppRouter = () => {
                     <Route path='/admin' exact component={HomeAdmin} />
                     <Route path='/admin/create_article' exact component={CreateArticle} />
                     <Route path='/admin/show_articles' exact component={ShowArticles} />
+                    <Route path='/admin/show_article/update/:id' component={UpdateArticle} />
                 </Switch>
             </Fragment>
         </BrowserRouter>
