@@ -24,11 +24,14 @@ const ShowArticles = () => {
                 let views = response.data["hydra:view"];
 
                 if(articles != [] && views != []) {
-                    let max = views["hydra:last"].substr(-1);
-                    setMaxPage(max)
+                    if(views["hydra:last"] != undefined) {
+                        let max = views["hydra:last"].substr(-1);
+                        setMaxPage(max)
+                    }
                 }
 
                 let tabArticles = [];
+                console.log(articles)
                 articles.forEach(element => {
                     tabArticles.push(
                         <ul className="list-group mb-4">
