@@ -6,57 +6,127 @@ $red: #ee2b47ff;
 $purpel: #8F3953;
 $white: #f6f6f6ff; 
 
-.logbox{
-    width: 100%;
-    display: flex;
-    height: 3em;
-    flex-direction: row;
-    justify-content:  space-between;
-    background-color: $darkblue;
-    align-items: center;
-
-    .loglist  {
-        display: flex;
-        flex-direction: row;
-    }
-    
-    a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 0.6em;
-        width: 5rem;
-        height: 2em;
-        color: $darkgrey;
-        background-color: $white; 
-        border-radius: 5px;
-    }
-
-    .loglist a:hover {
-        text-decoration: none;
-        background-color: $lightgrey; 
-        color: $white;
-    }
-
-    h2 {
-        color: $white;
-        text-decoration: bold;
-        padding-left: 1em;
-    }
+*, body {
+    top: 70px;
 }
 
-.navbox {
+.navmenu {
     display: flex;
-    flex-direction: row;
-    height: 1.5em;
-    background-color: $darkgrey;
+    flex-direction: column;
 
-    a {
-        color: white;
-        margin-left: 2em;
+    .logbox{
+        width: 100%;
+        display: flex;
+        height: 3em;
+        top: 0;
+        position: fixed;
+        flex-direction: row;
+        justify-content:  space-between;
+        background-color: $darkgrey;
+        align-items: center;
+        z-index: 20;
+
+        .loglist  {
+            
+            display: flex;
+            flex-direction: row;
+            align-items: flex;
+            justify-content: flex-end;
+            padding-right: 3vw;
+            width: 29%;
+           
+            .dropdown {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                top: 0;
+                position: relative;
+                z-index: 3;
+                height: 100%;
+                
+                
+                .boutonmenuprincipal {
+                    display: block;
+                    width: 100%;
+                    color: white;
+                    border: none;
+                    cursor: pointer;
+                    font-size: 30px;
+
+                }
+                    
+                .dropdown-child {
+                    display: none;
+                    background-color: $white;
+                    top: 45px;
+                    z-index: 3;
+                    text-align: center;
+                    min-width: 150px;
+                    border: black 0.3px solid;
+                    border-radius: 2px;
+                    height: auto;
+                    width: auto;
+                    a {
+                        padding-top: 7%;
+                        padding-bottom: 7%;
+                        height: 20%;
+                        color: $darkgrey;
+                        text-decoration: none;
+                        display: block;
+                       
+                    }
+                }
+            }    
+            
+                
+            .dropdown:hover > .dropdown-child {
+                display: block;
+                position: absolute;
+
+                a:hover {
+                    background-color: rgb(235, 235, 235);
+                    color: $red;
+                }
+            }
+        }
+            
+        a {
+            text-decoration: none;
+
+            h2 {
+                color: $white;
+                text-decoration: bold;
+                padding-left: 1em;
+            }
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
     }
 
-    a:hover {
-        color: white;
+    .navbox {
+        display: flex;
+        flex-direction: row;
+        height: 2.5em;
+        position: relative;
+        justify-content: center;
+        top: 48px;
+        background-color: $darkgrey;
+        font-size: 18px;
+
+        .best a {
+            color: yellow;
+        }
+
+        .promo a {
+            color: $red;
+        }
+
+        a {
+            color: white;
+            margin-left: 2em;
+        }
     }
 }

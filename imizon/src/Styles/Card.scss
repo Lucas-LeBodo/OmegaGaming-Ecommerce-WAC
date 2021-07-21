@@ -18,6 +18,7 @@ p {
     box-shadow: 0 2px 20px $lightgrey;
     overflow: hidden;
     width: 15em;
+    top: 70px;
 }
 .card-header img {
     width: 100%;
@@ -45,29 +46,19 @@ p {
     p {
         font-size: 13px;
         color: black;
-        height: 5em;
-        overflow: auto;
-        ::-webkit-scrollbar {
-            margin-right: 2px;
-            width: 10px;
-        }
-          
-        ::-webkit-scrollbar-thumb {
-            background: $darkblue;
-            border-radius: 10px;
-        }
-          
-        ::-webkit-scrollbar-thumb:hover {
-            box-shadow: inset 0 0 7px $red;
-        }
-    }
+        max-height: 5em;
+        width: 15em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        resize: horizontal;
+    }    
 
-    .card-btn {
+    .card-btn a{
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        background-color: $purple;
+        background-color: $red;
         font-size: 25px;
         border-radius: 50px;
         color: $white;
