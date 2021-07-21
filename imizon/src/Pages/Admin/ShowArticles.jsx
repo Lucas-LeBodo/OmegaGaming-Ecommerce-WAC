@@ -3,8 +3,11 @@ import React, { useState, useEffect, Fragment } from "react";
 import {Container, Pagination} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {AiFillDelete, AiFillEdit} from 'react-icons/ai';
 
 // Import Styles 
+import "../../Styles/ListingAdmin.scss";
+
 
 const ShowArticles = () => {
     const [articles, setArticles] = useState('');
@@ -34,14 +37,36 @@ const ShowArticles = () => {
                 console.log(articles)
                 articles.forEach(element => {
                     tabArticles.push(
-                        <ul className="list-group mb-4">
-                            <li>{element.id}</li>
-                            <li>{element.Title}</li>
-                            <li>{element.Description}</li>
-                            <li>{element.Feature}</li>
-                            <li>{element.Image}</li>
-                            <li>{element.Price}</li>
-                        </ul>
+                            <div className="article-card" key={element.id + "article_card"}>
+                                <div className="article-img" key={element.id + "div_article_img"}>
+                                    <img src={element.Image} alt={'image'} key={element.id + "article_img"}></img>
+                                </div>
+                                <div className="article-card-content" key={element.id + "article_content_card"}>
+                                    <div className="head-card" key={element.id + "article_head_card"}>
+                                        <div className="article-title" key={element.id + "article_title"}>
+                                            <h3 key={element.id + "article_title_h3"}>{element.Title}</h3>
+                                        </div>
+                                        <div className="article-price" key={element.id + "article_price"}>
+                                            {element.Price} €
+                                        </div>
+                                        <div className="article-stock" key={element.id + "article_stock"}>
+                                           Stock :  {/* ICI POUR LE STOCK */}
+                                        </div>
+                                        <div className="article-id" key={element.id + "article_id"}>
+                                            ID : {element.id}
+                                        </div>
+                                    </div>
+                                    <div className="article-card-footer" key={element.id + "article_card_footer"}>
+                                        <div className="article-desc" key={element.id + "article_desc"}>
+                                            <p key={element.id + "article_desc_p"}>{element.Description}</p>
+                                        </div>
+                                        <div className="article-button" key={element.id + "article_button"}>
+                                            <Link to={'#'} className="nav-link"><AiFillEdit/></Link>
+                                            <Link to={'#'} className="nav-link"><AiFillDelete/></Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     )
                 });
                 setArticlesShow(tabArticles);
