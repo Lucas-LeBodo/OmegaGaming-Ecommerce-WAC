@@ -1,9 +1,7 @@
-// Import Libs
-import React, { useState, useEffect, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {decode as base64_decode} from 'base-64';
 import {FiLogIn, FiUserPlus, FiUser, FiLogOut} from "react-icons/fi"
-import {RiVipCrownLine, RiMoneyDollarBoxLine} from "react-icons/ri"
 import { MdShoppingCart } from "react-icons/md"
 
 // Import Styles
@@ -22,7 +20,8 @@ function NavBar(props) {
     let jwt = localStorage.jwt
     let role = '';
     let nameUser = localStorage.name
-    let user = ''
+    let user = '';
+    
     const infoUser = (jwt) => {
         let split = jwt.split('.');
         let info = base64_decode(split[1]);

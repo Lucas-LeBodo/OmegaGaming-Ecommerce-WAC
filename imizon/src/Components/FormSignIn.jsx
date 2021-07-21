@@ -30,7 +30,10 @@ export default function FormSignIn() {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
         let username = JSON.parse(window.atob(base64)).username;
+<<<<<<< HEAD
         let roles = JSON.parse(window.atob(base64)).roles;
+=======
+>>>>>>> R1
         axios.get('https://localhost:8000/api/me', {
             params: {username: username}
         }).then((response) => {
