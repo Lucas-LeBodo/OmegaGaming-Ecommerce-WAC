@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Link, useLocation } from "react-router-dom";
 import '../Styles/NavBar.scss';
 import {decode as base64_decode} from 'base-64';
@@ -12,8 +12,8 @@ function NavBar(props) {
     let jwt = localStorage.jwt
     let role = '';
     let nameUser = localStorage.name
-    let user = ''
-
+    let user = '';
+    
     const infoUser = (jwt) => {
         let split = jwt.split('.');
         let info = base64_decode(split[1]);
