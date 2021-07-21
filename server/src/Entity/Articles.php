@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\CreateArticleController;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 use App\Repository\ArticlesRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,46 +12,63 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
  * 
  * @ApiResource(
+ * itemOperations={"get"},
  * )
  */
+#[ApiResource(
+    collectionOperations: [
+        'createArticle' => [
+             'pagination_enabled' => false,
+             'path' => '/createArticle',
+             'method' => 'post',
+             'controller' => CreateArticleController::class,
+             'read' => false,
+        ],
+        'post', 
+        'get'
+    ],
+    normalizationContext: ['groups' => ["article:read"]],
+    denormalizationContext: ['groups' => ["article:write"]]
+)]
 class Articles
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("article:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"article:read", "article:write"})
      */
     private $Title;
 
     /**
-     * @ORM\Column(type="text", length=4294967295)
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"article:read", "article:write"})
      */
     private $Description;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text", length=4294967295)
+     * @Groups({"article:read", "article:write"})
      */
     private $Image;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"article:read", "article:write"})
      */
     private $Feature;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"article:read", "article:write"})
      */
     private $Price;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $stock;
 
     public function getId(): ?int
     {
@@ -112,18 +131,6 @@ class Articles
     public function setPrice(int $Price): self
     {
         $this->Price = $Price;
-
-        return $this;
-    }
-
-    public function getStock(): ?int
-    {
-        return $this->stock;
-    }
-
-    public function setStock(int $stock): self
-    {
-        $this->stock = $stock;
 
         return $this;
     }

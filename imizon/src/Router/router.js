@@ -9,6 +9,7 @@ import Home from '../Pages/User/Home';
 import Register from '../Pages/User/Register';
 import Login from '../Pages/User/Login';
 import Product from '../Pages/User/Product';
+import CreateArticleForm from '../Components/CreateArticleForm';
 
 import ProtectedRoute from './Components/ProtectedRoute'
 
@@ -39,6 +40,7 @@ const AppRouter = (props) => {
                     <Route path='/' component={Home} exact={true} />
                     <Route path='/register' component={Register} />
                     <Route path='/login' component={Login} /> 
+                    <Route path='/article-form' component={CreateArticleForm} /> 
                     <ProtectedRoute Auth={auth} username={username} roles={roles[0]} path={pathName}/> 
                 </Switch>
             </Fragment>
