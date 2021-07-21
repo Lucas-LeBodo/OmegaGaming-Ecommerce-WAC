@@ -1,14 +1,13 @@
-import React, {Component} from 'react';
+import React, {Component,Fragment} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Container} from 'react-bootstrap';
 import FormSignIn from '../../Components/FormSignIn'
 
 export default class login extends Component {
     render(){
         return(
-            <Container >
+            <Fragment >
                 <FormSignIn/>
-            </Container>
+            </Fragment>
         )
     }
 
