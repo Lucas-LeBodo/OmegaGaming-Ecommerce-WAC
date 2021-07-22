@@ -34,6 +34,7 @@ const ShowArticles = () => {
                 }
 
                 let tabArticles = [];
+                console.log(articles)
                 articles.forEach(element => {
                     tabArticles.push(
                         <div className="article-card" key={element.id + "article_card"}>
@@ -50,6 +51,9 @@ const ShowArticles = () => {
                                     </div>
                                     <div className="article-stock" key={element.id + "article_stock"}>
                                        Stock :  {element.Stock}
+                                    </div>
+                                    <div className="article-stock" key={element.View + "article_view"}>
+                                        View : {element.View}
                                     </div>
                                     <div className="article-id" key={element.id + "article_id"}>
                                         ID : {element.id}

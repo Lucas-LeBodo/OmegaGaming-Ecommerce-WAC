@@ -23,7 +23,6 @@ const UpdateArticle = () => {
             let id = location.substr(-1);
             setId(id);
             axios.get('https://localhost:8000/api/articles/'+id, {
-
             }).then((response) => {
                 let information = response.data;
                 setInformations(information)
@@ -32,6 +31,14 @@ const UpdateArticle = () => {
                 setFeature(information.Feature)
                 setPrice(information.Price)
                 setStock(information.Stock)
+            }).catch((error) => {
+                console.log(error)
+            })
+
+            axios.get('https://localhost:8000/api/articles/view', {
+                params: {id: id}
+            }).then((response) => {
+                console.log(response)
             }).catch((error) => {
                 console.log(error)
             })

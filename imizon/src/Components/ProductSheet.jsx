@@ -26,7 +26,7 @@ export default function ProductSheet () {
     const [article, setArticle] = useState('')
 
     // ici il faudra changer {id} pour afficher un articles
-    axios.get("http://localhost:8000/api/articles/{id}").then((response) => { setArticle(response.data)})
+    axios.get("https://localhost:8000/api/articles/{id}").then((response) => { setArticle(response.data)})
 
     if(article != ''){
         return (
