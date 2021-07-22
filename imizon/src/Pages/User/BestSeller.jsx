@@ -21,15 +21,15 @@ const BestSeller = () => {
                 let showArticles = [];
                 articles.forEach(element => {
                     showArticles.push(
-                        <div className={"card"}>
-                            <div className={"card-header"}>
-                                <img src={image} alt="rover" />
+                        <div className={"card"} key={"div1"+ element.id}>
+                            <div className={"card-header"} key={"div2"+ element.id}>
+                                <img src={image} alt="rover" key={element.Image} />
                             </div>
-                            <div className={"card-body"}>
-                                <span className={"card-price"}>999.99€</span>
-                                <h4> {element.Title} </h4>
-                                <p> {element.Description} </p>
-                                <div className={"card-btn"} ><Link to={'/product'}><IoEye/></Link></div>
+                            <div className={"card-body"} key={"div3"+ element.id}>
+                                <span className={"card-price"} key={"span "+ element.id}>999.99€</span>
+                                <h4 key={"Title "+ element.Title}> {element.Title} </h4>
+                                <p key={"p"+ element.Description}> {element.Description} </p>
+                                <div className={"card-btn"} key={"div4"+ element.id}><Link to={'/product'} key={"Link"+ element.id}><IoEye/></Link></div>
                             </div>
                         </div>
                     )

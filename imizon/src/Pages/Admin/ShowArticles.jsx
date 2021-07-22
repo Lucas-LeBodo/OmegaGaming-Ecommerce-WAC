@@ -10,9 +10,7 @@ import "../../Styles/ListingAdmin.scss";
 
 
 const ShowArticles = () => {
-    const [articles, setArticles] = useState('');
     const [articlesShow, setArticlesShow] = useState('');
-    const [views, setViews] = useState('');
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
 
@@ -20,14 +18,11 @@ const ShowArticles = () => {
         function getArticles() {
             axios.get('https://localhost:8000/api/articles?page='+page, {
             }).then((response) => {
-                setArticles(response.data["hydra:member"]);
-                setViews(response.data["hydra:view"]);
-
                 let articles = response.data["hydra:member"];
                 let views = response.data["hydra:view"];
 
-                if(articles != [] && views != []) {
-                    if(views["hydra:last"] != undefined) {
+                if(articles !== [] && views !== []) {
+                    if(views["hydra:last"] !== undefined) {
                         let max = views["hydra:last"].substr(-1);
                         setMaxPage(max)
                     }
@@ -39,7 +34,7 @@ const ShowArticles = () => {
                     tabArticles.push(
                         <div className="article-card" key={element.id + "article_card"}>
                             <div className="article-img" key={element.id + "div_article_img"}>
-                                <img src={element.Image} alt={'image'} key={element.id + "article_img"}></img>
+                                <img src={element.Image} alt={'image'+element.id} key={element.id + "article_img"}></img>
                             </div>
                             <div className="article-card-content" key={element.id + "article_content_card"}>
                                 <div className="head-card" key={element.id + "article_head_card"}>

@@ -16,6 +16,7 @@ const Home = () => {
     useEffect(() => {
         function getMostPopular() {
             axios.get('https://localhost:8000/api/articles/popularity', {
+                params: {exist: "oui"}
             }).then((response) => {
                 console.log(response.data["hydra:member"]);
             }).catch((error) => {
@@ -32,8 +33,8 @@ const Home = () => {
 
         for (let i = 0; i < 4; i++){
             for (let j = 0; j < 4 ; j++){
-            row [j] = i+"-"+j
-                if(j == 3){
+            row[j] = i+"-"+j
+                if(j === 3){
                     map_def.push(row)
                     row = []
                 }

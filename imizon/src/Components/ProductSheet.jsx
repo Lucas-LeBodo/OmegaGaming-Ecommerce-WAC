@@ -28,7 +28,7 @@ export default function ProductSheet () {
     // ici il faudra changer {id} pour afficher un articles
     axios.get("https://localhost:8000/api/articles/{id}").then((response) => { setArticle(response.data)})
 
-    if(article != ''){
+    if(article !== ''){
         return (
             <Container fluid id="product_sheet">
                 <Row className="style_card">

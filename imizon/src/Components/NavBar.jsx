@@ -34,20 +34,20 @@ function NavBar(props) {
     // conditional display btn login / register
 
     // User déconnecté 
-    if(pathname == "/login"){
+    if(pathname === "/login"){
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
     }
-    if(pathname == "/register"){
+    if(pathname === "/register"){
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
     }
-    if(pathname == "/" && !jwt){
+    if(pathname === "/" && !jwt){
         navbox = <Navbox />
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
     }
-    if(pathname == "/product" && !jwt){
+    if(pathname === "/product" && !jwt){
         navbox = <Navbox />
         registerPath = <Link to={'/login'} >Login</Link>
         loginPath = <Link to={'/register'} >Register</Link>
@@ -72,9 +72,9 @@ function NavBar(props) {
                 <div className="logbox">
                     <Link to={'/'} ><h2>Omega Gaming</h2></Link>
                     <div className={'loglist'}>
-                        <div class="dropdown">
-                            <div class="boutonmenuprincipal"><FiUser /></div>
-                            <div class="dropdown-child">
+                        <div className="dropdown">
+                            <div className="boutonmenuprincipal"><FiUser /></div>
+                            <div className="dropdown-child">
                                 {user}
                                 {loginPath}
                                 {registerPath}
@@ -82,9 +82,9 @@ function NavBar(props) {
                             </div>
                         </div>
                         <div className={'loglist'}>
-                            <div class="dropdown">
-                                <div class="boutonmenuprincipal"><MdShoppingCart /></div>
-                                <div class="dropdown-child">
+                            <div className="dropdown">
+                                <div className="boutonmenuprincipal"><MdShoppingCart /></div>
+                                <div className="dropdown-child">
                                     {panier}
                                 </div>
                             </div>
