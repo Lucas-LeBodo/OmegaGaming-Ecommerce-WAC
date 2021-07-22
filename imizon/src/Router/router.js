@@ -43,7 +43,6 @@ const AppRouter = (props) => {
                     <Route path='/' component={Home} exact={true} />
                     <Route path='/register' component={Register} />
                     <Route path='/login' component={Login} /> 
-                    <ProtectedRoute Auth={auth} username={username} roles={roles[0]} path={pathName}/>
                     <Route path='/register' exact component={Register} />
                     <Route path='/login' exact component={Login} /> 
                     <Route path='/product' exact component={Product} />
@@ -51,6 +50,7 @@ const AppRouter = (props) => {
                     <Route path='/admin/create_article' exact component={CreateArticle} />
                     <Route path='/admin/show_articles' exact component={ShowArticles} />
                     <Route path='/admin/show_article/update/:id' component={UpdateArticle} /> 
+                    <ProtectedRoute Auth={auth} username={username} roles={roles[0]} path={pathName}/>
                 </Switch>
             </Fragment>
         </BrowserRouter>
