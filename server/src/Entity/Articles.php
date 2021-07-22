@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\ArticlesController;
+use App\Controller\MostPopularArticle;
 use App\Controller\ViewController;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\ArticlesRepository;
@@ -20,6 +21,11 @@ use App\Repository\ArticlesRepository;
             'path' => '/articles/view',
             'method' => 'get',
             'controller' => ViewController::class,
+        ],
+        'orderByView' => [
+            'path' => '/articles/popularity',
+            'method' => 'get',
+            'controller' => MostPopularArticle::class,
         ],
         'get',
         'post'

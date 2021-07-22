@@ -1,5 +1,6 @@
 // Import Libs
-import React, { Fragment }from 'react'
+import axios from 'axios';
+import React, { Fragment, useEffect }from 'react'
 import {Container} from 'react-bootstrap';
 
 
@@ -11,6 +12,20 @@ import Card from '../../Components/ArticleCard';
 import "../../Styles/ListingProduct.scss"
 
 const Home = () => {
+
+    useEffect(() => {
+        function getMostPopular() {
+            axios.get('https://localhost:8000/api/articles/popularity', {
+            }).then((response) => {
+                console.log(response.data["hydra:member"]);
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+
+        getMostPopular();
+    })
+
     const map = () => {
         let map_def = [];
         let row = []
