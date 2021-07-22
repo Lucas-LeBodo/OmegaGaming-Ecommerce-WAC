@@ -1,11 +1,13 @@
 // Import Libs
 import axios from 'axios';
 import React, { Fragment, useEffect, useState }from 'react'
-import {Container} from 'react-bootstrap';
+import {FiUpload, FiSave, FiXCircle} from 'react-icons/fi';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 
 
 //import style 
+import "../../Styles/UpdateArticles.scss";
 
 const UpdateArticle = () => {
     const [informations, setInformations] = useState('');
@@ -66,31 +68,46 @@ const UpdateArticle = () => {
 
     return (
         <Fragment>
-            <Container>
-                <Link to={"/admin/show_articles"}>Back to list</Link>
-                <ul>
-                    <li className="text-primary">{informations.Title}</li>
-                    <li className="text-primary">{informations.Description}</li>
-                    <li className="text-primary">{informations.Stock}</li>
-                    <li className="text-primary">{informations.Price}</li>
-                    <li className="text-primary">{informations.Feature}</li>
-                    <li className="text-primary">{informations.Image}</li>
-                </ul>
-                <form>
-                    <label>Titre</label>
-                    <input type="text" defaultValue={informations.Title} onChange={(event)=>setTitle(event.target.value)}></input>
-                    <label>Description</label>
-                    <textarea defaultValue={informations.Description} onChange={(event)=>setDescription(event.target.value)}></textarea>
-                    <label>Caractéristique</label>
-                    <textarea defaultValue={informations.Feature} onChange={(event)=>setFeature(event.target.value)}></textarea>
-                    <label>Prix</label>
-                    <input type="text" defaultValue={informations.Price} onChange={(event)=>setPrice(event.target.value)}></input>
-                    <label>Stock</label>
-                    <input type="text" defaultValue={informations.Stock} onChange={(event)=>setStock(event.target.value)}></input>
-
-                    <button onClick={submit}>UPDATE</button>
-                </form>
-            </Container>
+                <div className="container-form">
+                <Link to={"/admin/show_articles"}> 	&lt; Back to list</Link>
+                    <form>
+                        <div className="flex-head">
+                            <div className="flex-head-top">
+                            <label>Title : <input type="text" id={'title'} placeholder={"Enter a title"} defaultValue={informations.Title} onChange={(event)=>setTitle(event.target.value)}></input></label>    
+                            <label>Price : <input type="text" defaultValue={informations.Price} placeholder={"Enter Prices"} onChange={(event)=>setPrice(event.target.value)}></input> </label>
+                            </div>
+                            <div className="flex-head-bottom">
+                            <label>Stocks : <input type="text" defaultValue={informations.Stock} placeholder={"Enter Stock"} onChange={(event)=>setStock(event.target.value)}></input></label>
+                            </div>
+                        </div>
+                        <div className="flex-body">
+                            <div className="flex-img">
+                                <img src={'image.jpg'} alt={"Image"}></img>
+                                <div className="flex-bottom">
+                                    <div className="flex-img-button"> 
+                                        <Link to={"#"} id="upload"> <FiUpload/> Upload Image </Link>
+                                        <Link to={"#"} id="delete"> <RiDeleteBin5Line/> Delete All </Link>
+                                    </div>
+                                    <div className="other-img">
+                                        <div className="image"></div>
+                                        <div className="image"></div>
+                                        <div className="image"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex-bottom-area">
+                            <label>Description : <textarea defaultValue={informations.Description} placeholder={"Enter Description"}  onChange={(event)=>setDescription(event.target.value)}></textarea></label>
+                            <label>Feature : <textarea defaultValue={informations.Feature} placeholder={"Enter Features"} onChange={(event)=>setFeature(event.target.value)}></textarea></label>
+                        </div>
+                        <div className="btn">
+                            <button onClick={submit} id={"save"}><FiSave /> Update</button>
+                            <button onClick={submit} id={"cancel"}><FiXCircle /> Cancel</button>
+                            <button onClick={submit} id={"remove"}><RiDeleteBin5Line /> Delete</button>
+                        </div>
+                          
+                    </form>
+                </div>
         </Fragment>
     )
 }
