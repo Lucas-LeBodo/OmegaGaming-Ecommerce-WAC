@@ -19,7 +19,7 @@ export default function Auth(props){
     }, [])
 
     const verifAuth = async () => {
-        const response = await  axios.get('http://localhost:8000/api/me', {
+        const response = await  axios.get('https://localhost:8000/api/me', {
             params: {username: username}
         })
         data = await response.data.roles[0]

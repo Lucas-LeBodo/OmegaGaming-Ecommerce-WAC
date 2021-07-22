@@ -4,7 +4,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\ArticlesController;
+use App\Controller\MostPopularArticle;
+use App\Controller\ViewController;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Repository\ArticlesRepository;
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
@@ -12,6 +16,20 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 
 #[ApiResource(
+    collectionOperations: [
+        'countView' => [
+            'path' => '/articles/view',
+            'method' => 'get',
+            'controller' => ViewController::class,
+        ],
+        'orderByView' => [
+            'path' => '/articles/popularity',
+            'method' => 'get',
+            'controller' => MostPopularArticle::class,
+        ],
+        'get',
+        'post'
+    ],
     normalizationContext: ['groups' => ["article:read"]],
     denormalizationContext: ["groups" => ["article:write"]]
  )]
@@ -69,6 +87,13 @@ class Articles
      * @Groups({"article:read", "article:write"})
      */
     private $Stock;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * 
+     * @Groups("article:read")
+     */
+    private $View;
 
     public function getId(): ?int
     {
@@ -142,6 +167,18 @@ class Articles
     public function setStock(int $Stock): self
     {
         $this->Stock = $Stock;
+
+        return $this;
+    }
+
+    public function getView(): ?int
+    {
+        return $this->View;
+    }
+
+    public function setView(?int $View): self
+    {
+        $this->View = $View;
 
         return $this;
     }

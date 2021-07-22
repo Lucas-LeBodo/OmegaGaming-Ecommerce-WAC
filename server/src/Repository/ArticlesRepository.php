@@ -22,19 +22,16 @@ class ArticlesRepository extends ServiceEntityRepository
     // /**
     //  * @return Articles[] Returns an array of Articles objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function getMostPopular()
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->where("a.View > 0")
+            ->orderBy('a.View', "DESC")
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Articles
