@@ -16,7 +16,11 @@ class MostPopularArticle extends AbstractController
 
     public function __invoke(ArticlesRepository $articlesRepository)
     {
-        $articles = $articlesRepository->getMostPopular();
+        if(isset($_GET["exist"])) {
+            $articles = $articlesRepository->getMostPopularHome();
+        } else {
+            $articles = $articlesRepository->getMostPopularBestSeller();
+        }
         json_encode($articles);
         return $articles;
     }

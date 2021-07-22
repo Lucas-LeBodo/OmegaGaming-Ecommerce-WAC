@@ -10,7 +10,7 @@ import '../Styles/Card.scss';
 import image from '../Assets/pc1.jpg';
 
 
-function Card(props) {
+function Card() {
 return (
     <Fragment>
         <div className={"card"}>

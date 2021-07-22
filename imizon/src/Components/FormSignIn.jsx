@@ -1,6 +1,5 @@
 import React, {useState, Fragment} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Container, Form} from 'react-bootstrap';
 import {Link, useHistory} from 'react-router-dom';
 import '../Styles/FormSingUp.scss';
 import axios from 'axios';
