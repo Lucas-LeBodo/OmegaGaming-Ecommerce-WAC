@@ -28,7 +28,7 @@ class ArticlesRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->where("a.View > 0")
             ->orderBy('a.View', "DESC")
-            ->setMaxResults(50)
+            ->setMaxResults(30)
             ->getQuery()
             ->getResult()
         ;
@@ -37,9 +37,8 @@ class ArticlesRepository extends ServiceEntityRepository
     public function getMostPopularHome()
     {
         return $this->createQueryBuilder('a')
-            ->where("a.View > 0")
             ->orderBy('a.View', "DESC")
-            ->setMaxResults(4)
+            ->setMaxResults(30)
             ->getQuery()
             ->getResult()
         ;

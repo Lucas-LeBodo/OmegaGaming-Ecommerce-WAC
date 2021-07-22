@@ -1,14 +1,11 @@
 // Import Libs
 import axios from 'axios';
 import React, { Fragment, useEffect, useState }from 'react'
-import { IoEye } from "react-icons/io5";
-import {Link} from 'react-router-dom';
 
 //import style 
 import "../../Styles/ListingProduct.scss"
 
-// Import Images
-import image from '../../Assets/pc1.jpg';
+import Card from '../../Components/ArticleCard';
 
 const BestSeller = () => {
     const [showArticles, setShowArticles] = useState('');
@@ -21,17 +18,13 @@ const BestSeller = () => {
                 let showArticles = [];
                 articles.forEach(element => {
                     showArticles.push(
-                        <div className={"card"} key={"div1"+ element.id}>
-                            <div className={"card-header"} key={"div2"+ element.id}>
-                                <img src={image} alt="rover" key={element.Image} />
-                            </div>
-                            <div className={"card-body"} key={"div3"+ element.id}>
-                                <span className={"card-price"} key={"span "+ element.id}>999.99€</span>
-                                <h4 key={"Title "+ element.Title}> {element.Title} </h4>
-                                <p key={"p"+ element.Description}> {element.Description} </p>
-                                <div className={"card-btn"} key={"div4"+ element.id}><Link to={'/product'} key={"Link"+ element.id}><IoEye/></Link></div>
-                            </div>
-                        </div>
+                        <Card key={element.id} 
+                              id={element.id}
+                              title={element.Title}
+                              image={element.Image}
+                              description={element.Description}
+                              price={element.Price}
+                        />
                     )
                 });
                 setShowArticles(showArticles);
@@ -39,7 +32,6 @@ const BestSeller = () => {
                 console.log(error);
             })
         }
-
         getMostPopular();
     })
 

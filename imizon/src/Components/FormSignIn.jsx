@@ -54,9 +54,9 @@ export default function FormSignIn() {
                 <input type="password" className="signup-form"  placeholder={"Password"} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
                 <div type="submit" className="signup-btn" onClick={ submit } >Sign In</div>
             </div>
-            <p className={"containers-other"}>
-            <h3>You don't have a account ?</h3> <Link to={'/register'} className="nav-link">Sign Up</Link>
-            </p>
+            <div className={"containers-other"}>
+            <h3>You don't have an account ?</h3>  <Link to={'/register'} className="nav-link">Sign Up</Link>
+            </div>
         </div>
     </Fragment>
     )

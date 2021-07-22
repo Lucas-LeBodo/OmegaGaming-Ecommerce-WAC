@@ -29,7 +29,6 @@ const ShowArticles = () => {
                 }
 
                 let tabArticles = [];
-                console.log(articles)
                 articles.forEach(element => {
                     tabArticles.push(
                         <div className="article-card" key={element.id + "article_card"}>

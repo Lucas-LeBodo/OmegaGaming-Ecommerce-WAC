@@ -10,6 +10,7 @@ const CreateArticle = () => {
     const [description, setDescription] = useState('');
     const [feature, setFeature] = useState('');
     const [price, setPrice] = useState('');
+    const [stock, setStock] = useState('');
     const history = useHistory();
 
     const toBase64 = file => new Promise((resolve, reject) => {
@@ -31,13 +32,15 @@ const CreateArticle = () => {
         console.log(typeof mb64File);
         console.log(typeof feature)
         console.log(typeof parseInt(price))
+        console.log(typeof parseInt(stock))
 
         axios.post('https://localhost:8000/api/createArticle',{
-            Title : title,
-            Description : description,
-            Image : mb64File,
-            Feature : feature,
-            Price : parseInt(price)
+            Title: title,
+            Description: description,
+            Image: mb64File,
+            Feature: feature,
+            Price: parseInt(price),
+            Stock: parseInt(stock)
         }
         ).then((response) => {
             console.log(response)
@@ -45,10 +48,6 @@ const CreateArticle = () => {
             console.log(error)
         })
        
-        setTitle('');
-        setDescription('');
-        setFeature('');
-        setPrice('');
     }
 
     return (
@@ -64,19 +63,20 @@ const CreateArticle = () => {
                     <label>Image</label>
                     <input type="file" id="myFile" className="form-control"  required/>
                 </div>
-
                 <div className="form-group">
                     <label>Description</label>
                     <input type="textarea" className="form-control" placeholder={description} onChange={ (event)=>{ setDescription(event.target.value)}}/>
                 </div>
-
                 <div className="form-group">
                     <label>Features</label>
                     <input type="textarea" className="form-control" placeholder={feature} onChange={ (event)=>{ setFeature(event.target.value)}}/>
                 </div>
-
                 <div className="form-group">
-                    <label>Price ($)</label>
+                    <label>Stock</label>
+                    <input type="number" className="form-control" placeholder={stock} onChange={ (event)=>{ setStock(event.target.value)}} required/>
+                </div>
+                <div className="form-group">
+                    <label>Price (€)</label>
                     <input type="number" className="form-control" placeholder={price} onChange={ (event)=>{ setPrice(event.target.value)}} required/>
                 </div>
 

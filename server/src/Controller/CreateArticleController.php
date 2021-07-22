@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Articles;
-use AppBundle\Entity\Product;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CreateArticleController extends AbstractController
@@ -21,7 +18,6 @@ class CreateArticleController extends AbstractController
     {
         $article = new Articles();
 
-        // dd($article);
         $data = $request->getContent();
         $data = json_decode($data, true);
 
@@ -29,6 +25,7 @@ class CreateArticleController extends AbstractController
         $description = $data["Description"];
         $file = $data["Image"];
         $features = $data["Feature"];
+        $stock = $data["Stock"];
         $price = $data["Price"];
         
         $article->setTitle($title);
@@ -36,11 +33,12 @@ class CreateArticleController extends AbstractController
         $article->setImage($file);
         $article->setFeature($features);
         $article->setPrice($price);
+        $article->setStock($stock);
+        $article->setView(0);
 
         $em = $this->getDoctrine()->getManager();
 
         $em->persist($article);
-        
 
         $repository = $this->getDoctrine()->getRepository(Articles::class);
         $articles = $repository->findOneBy(["id" => 2]);

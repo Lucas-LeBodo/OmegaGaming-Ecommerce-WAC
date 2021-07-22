@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 //import style 
 
-const UpdateArticle = () => {
+const UpdateArticle = (props) => {
     const [informations, setInformations] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -19,9 +19,9 @@ const UpdateArticle = () => {
 
     useEffect(() => {
         function getInformations() {
-            let location = document.location.href;
-            let id = location.substr(-1);
+            let id = props.match.params.id
             setId(id);
+            
             axios.get('https://localhost:8000/api/articles/'+id, {
             }).then((response) => {
                 let information = response.data;
