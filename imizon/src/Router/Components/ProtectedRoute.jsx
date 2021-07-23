@@ -3,23 +3,25 @@ import { Route, Redirect } from "react-router-dom";
 import axios from 'axios'
 
 import Product from '../../Pages/User/Product';
-import Login from '../../Pages/User/Login';
+// import Login from '../../Pages/User/Login';
 
 
 export default function Auth(props){
+    const [ok, setOk ] = useState("");
+
     let auth = props.Auth
     let role = props.roles;
     let data = "";
     let username = props.username;
-    let testVerif = ""
-    const [ok, setOk ] = useState("");
+    let testVerif = "";
     let pathName = props.path
+
     useEffect(() => {
         verifAuth()
     }, [])
 
     const verifAuth = async () => {
-        const response = await  axios.get('http://localhost:8000/api/me', {
+        const response = await  axios.get('https://localhost:8000/api/me', {
             params: {username: username}
         })
         data = await response.data.roles[0]

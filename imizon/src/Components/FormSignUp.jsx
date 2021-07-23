@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, Fragment} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Container, Form} from 'react-bootstrap';
 import {Link, useHistory} from 'react-router-dom';
 import '../Styles/FormSingUp.scss';
 import axios from 'axios';
@@ -15,9 +14,9 @@ export default function FormSignUp () {
 
     const submit = () => {
     // fetch a faire a l'api 
-    if (password == confPassword) 
+    if (password === confPassword) 
         {
-            axios.post('http://localhost:8000/api/users',{
+            axios.post('https://localhost:8000/api/users',{
                 lastName : lastName, 
                 firstName : name,
                 email : email,
@@ -37,39 +36,24 @@ export default function FormSignUp () {
   }
 
     return (
-        <Container fluid className="signup">
-            <Form>
-                <h3>Sign Up</h3>
-                <hr id="hr-form"></hr>
-                <div className="form-group">
-                    <label>First name</label>
-                    <input type="text" className="form-control" placeholder={name} onChange={ (event)=>{ setName(event.target.value)}} required/>
+        <Fragment>
+            <div className="background-image">
+                <div className="fondu"></div>
+            </div>
+            <div className={"containers-form"}>
+                <div className={"containers-signup"}>
+                    <h3>Sign Up</h3>
+                    <input type="text" className="signup-form" placeholder={"Fisrt Name"} name={name} onChange={ (event)=>{ setName(event.target.value)}} required/>
+                    <input type="text" className="signup-form" placeholder={"Last Name"} name={lastName} onChange={ (event)=>{ setLastName(event.target.value)}} required/>
+                    <input type="email" className="signup-form" placeholder={"Email"} name={email} onChange={ (event)=>{ setEmail(event.target.value)}} required/>
+                    <input type="password" className="signup-form" placeholder={"Password"} name={password} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
+                    <input type="password" className="signup-form" placeholder={"Confirm Password"} name={confPassword} onChange={ (event)=>{ setConfPassword(event.target.value)}} required/>
+                    <div className="signup-btn" onClick={ submit } >Sign Up</div>
                 </div>
-                <div className="form-group">
-                    <label>Last name</label>
-                    <input type="text" className="form-control" placeholder={lastName} onChange={ (event)=>{ setLastName(event.target.value)}} required/>
+                <div className={"containers-other"}>
+                    <h3>Already registered ?</h3> <Link to={'/login'} className="nav-link">Sign In</Link>
                 </div>
-
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder={email} onChange={ (event)=>{ setEmail(event.target.value)}} required/>
-                </div>
-
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder={password} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
-                </div>
-
-                <div className="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" className="form-control" placeholder={confPassword} onChange={ (event)=>{ setConfPassword(event.target.value)}} required/>
-                </div>
-
-                <div className="btn btn-primary btn-block btn-custom" onClick={ submit } >Sign Up</div>
-                <p className="forgot-password text-right">
-                    Already registered <Link to={'/login'} className="nav-link">sign in?</Link>
-                </p>
-            </Form>
-        </Container>
+            </div>
+        </Fragment>
     )
 }

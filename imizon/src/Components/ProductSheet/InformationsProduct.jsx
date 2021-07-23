@@ -1,9 +1,9 @@
-import { Container, Row, Col, Carousel, Button } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 
 //import icon euro
 import { BiEuro } from 'react-icons/bi';
 import { MdAddShoppingCart } from 'react-icons/md';
-import { FcOk, FcCancel} from 'react-icons/fc';
+import { FcOk } from 'react-icons/fc';
 
 export default function informationProduct(props){
     return(
