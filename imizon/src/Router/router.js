@@ -22,22 +22,6 @@ import ProtectedRoute from './Components/ProtectedRoute'
 // Router
 
 const AppRouter = (props) => {
-    let token = localStorage.jwt
-    let auth = false
-    let roles = ''
-    let username
-    let pathName = window.location.pathname;
-    if(token){
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        username = JSON.parse(window.atob(base64)).username;
-        roles = JSON.parse(window.atob(base64)).roles;
-        if(roles[0] === "ROLE_ADMIN") {
-            auth = true
-        } 
-    }
-    
-    // console.log("dans le routeur ", auth)
     return (
         <BrowserRouter>
             <Fragment>
@@ -51,12 +35,11 @@ const AppRouter = (props) => {
                     <Route path='/product/:id' component={Product} />
                     <Route path='/best-seller' exact component={BestSeller} />
 
-
+                    <ProtectedRoute/>
                     <Route path='/admin' exact component={HomeAdmin} />
                     <Route path='/admin/create_article' exact component={CreateArticle} />
                     <Route path='/admin/show_articles' exact component={ShowArticles} />
                     <Route path='/admin/show_article/update/:id' component={UpdateArticle} /> 
-                    <ProtectedRoute Auth={auth} username={username} roles={roles[0]} path={pathName}/>
                 </Switch>
             </Fragment>
         </BrowserRouter>
