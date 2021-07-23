@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Switch,} from "react-router-dom";
 
 // import Components
 import NavBar from '../Components/NavBar';
+import BreadCrumbs from '../Components/BreadCrumbs';
+
 
 // import page
 import Home from '../Pages/User/Home';
@@ -42,21 +44,24 @@ const AppRouter = (props) => {
         <BrowserRouter>
             <Fragment>
                 <NavBar />
+                <BreadCrumbs />
+
                 <Switch>
+
+                    {/* User Router */}
                     <Route path='/' component={Home} exact={true} />
-                    <Route path='/register' component={Register} />
-                    <Route path='/login' component={Login} /> 
-                    <Route path='/register' exact component={Register} />
-                    <Route path='/login' exact component={Login} /> 
+                    <Route path='/register' component={Register} exact={true} />
+                    <Route path='/login' component={Login} exact={true} /> 
                     <Route path='/product/:id' component={Product} />
-                    <Route path='/best-seller' exact component={BestSeller} />
+                    <Route path='/best-seller'  component={BestSeller}  exact={true}/>
 
-
-                    <Route path='/admin' exact component={HomeAdmin} />
-                    <Route path='/admin/create_article' exact component={CreateArticle} />
-                    <Route path='/admin/show_articles' exact component={ShowArticles} />
+                    {/* Admin Router */}
+                    <Route path='/admin'  component={HomeAdmin} exact={true} />
+                    <Route path='/admin/create_article'  component={CreateArticle} exact={true} />
+                    <Route path='/admin/show_articles'  component={ShowArticles} exact={true} />
                     <Route path='/admin/show_article/update/:id' component={UpdateArticle} /> 
                     <ProtectedRoute Auth={auth} username={username} roles={roles[0]} path={pathName}/>
+
                 </Switch>
             </Fragment>
         </BrowserRouter>

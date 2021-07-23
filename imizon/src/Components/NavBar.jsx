@@ -42,16 +42,11 @@ function NavBar(props) {
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
     }
-    if(pathname === "/" && !jwt){
+    if(pathname.startsWith("/") && !jwt){
         navbox = <Navbox />
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
     }
-    if(pathname === "/product" && !jwt){
-        navbox = <Navbox />
-        registerPath = <Link to={'/login'} >Login</Link>
-        loginPath = <Link to={'/register'} >Register</Link>
-    }  
 
     // User connecté
     if(jwt){
