@@ -1,73 +1,83 @@
-.article-card {
-    display: inline-flex;
-    width: 100%;
-    height: 125px;
-    padding-right: 2%;
-    margin-top: 1vh;
-    margin-top: 1vh;
-    border: 0.1px black solid;
-
-    .article-img {
-        display: block;
-        width: 15%;
-        height: 100%;
-        border-right: 0.1px black solid;
-        
-        img{
-            width: 100%;
-        }
-    }
-
-    .article-card-content {
-        display: flex;
-        flex-direction: column;
-        width: 90%;
-        padding-left: 2%;
-
-        .head-card {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-
-            .article-title{
-                
-                h3 {
-                    color: black;
-                }
-            }
-
-            .article-id{
-                font-style: italic;
-                font-size: 15px;
-                color: grey;
-            }
-        }
-
-        .article-card-footer {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-
-            .article-desc {
-                p{
-                    color: black;
-                }                
-            }
-            .article-button {
-                
-                .nav-link{
-                    margin: 1px;
-                    width: 150%;
-                    border: 1px solid darkgrey;
-                    background-color: white;
-                    font-size: 20px;
-                    text-align: center;
-                    padding: 1%;
-                    margin-right: 2%;
-                    letter-spacing: 1px;
-                    cursor: pointer;
-                }
-            }
-        }
-    }
+*, body {
+    top: 0;
 }
+
+.container-card {
+    display: block;
+    position:relative;
+    top:  70px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+    .article-card {
+        display: inline-flex;
+        width: 100%;
+        height: 125px;
+        padding-right: 2%;
+        border: 0.1px black solid;
+        margin: 1px;
+
+        .article-img {
+            display: block;
+            width: 15%;
+            height: 100%;
+            border-right: 0.1px black solid;
+            
+            img{
+                width: 100%;
+            }
+        }
+
+        .article-card-content {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            padding-left: 2%;
+
+            .head-card {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .article-title{
+                    
+                    h3 {
+                        color: black;
+                    }
+                }
+
+                .article-id{
+                    font-style: italic;
+                    font-size: 15px;
+                    color: grey;
+                }
+            }
+
+            .article-card-footer {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .article-desc {
+                    p{
+                        color: black;
+                    }                
+                }
+                .article-button {
+                    
+                    .nav-link{
+                        margin: 1px;
+                        width: 150%;
+                        border: 1px solid darkgrey;
+                        background-color: white;
+                        font-size: 20px;
+                        text-align: center;
+                        padding: 1%;
+                        margin-right: 2%;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
