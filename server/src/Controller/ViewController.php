@@ -19,6 +19,9 @@ class ViewController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $article = $entityManager->getRepository(Articles::class)->find($id);
         $view = $article->getView();
+        if($view == "null") {
+            $view = 0;
+        }
         $view = $view + 1;
         $article->setView($view);
         $entityManager->flush();

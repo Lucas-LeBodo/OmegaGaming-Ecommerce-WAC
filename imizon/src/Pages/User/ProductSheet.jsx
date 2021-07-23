@@ -1,34 +1,43 @@
 // librairie
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, Row, Col } from "react-bootstrap";
 import axios from 'axios';
 
 //image slider 
-import Image1 from '../Styles/assets/testpc.jpeg';
-import Image2 from '../Styles/assets/testpc2.jpeg';
-import ImageDesc from '../Styles/assets/descLong.jpeg'
+import Image1 from '../../Assets/testpc.jpeg';
+import Image2 from '../../Assets/testpc2.jpeg';
+import ImageDesc from '../../Assets/descLong.jpeg'
 
 // css
-import '../Styles/ProductSheet.scss';
+import '../../Styles/ProductSheet.scss';
 
 // Components
-import CarouselProduct from './ProductSheet/CarouselProduct'
-import InformationsProduct from './ProductSheet/InformationsProduct'
-import DescriptionLongProduct from './ProductSheet/DescriptionLongProduct'
-import ImgDescriptionLongProduct from './ProductSheet/ImageDescLong'
+import CarouselProduct from '../../Components/ProductSheet/CarouselProduct'
+import InformationsProduct from '../../Components/ProductSheet/InformationsProduct'
+import DescriptionLongProduct from '../../Components/ProductSheet/DescriptionLongProduct'
+import ImgDescriptionLongProduct from '../../Components/ProductSheet/ImageDescLong'
 
 
-// il faudra encore faire la liaison avec les page d'ajout au panier / achat immediat 
-
-
-
-export default function ProductSheet () {
+const ProductSheet = (props) => {
     const [article, setArticle] = useState('')
 
-    // ici il faudra changer {id} pour afficher un articles
-    axios.get("https://localhost:8000/api/articles/{id}").then((response) => { setArticle(response.data)})
+    useEffect(() => {
+        function getInformations() {
+            let id = props.match.params.id;
+    
+            axios.get("https://localhost:8000/api/articles/"+id,{
+            }).then((response) => { 
+                let information = response.data;
+                setArticle(information)
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
 
-    if(article != ''){
+        getInformations();
+    }, [])
+
+    if(article !== ''){
         return (
             <Container fluid id="product_sheet">
                 <Row className="style_card">
@@ -37,7 +46,7 @@ export default function ProductSheet () {
                         title={article.Title} 
                         description={article.Description}
                         price={article.Price}
-                        stock='12'/>
+                        stock={article.Stock}/>
                 </Row>
 
                 <Row className="style_card">
@@ -52,7 +61,7 @@ export default function ProductSheet () {
                             <DescriptionLongProduct/>
                             <ImgDescriptionLongProduct
                                 id="img"
-                                img={ImageDesc}
+                                img={article.Image}
                             />
                         </Row>
                     </Col>
@@ -102,3 +111,5 @@ export default function ProductSheet () {
         </Container>
     )
 }
+
+export default ProductSheet

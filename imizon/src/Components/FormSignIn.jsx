@@ -1,6 +1,5 @@
 import React, {useState, Fragment} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Container, Form} from 'react-bootstrap';
 import {Link, useHistory} from 'react-router-dom';
 import '../Styles/FormSingUp.scss';
 import axios from 'axios';
@@ -30,7 +29,7 @@ export default function FormSignIn() {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
         let username = JSON.parse(window.atob(base64)).username;
-        let roles = JSON.parse(window.atob(base64)).roles;
+        // let roles = JSON.parse(window.atob(base64)).roles;
         
         axios.get('https://localhost:8000/api/me', {
             params: {username: username}
@@ -55,9 +54,9 @@ export default function FormSignIn() {
                 <input type="password" className="signup-form"  placeholder={"Password"} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
                 <div type="submit" className="signup-btn" onClick={ submit } >Sign In</div>
             </div>
-            <p className={"containers-other"}>
-            <h3>You don't have a account ?</h3> <Link to={'/register'} className="nav-link">Sign Up</Link>
-            </p>
+            <div className={"containers-other"}>
+            <h3>You don't have an account ?</h3>  <Link to={'/register'} className="nav-link">Sign Up</Link>
+            </div>
         </div>
     </Fragment>
     )

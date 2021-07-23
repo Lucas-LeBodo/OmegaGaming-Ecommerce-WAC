@@ -6,22 +6,20 @@ import {Link} from 'react-router-dom';
 // Import Styles 
 import '../Styles/Card.scss';
 
-// Import Images
-import image from '../Assets/pc1.jpg';
-
-
 function Card(props) {
 return (
     <Fragment>
-        <div className={"card"}>
-            <div className={"card-header"}>
-                <img src={image} alt="rover" />
+        <div className={"card"} key={"div1"+ props.id}>
+            <div className={"card-header"} key={"div2"+ props.id}>
+                <img src={props.image} alt="alt image" key={props.image} />
             </div>
-            <div className={"card-body"}>
-                <span className={"card-price"}>999.99€</span>
-                <h4> AORUS GAMING 5.0hz 8vCores</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, quam recusandae consectetur quod velit maiores vero hic similique tempora, totam amet optio expedita minus. Vel ullam dolore voluptate excepturi iure.</p>
-                <div className={"card-btn"} ><Link to={'/product'}><IoEye/></Link></div>
+            <div className={"card-body"} key={"div3"+ props.id}>
+                <span className={"card-price"} key={"span "+ props.id}> {props.price} € </span>
+                <h4 key={"Title "+ props.title}> {props.title} </h4>
+                <p key={"p"+ props.description}> {props.description} </p>
+                <div className={"card-btn"} key={"div4"+ props.id}>
+                    <Link to={'product/'+props.id} id={props.id} key={"Link"+ props.id}><IoEye/></Link>
+                </div>
             </div>
         </div>
     </Fragment>

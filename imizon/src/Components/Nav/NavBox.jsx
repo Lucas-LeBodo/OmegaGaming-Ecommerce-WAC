@@ -11,7 +11,7 @@ return (
     <Fragment>
         <div className={'navbox'}>
             <p>
-                <span className={"best"}><Link to={'/'} ><RiVipCrownLine/> Best Sellers</Link></span>
+                <span className={"best"}><Link to={'/best-seller'} ><RiVipCrownLine/> Best Sellers</Link></span>
                 <span className={"promo"}><Link to={'/'} ><RiMoneyDollarBoxLine/> Promo</Link></span>
                 <Link to={'/'} >Gaming</Link>
                 <Link to={'/'} >Streaming</Link>

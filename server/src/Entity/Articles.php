@@ -9,6 +9,8 @@ use App\Controller\MostPopularArticle;
 use App\Controller\ViewController;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\ArticlesRepository;
+use App\Controller\CreateArticleController;
+
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
@@ -27,6 +29,13 @@ use App\Repository\ArticlesRepository;
             'method' => 'get',
             'controller' => MostPopularArticle::class,
         ],
+        'createArticle' => [
+            'pagination_enabled' => false,
+            'path' => '/createArticle',
+            'method' => 'post',
+            'controller' => CreateArticleController::class,
+            'read' => false,
+       ],
         'get',
         'post'
     ],
@@ -61,8 +70,7 @@ class Articles
     private $Description;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * 
+     * @ORM\Column(type="text", length=4294967295)
      * @Groups({"article:read", "article:write"})
      */
     private $Image;

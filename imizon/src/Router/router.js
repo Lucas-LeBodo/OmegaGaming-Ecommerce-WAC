@@ -8,7 +8,10 @@ import NavBar from '../Components/NavBar';
 import Home from '../Pages/User/Home';
 import Register from '../Pages/User/Register';
 import Login from '../Pages/User/Login';
-import Product from '../Pages/User/Product';
+import Product from '../Pages/User/ProductSheet'
+import BestSeller from '../Pages/User/BestSeller';
+
+
 import HomeAdmin from '../Pages/Admin/Home';
 import CreateArticle from '../Pages/Admin/CreateArticle';
 import ShowArticles from '../Pages/Admin/ShowArticles';
@@ -45,7 +48,10 @@ const AppRouter = (props) => {
                     <Route path='/login' component={Login} /> 
                     <Route path='/register' exact component={Register} />
                     <Route path='/login' exact component={Login} /> 
-                    <Route path='/product' exact component={Product} />
+                    <Route path='/product/:id' component={Product} />
+                    <Route path='/best-seller' exact component={BestSeller} />
+
+
                     <Route path='/admin' exact component={HomeAdmin} />
                     <Route path='/admin/create_article' exact component={CreateArticle} />
                     <Route path='/admin/show_articles' exact component={ShowArticles} />

@@ -23,11 +23,22 @@ class ArticlesRepository extends ServiceEntityRepository
     //  * @return Articles[] Returns an array of Articles objects
     //  */
     
-    public function getMostPopular()
+    public function getMostPopularBestSeller()
     {
         return $this->createQueryBuilder('a')
             ->where("a.View > 0")
             ->orderBy('a.View', "DESC")
+            ->setMaxResults(30)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getMostPopularHome()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.View', "DESC")
+            ->setMaxResults(30)
             ->getQuery()
             ->getResult()
         ;

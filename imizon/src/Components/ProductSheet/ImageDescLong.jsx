@@ -1,4 +1,4 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 
 export default function imgDescriptionLong (props){
     return(
@@ -6,7 +6,7 @@ export default function imgDescriptionLong (props){
             <div className="margin"> 
                 <img 
                     src={props.img}
-                    alt="image product"
+                    alt={"image product"+props.img}
                 />
             </div> 
         </Col>
