@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Switch,} from "react-router-dom";
 
 // import Components
 import NavBar from '../Components/NavBar';
+import BreadCrumbs from '../Components/BreadCrumbs';
+
 
 // import page
 import Home from '../Pages/User/Home';
@@ -26,20 +28,24 @@ const AppRouter = (props) => {
         <BrowserRouter>
             <Fragment>
                 <NavBar />
-                <Switch>
-                    <Route path='/' component={Home} exact={true} />
-                    <Route path='/register' component={Register} />
-                    <Route path='/login' component={Login} /> 
-                    <Route path='/register' exact component={Register} />
-                    <Route path='/login' exact component={Login} /> 
-                    <Route path='/product/:id' component={Product} />
-                    <Route path='/best-seller' exact component={BestSeller} />
+                <BreadCrumbs />
 
+                <Switch>
+
+                    {/* User Router */}
+                    <Route path='/' component={Home} exact={true} />
+                    <Route path='/register' component={Register} exact={true} />
+                    <Route path='/login' component={Login} exact={true} /> 
+                    <Route path='/product/:id' component={Product} />
+                    <Route path='/best-seller'  component={BestSeller}  exact={true}/>
+
+                    {/* Admin Router */}
                     <ProtectedRoute/>
-                    <Route path='/admin' exact component={HomeAdmin} />
-                    <Route path='/admin/create_article' exact component={CreateArticle} />
-                    <Route path='/admin/show_articles' exact component={ShowArticles} />
+                    <Route path='/admin'  component={HomeAdmin} exact={true} />
+                    <Route path='/admin/create_article'  component={CreateArticle} exact={true} />
+                    <Route path='/admin/show_articles'  component={ShowArticles} exact={true} />
                     <Route path='/admin/show_article/update/:id' component={UpdateArticle} /> 
+
                 </Switch>
             </Fragment>
         </BrowserRouter>
