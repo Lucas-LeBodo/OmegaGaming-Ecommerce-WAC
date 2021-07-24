@@ -2,16 +2,19 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\ViewController;
 use App\Controller\ArticlesController;
 use App\Controller\MostPopularArticle;
-use App\Controller\ViewController;
-use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\ArticlesRepository;
+use App\Controller\ArticlesOrderByName;
+use App\Controller\ArticlesOrderByNameASC;
+use App\Controller\ArticlesOrderByNameDESC;
 use App\Controller\CreateArticleController;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -38,6 +41,16 @@ use App\Controller\CreateArticleController;
             'controller' => CreateArticleController::class,
             'read' => false,
        ],
+       'orderByNameASC' => [
+        'path' => '/articles/OrderByNameASC',
+        'method' => 'get',
+        'controller' => ArticlesOrderByNameASC::class,
+        ],
+        'orderByNameDESC' => [
+            'path' => '/articles/OrderByNameDESC',
+            'method' => 'get',
+            'controller' => ArticlesOrderByNameDESC::class,
+            ],
         'get',
         'post'
     ],
