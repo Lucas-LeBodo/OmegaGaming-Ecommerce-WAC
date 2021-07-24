@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\ArticlesController;
@@ -100,13 +102,23 @@ class Articles
      * @ORM\Column(type="integer", nullable=true)
      * 
      * @Groups("article:read")
+     * 
      */
     private $View;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     * 
+     * @Groups("article:write")
      */
     private $category;
+
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -207,4 +219,5 @@ class Articles
 
         return $this;
     }
+
 }

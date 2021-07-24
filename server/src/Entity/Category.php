@@ -2,30 +2,36 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  */
+#[ApiResource]
 class Category
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("category:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"category:read", "category:write"})
      */
-    private $name_category;
+    private $category_name;
 
     /**
      * @ORM\OneToMany(targetEntity=Articles::class, mappedBy="category")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $articles;
 
@@ -39,14 +45,14 @@ class Category
         return $this->id;
     }
 
-    public function getNameCategory(): ?string
+    public function getCategoryName(): ?string
     {
-        return $this->name_category;
+        return $this->category_name;
     }
 
-    public function setNameCategory(string $name_category): self
+    public function setCategoryName(string $category_name): self
     {
-        $this->name_category = $name_category;
+        $this->category_name = $category_name;
 
         return $this;
     }
