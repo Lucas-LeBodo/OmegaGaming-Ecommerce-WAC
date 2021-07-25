@@ -13,7 +13,7 @@ import "../../Styles/ListingProduct.scss"
 
 const Home = () => {
     const [showArticles, setShowArticles] = useState('');
-
+    let result;
     useEffect(() => {
         function getMostPopular() {
             axios.get('http://localhost:8000/api/articles/popularity', {
@@ -34,18 +34,79 @@ const Home = () => {
                 });
                 setShowArticles(showArticles);
             }).catch((error) => {
-                console.log(error);
+                //console.log(error);
             })
         }
+        
         getMostPopular();
-    })
+    },[])
 
-    // affichage des card sur une ligne
+    const map = () => {
+        let map_def = [];
+        let row = [];
+        let nbRow = 1;
+
+        if(showArticles.length > 4){
+            nbRow = Math.ceil(showArticles.length/4);
+            for (let i = 0; i < nbRow; i++){
+                for (let j = 0; j < 4 ; j++){
+                row [j] = showArticles[j]
+                    if(j == 3 ){
+                        map_def.push(row)
+                        row = []
+                        showArticles.splice(0, 4);
+                    }
+                }
+            }
+        }else{
+            for (let i = 0; i < nbRow; i++){
+                for (let j = 0; j < 4 ; j++){
+                row [j] = showArticles[j]
+                    if(j == 3){
+                        map_def.push(row)
+                        row = []
+                    }
+                }
+            }
+        }
+        // console.log("map_def")
+        // console.log(map_def)
+        return map_def 
+    }
+
+    const renderCards = (cards) => {
+        let renderCardRow = cards.map((card, index) => {
+            return(
+                <div key={ Math.random().toString(36).substring(7)}>
+                    {card}
+                </div>
+            )
+        });
+        return renderCardRow
+    }
+
+
+    let row  = map();
+   
+    if(row){
+        result = row.map((cards, index) => {
+            // console.log("cards : ")
+            // console.log(cards)
+            return(
+                <div key={ Math.random().toString(36).substring(7)} className="row">
+                    {renderCards(cards)}
+                </div>
+            )
+        })
+        
+    }
+
+
 
     return (
         <Fragment>
             <Container>
-                {showArticles}
+                {result}
             </Container>
         </Fragment>
     )

@@ -32,6 +32,14 @@ const ProductSheet = (props) => {
             }).catch((error) => {
                 console.log(error)
             })
+
+            axios.get('http://localhost:8000/api/articles/view', {
+                params: {id: id}
+            }).then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error)
+            })
         }
 
         getInformations();
