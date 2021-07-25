@@ -44,6 +44,34 @@ class ArticlesRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getArticleByNameASC()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.Title')
+            ->setMaxResults(30)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    public function getArticleByNameDESC()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.Title', 'DESC')
+            ->setMaxResults(30)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getArticleByCategory($id)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.category = :id')
+            ->setParameter('id', 1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     /*
     public function findOneBySomeField($value): ?Articles
     {

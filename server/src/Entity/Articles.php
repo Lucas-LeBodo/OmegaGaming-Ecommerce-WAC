@@ -3,14 +3,22 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\ViewController;
+use App\Controller\ArticlesByCategory;
 use App\Controller\ArticlesController;
 use App\Controller\MostPopularArticle;
-use App\Controller\ViewController;
-use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\ArticlesRepository;
+use App\Controller\ArticlesOrderByName;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use App\Controller\ArticlesOrderByNameASC;
+use App\Controller\ArticlesOrderByNameDESC;
 use App\Controller\CreateArticleController;
-
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
@@ -36,12 +44,29 @@ use App\Controller\CreateArticleController;
             'controller' => CreateArticleController::class,
             'read' => false,
        ],
+       'orderByNameASC' => [
+        'path' => '/articles/OrderByNameASC',
+        'method' => 'get',
+        'controller' => ArticlesOrderByNameASC::class,
+        ],
+        'orderByNameDESC' => [
+            'path' => '/articles/OrderByNameDESC',
+            'method' => 'get',
+            'controller' => ArticlesOrderByNameDESC::class,
+        ],
+        'articleByCategory' => [
+            'method' => 'get',
+            'pagination_enabled' => false,
+            'path' => '/articles/ArticleByCategory/',
+            'controller' => ArticlesByCategory::class,
+        ],
         'get',
         'post'
     ],
     normalizationContext: ['groups' => ["article:read"]],
     denormalizationContext: ["groups" => ["article:write"]]
- )]
+),
+ApiFilter(SearchFilter::class, properties: ['id' => 'exact'])]
 
 class Articles
 {
@@ -100,8 +125,23 @@ class Articles
      * @ORM\Column(type="integer", nullable=true)
      * 
      * @Groups("article:read")
+     * 
      */
     private $View;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     * 
+     * @Groups("article:write")
+     */
+    private $category;
+
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -190,4 +230,17 @@ class Articles
 
         return $this;
     }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
 }
