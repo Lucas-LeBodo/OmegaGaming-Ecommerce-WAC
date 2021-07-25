@@ -34,7 +34,7 @@ const CreateArticle = () => {
         console.log(typeof parseInt(price))
         console.log(typeof parseInt(stock))
 
-        axios.post('https://localhost:8000/api/createArticle',{
+        axios.post('http://localhost:8000/api/createArticle',{
             Title: title,
             Description: description,
             Image: mb64File,

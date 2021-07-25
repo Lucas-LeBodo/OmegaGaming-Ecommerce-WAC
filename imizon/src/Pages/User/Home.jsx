@@ -16,7 +16,7 @@ const Home = () => {
 
     useEffect(() => {
         function getMostPopular() {
-            axios.get('https://localhost:8000/api/articles/popularity', {
+            axios.get('http://localhost:8000/api/articles/popularity', {
                 params: {exist: "oui"}
             }).then((response) => {
                 let articles = response.data["hydra:member"];

@@ -24,7 +24,7 @@ const UpdateArticle = (props) => {
             let id = props.match.params.id
             setId(id);
             
-            axios.get('https://localhost:8000/api/articles/'+id, {
+            axios.get('http://localhost:8000/api/articles/'+id, {
             }).then((response) => {
                 let information = response.data;
                 setInformations(information)
@@ -37,7 +37,7 @@ const UpdateArticle = (props) => {
                 console.log(error)
             })
 
-            axios.get('https://localhost:8000/api/articles/view', {
+            axios.get('http://localhost:8000/api/articles/view', {
                 params: {id: id}
             }).then((response) => {
                 console.log(response)
@@ -51,7 +51,7 @@ const UpdateArticle = (props) => {
 
     const submit = (event) => {
         event.preventDefault();
-        axios.put('https://localhost:8000/api/articles/'+id,{
+        axios.put('http://localhost:8000/api/articles/'+id,{
             Title: title,
             Description: description,
             Feature: feature,
