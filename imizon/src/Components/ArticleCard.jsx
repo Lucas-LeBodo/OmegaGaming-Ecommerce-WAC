@@ -11,7 +11,7 @@ return (
     <Fragment>
         <div className={"card"} key={"div1"+ props.id}>
             <div className={"card-header"} key={"div2"+ props.id}>
-                <img src={props.image} alt="alt image" key={props.image} />
+                <img src={props.image} alt={"alt image"+props.id} key={props.image} />
             </div>
             <div className={"card-body"} key={"div3"+ props.id}>
                 <span className={"card-price"} key={"span "+ props.id}> {props.price} € </span>

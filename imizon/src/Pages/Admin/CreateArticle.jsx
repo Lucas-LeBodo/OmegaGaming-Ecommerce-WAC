@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Container, Form} from 'react-bootstrap';
-import {useHistory} from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -11,7 +10,6 @@ const CreateArticle = () => {
     const [feature, setFeature] = useState('');
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
-    const history = useHistory();
 
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -21,18 +19,9 @@ const CreateArticle = () => {
     });
 
     const submit = async () => {
-    // fetch a faire a l'api 
         const file = document.getElementById('myFile').files[0];
         
         let mb64File =  await toBase64(file);
-
-        console.log("ici");
-        console.log(typeof title); 
-        console.log(typeof description)
-        console.log(typeof mb64File);
-        console.log(typeof feature)
-        console.log(typeof parseInt(price))
-        console.log(typeof parseInt(stock))
 
         axios.post('http://localhost:8000/api/createArticle',{
             Title: title,
@@ -44,6 +33,7 @@ const CreateArticle = () => {
         }
         ).then((response) => {
             console.log(response)
+            window.location.reload();
         }).catch((error) => {
             console.log(error)
         })
@@ -61,15 +51,15 @@ const CreateArticle = () => {
                 </div>
                 <div className="form-group">
                     <label>Image</label>
-                    <input type="file" id="myFile" className="form-control"  required/>
+                    <input type="file" id="myFile" className="form-control" required/>
                 </div>
                 <div className="form-group">
                     <label>Description</label>
-                    <input type="textarea" className="form-control" placeholder={description} onChange={ (event)=>{ setDescription(event.target.value)}}/>
+                    <input type="textarea" className="form-control" placeholder={description} onChange={ (event)=>{ setDescription(event.target.value)}} required/>
                 </div>
                 <div className="form-group">
                     <label>Features</label>
-                    <input type="textarea" className="form-control" placeholder={feature} onChange={ (event)=>{ setFeature(event.target.value)}}/>
+                    <input type="textarea" className="form-control" placeholder={feature} onChange={ (event)=>{ setFeature(event.target.value)}} required/>
                 </div>
                 <div className="form-group">
                     <label>Stock</label>

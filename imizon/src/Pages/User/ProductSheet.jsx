@@ -44,7 +44,6 @@ const ProductSheet = (props) => {
 
         getInformations();
     }, [])
-
     if(article !== ''){
         return (
             <Container fluid id="product_sheet">

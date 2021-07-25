@@ -1,9 +1,9 @@
 // Import Libs
 import axios from 'axios';
 import React, { Fragment, useEffect, useState }from 'react'
-import {FiUpload, FiSave, FiXCircle} from 'react-icons/fi';
+import { FiSave, FiXCircle} from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 
 //import style 
@@ -17,6 +17,7 @@ const UpdateArticle = (props) => {
     const [stock, setStock] = useState('');
     const [price, setPrice] = useState('');
     const [id, setId] = useState('');
+    const history = useHistory();
 
 
     useEffect(() => {
@@ -36,11 +37,11 @@ const UpdateArticle = (props) => {
             }).catch((error) => {
                 console.log(error)
             })
-
+            
+            //REQUEST FOR UP VIEW + 1
             axios.get('http://localhost:8000/api/articles/view', {
                 params: {id: id}
             }).then((response) => {
-                console.log(response)
             }).catch((error) => {
                 console.log(error)
             })
@@ -65,6 +66,24 @@ const UpdateArticle = (props) => {
         })
     }
 
+    const deleteArticles = (event) => {
+        event.preventDefault();
+        axios.delete('http://localhost:8000/api/articles/'+id, {
+            data : {id:id}
+        }).then((response) => {
+            history.push("/admin/show_articles");
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    const cancelUpdate = (event) => {
+        event.preventDefault();
+        window.location.reload()
+    }
+
+    // METTRE les images à part en BDD !
+    // CSS du bouton input file
 
     return (
         <Fragment>
@@ -85,7 +104,7 @@ const UpdateArticle = (props) => {
                                 <img src={'image.jpg'} alt={"Image"}></img>
                                 <div className="flex-bottom">
                                     <div className="flex-img-button"> 
-                                        <Link to={"#"} id="upload"> <FiUpload/> Upload Image </Link>
+                                        <input type="file" id="myFile" className="form-control" required/>
                                         <Link to={"#"} id="delete"> <RiDeleteBin5Line/> Delete All </Link>
                                     </div>
                                     <div className="other-img">
@@ -101,9 +120,9 @@ const UpdateArticle = (props) => {
                             <label>Feature : <textarea defaultValue={informations.Feature} placeholder={"Enter Features"} onChange={(event)=>setFeature(event.target.value)}></textarea></label>
                         </div>
                         <div className="btn">
-                            <button onClick={submit} id={"save"}><FiSave /> Update</button>
-                            <button onClick={submit} id={"cancel"}><FiXCircle /> Cancel</button>
-                            <button onClick={submit} id={"remove"}><RiDeleteBin5Line /> Delete</button>
+                            <button onClick={deleteArticles} id={"remove"}><RiDeleteBin5Line />Delete</button>
+                            <button onClick={cancelUpdate} id={"cancel"}><FiXCircle />Cancel update</button>
+                            <button onClick={submit} id={"save"}><FiSave />Update</button>
                         </div>
                           
                     </form>

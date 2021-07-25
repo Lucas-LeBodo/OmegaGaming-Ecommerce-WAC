@@ -1,6 +1,6 @@
 // Import Libs 
 import React, { useState, useEffect, Fragment } from "react";
-import {Container, Pagination} from 'react-bootstrap';
+import {Pagination} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {AiFillDelete, AiFillEdit} from 'react-icons/ai';
@@ -13,15 +13,18 @@ const ShowArticles = () => {
     const [articlesShow, setArticlesShow] = useState('');
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
-
+    let views
     useEffect(() => {
         function getArticles() {
             axios.get('http://localhost:8000/api/articles?page='+page, {
             }).then((response) => {
                 let articles = response.data["hydra:member"];
-                let views = response.data["hydra:view"];
-
-                if(articles !== [] && views !== []) {
+                if(response.data["hydra:view"] !== undefined){
+                    console.log('putain')
+                    views = response.data["hydra:view"];
+                }
+                
+                if(articles !== [] && views !== [] && views !== undefined) {
                     if(views["hydra:last"] !== undefined) {
                         let max = views["hydra:last"].substr(-1);
                         setMaxPage(max)
@@ -30,6 +33,7 @@ const ShowArticles = () => {
 
                 let tabArticles = [];
                 articles.forEach(element => {
+                    
                     tabArticles.push(
                         <div className="article-card" key={element.id + "article_card"}>
                             <div className="article-img" key={element.id + "div_article_img"}>
