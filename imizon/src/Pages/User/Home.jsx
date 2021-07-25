@@ -13,7 +13,7 @@ import "../../Styles/ListingProduct.scss"
 
 const Home = () => {
     const [showArticles, setShowArticles] = useState('');
-    let result,
+    let result;
     useEffect(() => {
         function getMostPopular() {
             axios.get('http://localhost:8000/api/articles/popularity', {
