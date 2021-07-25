@@ -11,6 +11,10 @@ const CreateArticle = () => {
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
 
+    useEffect(() => {
+        const 
+    })
+
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -48,6 +52,12 @@ const CreateArticle = () => {
                 <div className="form-group">
                     <label>Title</label>
                     <input type="text" className="form-control" placeholder={title} onChange={ (event)=>{ setTitle(event.target.value)}} required/>
+                </div>
+                <div className="form-group">
+                    <label>Category</label>
+                    <select name="category" className="form-control">
+                        <option value="">-- Category --</option>
+                    </select>
                 </div>
                 <div className="form-group">
                     <label>Image</label>
