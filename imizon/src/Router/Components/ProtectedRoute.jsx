@@ -36,7 +36,7 @@ export default function Auth(props){
 
     const verifAuth = async () => {
         if(token) {
-            await axios.get('https://localhost:8000/api/me', {
+            await axios.get('http://localhost:8000/api/me', {
                 params: {username: username}
             }).then((response) => {
                 console.log(response.data.roles)
@@ -44,7 +44,7 @@ export default function Auth(props){
     
                 console.log(rolesToken)
                 console.log(roleRequest)
-                
+                console.log(rolesToken["roles"])
                 if(rolesToken["roles"] === roleRequest && auth === true){
                     console.log("la")
                     console.log(pathName)
