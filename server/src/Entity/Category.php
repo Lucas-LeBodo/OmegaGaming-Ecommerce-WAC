@@ -17,15 +17,15 @@ class Category
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
-     * @Groups("category:read")
+     * @Groups({"category:read", "article:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"category:read", "category:write"})
+     * @Groups({"category:read", "category:write", "article:read"})
      */
     private $category_name;
 

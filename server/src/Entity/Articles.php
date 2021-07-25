@@ -4,18 +4,21 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Controller\ViewController;
+use App\Controller\ArticlesByCategory;
 use App\Controller\ArticlesController;
 use App\Controller\MostPopularArticle;
 use App\Repository\ArticlesRepository;
 use App\Controller\ArticlesOrderByName;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use App\Controller\ArticlesOrderByNameASC;
 use App\Controller\ArticlesOrderByNameDESC;
 use App\Controller\CreateArticleController;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
@@ -50,13 +53,20 @@ use Symfony\Component\Serializer\Annotation\Groups;
             'path' => '/articles/OrderByNameDESC',
             'method' => 'get',
             'controller' => ArticlesOrderByNameDESC::class,
-            ],
+        ],
+        'articleByCategory' => [
+            'method' => 'get',
+            'pagination_enabled' => false,
+            'path' => '/articles/ArticleByCategory/',
+            'controller' => ArticlesByCategory::class,
+        ],
         'get',
         'post'
     ],
     normalizationContext: ['groups' => ["article:read"]],
     denormalizationContext: ["groups" => ["article:write"]]
- )]
+),
+ApiFilter(SearchFilter::class, properties: ['id' => 'exact'])]
 
 class Articles
 {
