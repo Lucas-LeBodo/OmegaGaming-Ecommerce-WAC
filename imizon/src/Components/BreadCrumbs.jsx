@@ -25,20 +25,26 @@ const BreadCrumbs = (props) =>  {
 
     const [article, setArticle] = useState('') 
 
+    //REVOIR 2 à 3 trucs
+
     id = pathname.lastIndexOf("/");
     id = pathname.substr(id + 1);
 
-    function getName() {
-        
-        axios.get("http://localhost:8000/api/articles/"+id,{
-        }).then((response) => { 
-            let information = response.data;
-            setArticle(information)
-        }).catch((error) => {
-            //console.log(error)
-        })
-    }
-    getName();
+    useEffect(() => {
+        function getName() {
+            
+            axios.get("https://localhost:8000/api/articles/"+id,{
+            }).then((response) => { 
+                let information = response.data;
+                setArticle(information)
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+        getName();
+
+    }, [window.location.pathname])
+
         
     if(pathname === "/"){
         homePath = <Link  to={"/"}> <RiHome2Line/> </Link>;

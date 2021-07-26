@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter, Route, Switch,} from "react-router-dom";
 
 // import Components
@@ -20,10 +20,39 @@ import ShowArticles from '../Pages/Admin/ShowArticles';
 import UpdateArticle from '../Pages/Admin/UpdateArticle';
 
 import ProtectedRoute from './Components/ProtectedRoute'
+import axios from 'axios';
 
 // Router
 
 const AppRouter = (props) => {
+
+    useEffect(() => {
+        let count_articles = '';
+
+        if(localStorage.jwt) {
+                const base64Url = localStorage.jwt.split('.')[1];
+                const base64 = base64Url.replace('-', '+').replace('_', '/');
+                let username = JSON.parse(window.atob(base64)).username;
+
+            axios.get('https://localhost:8000/api/baskets/countArticles', {
+                params: {email: username}
+            }).then((response) => {
+                count_articles = response.data["hydra:member"].length
+            }).catch((error) => {
+                console.log(error);
+            })
+
+        } else {
+            if(localStorage.shoppingUserNoLog) {
+                let list_id = localStorage.shoppingUserNoLog;
+                list_id = list_id.split(" ");
+                count_articles = list_id.length;
+            }
+        }
+
+    }, [window.location.pathname])
+
+
     return (
         <BrowserRouter>
             <Fragment>

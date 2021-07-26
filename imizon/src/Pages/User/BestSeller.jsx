@@ -13,7 +13,7 @@ const BestSeller = () => {
     let result;
     useEffect(() => {
         function getMostPopular() {
-            axios.get('http://localhost:8000/api/articles/popularity', {
+            axios.get('https://localhost:8000/api/articles/popularity', {
             }).then((response) => {
                 let articles = response.data["hydra:member"];
                 let showArticles = [];

@@ -24,7 +24,7 @@ const CreateArticle = () => {
         
         let mb64File =  await toBase64(file);
 
-        axios.post('http://localhost:8000/api/articles',{
+        axios.post('https://localhost:8000/api/articles',{
             Title: title,
             Description: description,
             Image: mb64File,

@@ -4,8 +4,56 @@ import { Row, Col, Button } from "react-bootstrap";
 import { BiEuro } from 'react-icons/bi';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { FcOk } from 'react-icons/fc';
+import axios from "axios";
 
 export default function informationProduct(props){
+
+    let username = '';
+    let token = localStorage.jwt;
+
+    if(token){
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace('-', '+').replace('_', '/');
+        username = JSON.parse(window.atob(base64)).username;
+    }
+    
+    const addToBasket = () => {
+        if(token){
+            let id_user = "";
+
+            axios.get('https://localhost:8000/api/me', {
+                params: {username: username}
+            }).then((response) => {
+                id_user = response.data.id
+                addToBasketBDD(id_user);
+            }).catch((error) => {
+                console.log(error)
+            })
+        } else {
+            if(localStorage.shoppingUserNoLog) {
+                let list_id = localStorage.shoppingUserNoLog;
+                list_id = list_id + " " + props.id
+                localStorage.setItem("shoppingUserNoLog", list_id)
+            } else {
+                localStorage.setItem("shoppingUserNoLog", props.id)
+            }
+        }
+    }
+
+    function addToBasketBDD(id_user) {
+        let id_art = props.id;
+
+        axios.post('https://localhost:8000/api/baskets', {
+                price: parseInt(props.price),
+                idUser: parseInt(id_user),
+                idArticles: parseInt(id_art),
+            }).then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error)
+            })
+    }
+
     return(
         <Col>
             <Row> 
@@ -28,7 +76,7 @@ export default function informationProduct(props){
             <Row> 
                 <Col>
                     <div id="buy" className="margin" > 
-                        <Button id="btn_panier"> <MdAddShoppingCart/> Ajouter au panier </Button>
+                        <Button id="btn_panier" onClick={addToBasket}> <MdAddShoppingCart/> Ajouter au panier </Button>
                     </div> 
                 </Col>
                 <Col>
