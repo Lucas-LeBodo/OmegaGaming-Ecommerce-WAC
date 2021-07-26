@@ -17,7 +17,7 @@ class Category
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"category:read", "article:read"})
      */

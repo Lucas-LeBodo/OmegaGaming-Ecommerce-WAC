@@ -20,7 +20,6 @@ const ShowArticles = () => {
             }).then((response) => {
                 let articles = response.data["hydra:member"];
                 if(response.data["hydra:view"] !== undefined){
-                    console.log('putain')
                     views = response.data["hydra:view"];
                 }
                 
