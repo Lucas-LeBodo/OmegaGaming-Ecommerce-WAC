@@ -20,6 +20,8 @@ const CreateArticle = () => {
     let views;
 
    useEffect(() => {
+
+        // recup categories
         const recupCategory = () => {
             axios.get('http://localhost:8000/api/categories?page='+ pages ,{
                 
@@ -40,6 +42,8 @@ const CreateArticle = () => {
         recupCategory();
     }, [])
 
+
+    // creation des options pour le select category
     let result;
     if(categories != ''){
         result = categories.map((category) => {
@@ -56,6 +60,8 @@ const CreateArticle = () => {
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
     });
+
+
 
     const submit = async () => {
         const file = document.getElementById('myFile').files[0];

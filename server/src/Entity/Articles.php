@@ -133,7 +133,7 @@ class Articles
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
      * 
-     * @Groups("article:write")
+     * @Groups({"article:write", "article:read"})
      */
     private $category;
 
