@@ -45,7 +45,7 @@ const CreateArticle = () => {
         result = categories.map((category) => {
             console.log(category.categoryName)
             return(
-                <option value={category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
+                <option value={'\/api\/categories\/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
             )
         })
     }
@@ -69,7 +69,7 @@ const CreateArticle = () => {
             Feature: feature,
             Price: parseInt(price),
             Stock: parseInt(stock),
-            categories: "\/api\/categories\/" + parseInt(selectCategory)
+            category: selectCategory
         }
         ).then((response) => {
             console.log(response)
