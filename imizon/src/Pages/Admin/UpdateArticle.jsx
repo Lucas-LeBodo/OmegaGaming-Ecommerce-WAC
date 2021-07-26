@@ -101,7 +101,8 @@ const UpdateArticle = (props) => {
             Description: description,
             Feature: feature,
             Price: parseInt(price),
-            Stock: parseInt(stock)
+            Stock: parseInt(stock),
+            category: selectCategory
         }).then((response) => {
             console.log(response);
             window.location.reload()
