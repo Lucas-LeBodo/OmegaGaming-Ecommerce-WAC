@@ -4,9 +4,6 @@ import { Container, Row, Col } from "react-bootstrap";
 import axios from 'axios';
 
 //image slider 
-import Image1 from '../../Assets/testpc.jpeg';
-import Image2 from '../../Assets/testpc2.jpeg';
-import ImageDesc from '../../Assets/descLong.jpeg'
 
 // css
 import '../../Styles/ProductSheet.scss';
@@ -48,7 +45,7 @@ const ProductSheet = (props) => {
         return (
             <Container fluid id="product_sheet">
                 <Row className="style_card">
-                    <CarouselProduct img1={Image1} img2={Image2}/>
+                    <CarouselProduct img1={article.Image} img2={article.Image}/>
                     <InformationsProduct 
                         title={article.Title} 
                         description={article.Description}
@@ -81,7 +78,7 @@ const ProductSheet = (props) => {
     return(
         <Container fluid id="product_sheet">
             <Row className="style_card">
-                <CarouselProduct img1={Image1} img2={Image2}/>
+                <CarouselProduct />
                 <InformationsProduct 
                     title="PC Gamer - MSI MAG Infinite 10SA-1208FR 
                             - Core i5-10400F - RAM 8Go - Stockage 1To HDD " 
@@ -108,7 +105,7 @@ const ProductSheet = (props) => {
                         <DescriptionLongProduct/>
                         <ImgDescriptionLongProduct
                             id="img"
-                            img={ImageDesc}
+                            
                         />
                     </Row>
                 </Col>

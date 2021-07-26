@@ -10,6 +10,7 @@ const CreateArticle = () => {
     const [feature, setFeature] = useState('');
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
+    const [category, setCategory] = useState('\/api\/categories\/1');
 
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -23,13 +24,14 @@ const CreateArticle = () => {
         
         let mb64File =  await toBase64(file);
 
-        axios.post('http://localhost:8000/api/createArticle',{
+        axios.post('http://localhost:8000/api/articles',{
             Title: title,
             Description: description,
             Image: mb64File,
             Feature: feature,
             Price: parseInt(price),
-            Stock: parseInt(stock)
+            Stock: parseInt(stock),
+            category: category
         }
         ).then((response) => {
             console.log(response)

@@ -13,7 +13,6 @@ import '../Styles/BreadCrumbs.scss';
 
 
 const BreadCrumbs = (props) =>  {
-    console.log(props)
 
     let pathname = useLocation().pathname;
     let homePath = ' ';
@@ -36,7 +35,7 @@ const BreadCrumbs = (props) =>  {
             let information = response.data;
             setArticle(information)
         }).catch((error) => {
-            console.log(error)
+            //console.log(error)
         })
     }
     getName();
