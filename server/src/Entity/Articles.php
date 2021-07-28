@@ -60,13 +60,18 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'path' => '/articles/ArticleByCategory/',
             'controller' => ArticlesByCategory::class,
         ],
+        'searchArticleByName' => [
+            'method' => 'get',
+            'pagination_enabled' => false,
+            'path' => '/articles/searchArticle/', // cote front la requete api/articles/searchArticle/?Title= 
+        ],
         'get',
         'post'
     ],
     normalizationContext: ['groups' => ["article:read"]],
     denormalizationContext: ["groups" => ["article:write"]]
 ),
-ApiFilter(SearchFilter::class, properties: ['id' => 'exact'])]
+ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'Title' => 'partial'])]
 
 class Articles
 {
