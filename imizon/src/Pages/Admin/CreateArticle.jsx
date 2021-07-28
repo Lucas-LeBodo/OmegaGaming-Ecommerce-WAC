@@ -1,23 +1,68 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Container, Form} from 'react-bootstrap';
 
 import axios from 'axios';
 
 const CreateArticle = () => {
 
+    // remplir le formulaire
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [feature, setFeature] = useState('');
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
-    const [category, setCategory] = useState('\/api\/categories\/1');
+    const [selectCategory, setSelectCategory] = useState('');
 
+
+    //affichage des categories
+    const [pages, setPages] = useState(1);
+    const [maxPage, setMaxPage] = useState(1);
+    const [categories, setCategories] = useState('');
+    let views;
+
+   useEffect(() => {
+
+        // recup categories
+        const recupCategory = () => {
+            axios.get('http://localhost:8000/api/categories?page='+ pages ,{
+                
+            }).then((response) => {
+                setCategories(response.data["hydra:member"]);
+                if(response.data["hydra:view"] !== undefined){
+                    views = response.data["hydra:view"];
+                }
+                
+                if(categories !== [] && views !== [] && views !== undefined) {
+                    if(views["hydra:last"] !== undefined) {
+                        let max = views["hydra:last"].substr(-1);
+                        setMaxPage(max)
+                    }
+                }
+            })
+        }
+        recupCategory();
+    }, [])
+
+
+    // creation des options pour le select category
+    let result;
+    if(categories != ''){
+        result = categories.map((category) => {
+            console.log(category.categoryName)
+            return(
+                <option value={'\/api\/categories\/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
+            )
+        })
+    }
+    console.log(result)
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
     });
+
+
 
     const submit = async () => {
         const file = document.getElementById('myFile').files[0];
@@ -31,7 +76,8 @@ const CreateArticle = () => {
             Feature: feature,
             Price: parseInt(price),
             Stock: parseInt(stock),
-            category: category
+            category: selectCategory
+
         }
         ).then((response) => {
             console.log(response)
@@ -50,6 +96,13 @@ const CreateArticle = () => {
                 <div className="form-group">
                     <label>Title</label>
                     <input type="text" className="form-control" placeholder={title} onChange={ (event)=>{ setTitle(event.target.value)}} required/>
+                </div>
+                <div className="form-group">
+                    <label>Category</label>
+                    <select name="category" className="form-control" onChange={ (event)=>{ setSelectCategory(event.target.value)}}>
+                        <option value="">-- Category --</option>
+                        {result}
+                    </select>
                 </div>
                 <div className="form-group">
                     <label>Image</label>

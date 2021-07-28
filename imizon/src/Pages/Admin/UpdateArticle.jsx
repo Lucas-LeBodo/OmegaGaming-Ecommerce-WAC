@@ -17,6 +17,15 @@ const UpdateArticle = (props) => {
     const [stock, setStock] = useState('');
     const [price, setPrice] = useState('');
     const [id, setId] = useState('');
+    const [image, setImage] = useState('')
+    const [category, setCategory] = useState('')
+
+    //affichage des categories
+    const [pages, setPages] = useState(1);
+    const [maxPage, setMaxPage] = useState(1);
+    const [selectCategory, setSelectCategory] = useState('');
+    const [categories, setCategories] = useState('');
+    let views;
     const history = useHistory();
 
 
@@ -34,6 +43,8 @@ const UpdateArticle = (props) => {
                 setFeature(information.Feature)
                 setPrice(information.Price)
                 setStock(information.Stock)
+                setImage(information.Image)
+                setCategory(information.category.category_name)
             }).catch((error) => {
                 console.log(error)
             })
@@ -47,8 +58,41 @@ const UpdateArticle = (props) => {
             })
         }
 
+        const recupCategory = () => {
+            axios.get('http://localhost:8000/api/categories?page='+ pages ,{
+                
+            }).then((response) => {
+                setCategories(response.data["hydra:member"]);
+                if(response.data["hydra:view"] !== undefined){
+                    views = response.data["hydra:view"];
+                }
+                
+                if(categories !== [] && views !== [] && views !== undefined) {
+                    if(views["hydra:last"] !== undefined) {
+                        let max = views["hydra:last"].substr(-1);
+                        setMaxPage(max)
+                    }
+                }
+            })
+        }
+        recupCategory();
+
         getInformations();
     }, [])
+
+
+    // creation des options pour le select category
+    let result;
+    if(categories != ''){
+        result = categories.map((category) => {
+            console.log(category.categoryName)
+            return(
+                <option value={'\/api\/categories\/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
+            )
+        })
+    }
+    
+
 
     const submit = (event) => {
         event.preventDefault();
@@ -57,7 +101,8 @@ const UpdateArticle = (props) => {
             Description: description,
             Feature: feature,
             Price: parseInt(price),
-            Stock: parseInt(stock)
+            Stock: parseInt(stock),
+            category: selectCategory
         }).then((response) => {
             console.log(response);
             window.location.reload()
@@ -101,7 +146,7 @@ const UpdateArticle = (props) => {
                         </div>
                         <div className="flex-body">
                             <div className="flex-img">
-                                <img src={'image.jpg'} alt={"Image"}></img>
+                                <img src={image} alt={"Image"}></img>
                                 <div className="flex-bottom">
                                     <div className="flex-img-button"> 
                                         <input type="file" id="myFile" className="form-control" required/>
@@ -116,6 +161,13 @@ const UpdateArticle = (props) => {
                             </div>
                         </div>
                         <div className="flex-bottom-area">
+                            <label>
+                                Category : 
+                                <select onChange={ (event)=>{ setSelectCategory(event.target.value)}} >
+                                    <option> {category} </option>
+                                    {result}
+                                </select> 
+                            </label>
                             <label>Description : <textarea defaultValue={informations.Description} placeholder={"Enter Description"}  onChange={(event)=>setDescription(event.target.value)}></textarea></label>
                             <label>Feature : <textarea defaultValue={informations.Feature} placeholder={"Enter Features"} onChange={(event)=>setFeature(event.target.value)}></textarea></label>
                         </div>
