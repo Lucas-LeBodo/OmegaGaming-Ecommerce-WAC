@@ -13,6 +13,7 @@ const CreateArticle = () => {
     const [stock, setStock] = useState('');
     const [selectCategory, setSelectCategory] = useState('');
 
+
     //affichage des categories
     const [pages, setPages] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
@@ -76,6 +77,7 @@ const CreateArticle = () => {
             Price: parseInt(price),
             Stock: parseInt(stock),
             category: selectCategory
+
         }
         ).then((response) => {
             console.log(response)
