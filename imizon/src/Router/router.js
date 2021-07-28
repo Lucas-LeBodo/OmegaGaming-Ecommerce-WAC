@@ -12,6 +12,7 @@ import Register from '../Pages/User/Register';
 import Login from '../Pages/User/Login';
 import Product from '../Pages/User/ProductSheet'
 import BestSeller from '../Pages/User/BestSeller';
+import Basket from '../Pages/User/Basket';
 
 
 import HomeAdmin from '../Pages/Admin/Home';
@@ -25,7 +26,6 @@ import axios from 'axios';
 // Router
 
 const AppRouter = (props) => {
-
     useEffect(() => {
         let count_articles = '';
 
@@ -67,6 +67,7 @@ const AppRouter = (props) => {
                     <Route path='/login' component={Login} exact={true} /> 
                     <Route path='/product/:id' component={Product} />
                     <Route path='/best-seller'  component={BestSeller}  exact={true}/>
+                    <Route path='/basket'  component={Basket}  exact={true} />
 
                     {/* Admin Router */}
                     <ProtectedRoute/>

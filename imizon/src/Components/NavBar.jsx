@@ -51,7 +51,7 @@ function NavBar(props) {
     // User connecté
     if(jwt){
         navbox = <Navbox />
-        panier = <Link to={'#'} ><MdShoppingCart/> Panier</Link>
+        panier = <Link to={'/basket'} ><MdShoppingCart/> Panier</Link>
         logout = <Link to={'/'}  onClick={() => {localStorage.clear();}}><FiLogOut/> Logout</Link>
          user = nameUser.split(' ')
          user = <Link to={'#'} ><FiUser /> {user[0]}</Link>

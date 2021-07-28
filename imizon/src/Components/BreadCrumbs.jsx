@@ -25,7 +25,7 @@ const BreadCrumbs = (props) =>  {
 
     const [article, setArticle] = useState('') 
 
-    //REVOIR 2 à 3 trucs
+    //REVOIR 2 à 3 trucs genre l'id si pas sur la page article !
 
     id = pathname.lastIndexOf("/");
     id = pathname.substr(id + 1);
