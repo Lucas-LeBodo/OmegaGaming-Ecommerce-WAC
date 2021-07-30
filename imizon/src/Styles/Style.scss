@@ -171,21 +171,53 @@ $white: #f6f6f6ff;
         background-color: $darkgrey;
         align-items: center;
         z-index: 20;
+        
+        .searchBox {
+            display: flex;
+            width: 35vw;
+            background: $white;
+            border-radius: 40px;
+            height: 75%;
+          
+            
+            .searchButton {
+                width: 4em;
+                border: none;
+                background: none;
+                border-radius: 40px;
+                padding-bottom: 5px;
+                font-weight: bold;
+
+                &:hover{
+                    background-color: rgb(235, 232, 232);
+                }
+            }
+            
+            .searchInput {
+                width: 100%;
+                border:none;
+                background: none;
+                outline:none;
+                padding: 7px;
+                font-weight: 600;
+                color: $darkgrey;
+                font-size: 16px;
+            
+            }
+        }
+        }
 
         .loglist  {
             
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: flex-end;
-            padding-right: 3vw;
-            width: 29%;
+            justify-content: space-evenly;
+            width: 25vw;
            
             .dropdown {
                 display: flex;
                 flex-direction: row;
-                align-items: center;
-                justify-content: center;
                 top: 0;
                 position: relative;
                 z-index: 3;
@@ -208,12 +240,12 @@ $white: #f6f6f6ff;
                 .dropdown-child {
                     display: none;
                     top: 45px;
+                    left: -200%;
                     z-index: 3;
                     text-align: center;
                     min-width: 150px;
                     border: black 0.3px solid;
                     border-radius: 2px;
-                    width: auto;
 
                     a {
                         background-color: $white;
@@ -221,6 +253,7 @@ $white: #f6f6f6ff;
                         color: $darkgrey;
                         text-decoration: none;
                         display: block;
+                        
                        
                     }
                 }
@@ -242,15 +275,15 @@ $white: #f6f6f6ff;
 
             h2 {
                 color: $white;
-                text-decoration: bold;
-                padding-left: 1em;
+                font-weight: bold;
+                width: 25vw;
             }
 
             &:hover {
                 text-decoration: none;
             }
         }
-    }
+    
 
     .navbox {
         display: flex;
@@ -272,7 +305,7 @@ $white: #f6f6f6ff;
 
         a {
             color: white;
-            margin-left: 2em;
+            padding: 0.5em;
         }
     }
 }
