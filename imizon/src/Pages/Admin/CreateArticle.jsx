@@ -79,7 +79,6 @@ const CreateArticle = () => {
     let resultRef;
     if(allRef != ''){
         resultRef = allRef.map((refs) => {
-            
             return(
                 <option value={refs.sameArticles} key={Math.random().toString(36).substring(7)}>{refs.sameArticles}</option>
             )
@@ -95,9 +94,10 @@ const CreateArticle = () => {
         }
     }
 
-    const desactivateCheckbox = () => {
-        console.log(reference)
-        if(reference != 'default'){
+    
+    const desactivateCheckbox = (event) => {
+        let test = event.target.value
+        if(test !== ''){
             document.getElementById('ref_checke').disabled = true;
         }else{
             document.getElementById('ref_checke').disabled = false;
@@ -111,7 +111,6 @@ const CreateArticle = () => {
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
     });
-
 
 
     const submit = async () => {
@@ -205,8 +204,8 @@ const CreateArticle = () => {
                 <div className="form-group">
                     <label>
                         Add to a reference :
-                        <select name="reference" id="selectRef" className="form-control" onChange={ (event)=>{ setReference(event.target.value)}} onClick={() => {{desactivateCheckbox()}}}>
-                            <option value="default">-- Chose reference --</option>
+                        <select name="reference" id="selectRef" className="form-control" onChange={ (event)=>{ desactivateCheckbox(event)}} >
+                            <option value="">-- Chose reference --</option>
                             {resultRef}
                         </select>
                     </label>
