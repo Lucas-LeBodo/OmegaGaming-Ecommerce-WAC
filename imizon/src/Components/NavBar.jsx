@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {decode as base64_decode} from 'base-64';
-import {FiLogIn, FiUserPlus, FiUser, FiLogOut} from "react-icons/fi"
+import {FiLogIn, FiUserPlus, FiUser, FiLogOut, FiSearch} from "react-icons/fi"
 import { MdShoppingCart } from "react-icons/md"
 
 // Import Components
@@ -60,6 +60,10 @@ function NavBar(props) {
             <div className="navmenu">
                 <div className="logbox">
                     <Link to={'/'} ><h2>Omega Gaming</h2></Link>
+                    <div className="searchBox">
+                        <input type="text" className="searchInput" placeholder="Search"/>
+                        <button className="searchButton"><FiSearch /></button>
+                    </div>
                     <div className={'loglist'}>
                         <div className="dropdown">
                             <div className="boutonmenuprincipal"><FiUser /></div>
@@ -70,10 +74,8 @@ function NavBar(props) {
                                 {logout}
                             </div>
                         </div>
-                        <div className={'loglist'}>
-                            <div className="dropdown">
-                                <div className="boutonmenuprincipal"><Link to={'/basket'} ><MdShoppingCart/></Link></div>
-                            </div>
+                        <div className="dropdown">
+                            <div className="boutonmenuprincipal"><Link to={'/basket'} ><MdShoppingCart/></Link></div>
                         </div>
                     </div>
                 </div>
