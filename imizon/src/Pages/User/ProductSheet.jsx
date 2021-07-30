@@ -16,7 +16,8 @@ import ImgDescriptionLongProduct from '../../Components/ProductSheet/ImageDescLo
 
 
 const ProductSheet = (props) => {
-    const [article, setArticle] = useState('')
+    const [article, setArticle] = useState('');
+    const [sameArticle, setSameArticle] = useState('');
 
     useEffect(() => {
         function getInformations() {
@@ -37,6 +38,15 @@ const ProductSheet = (props) => {
             }).catch((error) => {
                 console.log(error)
             })
+
+            axios.get('http://localhost:8000/api/articles/recupChildRef/?sameArticles=' + , {
+                params: {id: id}
+            }).then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error)
+            })
+
         }
 
         getInformations();
