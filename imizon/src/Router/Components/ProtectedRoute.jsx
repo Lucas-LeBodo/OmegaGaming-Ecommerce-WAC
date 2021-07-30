@@ -6,7 +6,7 @@ import HomeAdmin from '../../Pages/Admin/Home';
 import CreateArticle from '../../Pages/Admin/CreateArticle';
 import ShowArticles from '../../Pages/Admin/ShowArticles';
 import UpdateArticle from '../../Pages/Admin/UpdateArticle';
-
+import CreateCategory from '../../Pages/Admin/CreateCategory';
 
 export default function Auth(props){
     const [ok, setOk] = useState("");
@@ -49,18 +49,19 @@ export default function Auth(props){
                     console.log("la")
                     console.log(pathName)
 
-                    // if(pathName.includes("update") === true) {
-                    //     setOk(<Route path={"/admin/show_article/update/:id"} component={UpdateArticle} />)
-                    // } else {
-                    //     //ici on rajoute les route qui doivent etre pour l'admin
-                    //    let route = 
-                    //    {  
-                    //        "/admin":  <Route exact path="/admin" component={HomeAdmin} />,
-                    //        "/admin/show_articles":  <Route exact path="/admin/show_articles" component={ShowArticles} />,
-                    //        "/admin/create_article":  <Route exact path="/admin/create_article" component={CreateArticle} />,
-                    //    }
-                    //    setOk(route[pathName])       
-                    // }
+                    if(pathName.includes("update") === true) {
+                        setOk(<Route path={"/admin/show_article/update/:id"} component={UpdateArticle} />)
+                    } else {
+                        //ici on rajoute les route qui doivent etre pour l'admin
+                       let route = 
+                       {  
+                           "/admin":  <Route exact path="/admin" component={HomeAdmin} />,
+                           "/admin/show_articles":  <Route exact path="/admin/show_articles" component={ShowArticles} />,
+                           "/admin/create_article":  <Route exact path="/admin/create_article" component={CreateArticle} />,
+                           "/admin/createCategory": <Route path='/admin/createCategory'  component={CreateCategory} exact={true} />,
+                       }
+                       setOk(route[pathName])       
+                    }
                 }
                 else{
                     setOk( <Redirect to={'/'}/> ) 

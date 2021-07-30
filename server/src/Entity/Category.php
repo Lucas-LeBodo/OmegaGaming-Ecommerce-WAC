@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Controller\CreateCategory;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -17,7 +18,7 @@ class Category
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"category:read", "article:read"})
      */
@@ -31,7 +32,7 @@ class Category
 
     /**
      * @ORM\OneToMany(targetEntity=Articles::class, mappedBy="category")
-     * @ORM\JoinColumn(nullable=true)
+     * 
      */
     private $articles;
 
@@ -65,25 +66,25 @@ class Category
         return $this->articles;
     }
 
-    public function addArticle(Articles $article): self
-    {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->setCategory($this);
-        }
+    // public function addArticle(Articles $article): self
+    // {
+    //     if (!$this->articles->contains($article)) {
+    //         $this->articles[] = $article;
+    //         $article->setCategory($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeArticle(Articles $article): self
-    {
-        if ($this->articles->removeElement($article)) {
-            // set the owning side to null (unless already changed)
-            if ($article->getCategory() === $this) {
-                $article->setCategory(null);
-            }
-        }
+    // public function removeArticle(Articles $article): self
+    // {
+    //     if ($this->articles->removeElement($article)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($article->getCategory() === $this) {
+    //             $article->setCategory(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

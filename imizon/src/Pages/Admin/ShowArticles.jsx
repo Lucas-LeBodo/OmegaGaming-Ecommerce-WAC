@@ -14,12 +14,13 @@ const ShowArticles = () => {
     const [maxPage, setMaxPage] = useState(1);
     let views
     useEffect(() => {
+
+        
         function getArticles() {
             axios.get('https://localhost:8000/api/articles?page='+page, {
             }).then((response) => {
                 let articles = response.data["hydra:member"];
                 if(response.data["hydra:view"] !== undefined){
-                    console.log('putain')
                     views = response.data["hydra:view"];
                 }
                 
