@@ -43,7 +43,6 @@ const AppRouter = (props) => {
             }).catch((error) => {
                 console.log(error);
             })
-            console.log(count_articles);
 
         } else {
             if(localStorage.shoppingUserNoLog) {

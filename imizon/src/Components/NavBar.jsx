@@ -47,8 +47,8 @@ function NavBar(props) {
     if(jwt){
         navbox = <Navbox />
         logout = <Link to={'/'}  onClick={() => {localStorage.clear();}}><FiLogOut/> Logout</Link>
-         user = nameUser.split(' ')
-         user = <Link to={'#'} ><FiUser /> {user[0]}</Link>
+        user = nameUser.split(' ')
+        user = <Link to={'#'} ><FiUser /> {user[0]}</Link>
         infoUser(jwt)
     }
          
