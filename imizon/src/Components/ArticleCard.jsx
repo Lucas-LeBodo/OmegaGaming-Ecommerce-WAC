@@ -3,8 +3,6 @@ import React, { Fragment } from "react";
 import { IoEye } from "react-icons/io5";
 import {Link} from 'react-router-dom';
 
-// Import Styles 
-import '../Styles/Card.scss';
 
 function Card(props) {
 return (

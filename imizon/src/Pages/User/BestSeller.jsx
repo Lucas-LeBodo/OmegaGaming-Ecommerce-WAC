@@ -3,9 +3,6 @@ import axios from 'axios';
 import React, { Fragment, useEffect, useState }from 'react'
 import {Container} from 'react-bootstrap';
 
-//import style 
-import "../../Styles/ListingProduct.scss"
-
 import Card from '../../Components/ArticleCard';
 
 const BestSeller = () => {

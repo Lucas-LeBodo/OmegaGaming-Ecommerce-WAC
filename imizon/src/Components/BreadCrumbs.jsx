@@ -5,13 +5,6 @@ import { Link, useLocation } from "react-router-dom";
 import {RiVipCrownLine, RiHome2Line } from "react-icons/ri"
 import axios from 'axios';
 
-
-
-
-// Import Styles 
-import '../Styles/BreadCrumbs.scss';
-
-
 const BreadCrumbs = (props) =>  {
 
     let pathname = useLocation().pathname;
