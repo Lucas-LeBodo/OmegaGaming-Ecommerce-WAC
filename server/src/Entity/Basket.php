@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\CountArticleController;
+use App\Controller\ShippyController;
 use App\Repository\BasketRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,6 +18,11 @@ use Doctrine\ORM\Mapping as ORM;
             'path' => '/baskets/countArticles',
             'method' => 'get',
             'controller' => CountArticleController::class,
+        ],
+        'shippy' => [
+            'path' => '/shippy',
+            'method' => 'get',
+            'controller' => ShippyController::class,
         ],
         'get',
         'post',
