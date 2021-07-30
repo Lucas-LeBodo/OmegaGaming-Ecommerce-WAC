@@ -38,7 +38,7 @@ const BreadCrumbs = (props) =>  {
             //console.log(error)
         })
     }
-    getName();
+    //getName();
         
     if(pathname === "/"){
         homePath = <Link  to={"/"}> <RiHome2Line/> </Link>;

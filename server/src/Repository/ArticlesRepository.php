@@ -72,6 +72,18 @@ class ArticlesRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function getReference()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a.sameArticles')
+            ->where('a.sameArticles IS NOT NULL')
+            ->andwhere('a.sameArticles != :val' )
+            ->setParameter('val', "")
+            ->distinct()
+            ->getQuery()
+            ->getResult() ;
+    }
     /*
     public function findOneBySomeField($value): ?Articles
     {

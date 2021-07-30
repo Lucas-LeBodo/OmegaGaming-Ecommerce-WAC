@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Controller\ViewController;
+use App\Controller\ArticleReference;
 use App\Controller\ArticlesByCategory;
 use App\Controller\ArticlesController;
 use App\Controller\MostPopularArticle;
@@ -37,13 +38,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'method' => 'get',
             'controller' => MostPopularArticle::class,
         ],
-        'createArticle' => [
-            'pagination_enabled' => false,
-            'path' => '/createArticle',
-            'method' => 'post',
-            'controller' => CreateArticleController::class,
-            'read' => false,
-       ],
        'orderByNameASC' => [
         'path' => '/articles/OrderByNameASC',
         'method' => 'get',
@@ -64,6 +58,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'method' => 'get',
             'pagination_enabled' => false,
             'path' => '/articles/searchArticle/', // cote front la requete api/articles/searchArticle/?Title= 
+        ],
+        'recupReference' => [
+            'method' => 'get',
+            'pagination_enabled' => false,
+            'path' => '/articles/recupReferences/',
+            'controller' => ArticleReference::class,
         ],
         'get',
         'post'
@@ -141,6 +141,18 @@ class Articles
      * @Groups({"article:write", "article:read"})
      */
     private $category;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"article:write", "article:read"})
+     */
+    private $sameArticles;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"article:write", "article:read"})
+     */
+    private $featureDiff;
 
 
     public function __construct()
@@ -244,6 +256,30 @@ class Articles
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getSameArticles(): ?string
+    {
+        return $this->sameArticles;
+    }
+
+    public function setSameArticles(?string $sameArticles): self
+    {
+        $this->sameArticles = $sameArticles;
+
+        return $this;
+    }
+
+    public function getFeatureDiff(): ?string
+    {
+        return $this->featureDiff;
+    }
+
+    public function setFeatureDiff(?string $featureDiff): self
+    {
+        $this->featureDiff = $featureDiff;
 
         return $this;
     }

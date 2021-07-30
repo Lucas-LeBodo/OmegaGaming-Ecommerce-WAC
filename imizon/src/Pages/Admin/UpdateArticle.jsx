@@ -95,6 +95,7 @@ const UpdateArticle = (props) => {
 
 
     const submit = (event) => {
+        
         event.preventDefault();
         axios.put('http://localhost:8000/api/articles/'+id,{
             Title: title,
@@ -104,7 +105,6 @@ const UpdateArticle = (props) => {
             Stock: parseInt(stock),
             category: selectCategory
         }).then((response) => {
-            console.log(response);
             window.location.reload()
         }).catch((error) => {
             console.log(error);

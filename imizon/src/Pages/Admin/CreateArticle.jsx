@@ -20,12 +20,16 @@ const CreateArticle = () => {
     const [categories, setCategories] = useState('');
     let views;
 
+    // ajout de references
+    const [reference, setReference] = useState('')
+    const [pageRef, setPageRef] = useState(1)
+    const [allRef, setAllRef] = useState('')
+
    useEffect(() => {
 
         // recup categories
         const recupCategory = () => {
-            axios.get('http://localhost:8000/api/categories?page='+ pages ,{
-                
+            axios.get('http://localhost:8000/api/categories?page='+ pages ,{    
             }).then((response) => {
                 setCategories(response.data["hydra:member"]);
                 if(response.data["hydra:view"] !== undefined){
@@ -40,21 +44,67 @@ const CreateArticle = () => {
                 }
             })
         }
+
+        const recupReferences = () => {
+            axios.get('http://localhost:8000/api/articles/recupReferences?page='+ pages ,{    
+            }).then((response) => {
+                setAllRef(response.data["hydra:member"]);
+                if(response.data["hydra:view"] !== undefined){
+                    views = response.data["hydra:view"];
+                }
+                
+                if(categories !== [] && views !== [] && views !== undefined) {
+                    if(views["hydra:last"] !== undefined) {
+                        let max = views["hydra:last"].substr(-1);
+                        setMaxPage(max)
+                    }
+                }
+            })
+        }
+        recupReferences();
         recupCategory();
     }, [])
-
 
     // creation des options pour le select category
     let result;
     if(categories != ''){
         result = categories.map((category) => {
-            console.log(category.categoryName)
             return(
                 <option value={'\/api\/categories\/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
             )
         })
     }
-    console.log(result)
+
+    // creation des options pour le select references
+    let resultRef;
+    if(allRef != ''){
+        resultRef = allRef.map((refs) => {
+            
+            return(
+                <option value={refs.sameArticles} key={Math.random().toString(36).substring(7)}>{refs.sameArticles}</option>
+            )
+        })
+    }
+
+    const cocher = () => {
+        let disabled = document.getElementById('selectRef').disabled;
+        if(disabled){
+            document.getElementById('selectRef').disabled = false;
+        }else{
+            document.getElementById('selectRef').disabled = true;
+        }
+    }
+
+    const desactivateCheckbox = () => {
+        console.log(reference)
+        if(reference != 'default'){
+            document.getElementById('ref_checke').disabled = true;
+        }else{
+            document.getElementById('ref_checke').disabled = false;
+        }
+    }
+    
+    
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -68,23 +118,45 @@ const CreateArticle = () => {
         const file = document.getElementById('myFile').files[0];
         
         let mb64File =  await toBase64(file);
+        let checked = document.getElementById("ref_checke").checked;
+       
+        if(checked){
+            setReference(title);
+            axios.post('http://localhost:8000/api/articles',{
+                Title: title,
+                Description: description,
+                Image: mb64File,
+                Feature: feature,
+                Price: parseInt(price),
+                Stock: parseInt(stock),
+                category: selectCategory,
+                sameArticles: reference
+            }
+            ).then((response) => {
+                console.log(response)
+                //window.location.reload();
+            }).catch((error) => {
+                console.log(error)
+            })
+        }else {
 
-        axios.post('http://localhost:8000/api/articles',{
-            Title: title,
-            Description: description,
-            Image: mb64File,
-            Feature: feature,
-            Price: parseInt(price),
-            Stock: parseInt(stock),
-            category: selectCategory
+            axios.post('http://localhost:8000/api/articles',{
+                Title: title,
+                Description: description,
+                Image: mb64File,
+                Feature: feature,
+                Price: parseInt(price),
+                Stock: parseInt(stock),
+                category: selectCategory
 
+            }
+            ).then((response) => {
+                console.log(response)
+                window.location.reload();
+            }).catch((error) => {
+                console.log(error)
+            })
         }
-        ).then((response) => {
-            console.log(response)
-            window.location.reload();
-        }).catch((error) => {
-            console.log(error)
-        })
        
     }
 
@@ -123,6 +195,21 @@ const CreateArticle = () => {
                 <div className="form-group">
                     <label>Price (€)</label>
                     <input type="number" className="form-control" placeholder={price} onChange={ (event)=>{ setPrice(event.target.value)}} required/>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Create a reference :
+                        <input type="checkbox" id="ref_checke" name="ref" onClick={() => {cocher()}}/> 
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Add to a reference :
+                        <select name="reference" id="selectRef" className="form-control" onChange={ (event)=>{ setReference(event.target.value)}} onClick={() => {{desactivateCheckbox()}}}>
+                            <option value="default">-- Chose reference --</option>
+                            {resultRef}
+                        </select>
+                    </label>
                 </div>
 
                 <div className="btn btn-primary btn-block btn-custom" onClick={ submit } >Create</div>
