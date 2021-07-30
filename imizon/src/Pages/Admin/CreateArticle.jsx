@@ -10,7 +10,7 @@ const CreateArticle = () => {
     const [feature, setFeature] = useState('');
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
-    const [category, setCategory] = useState('\/api\/categories\/1');
+    const [category, setCategory] = useState('/api/categories/1');
 
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();

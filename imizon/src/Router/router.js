@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch,} from "react-router-dom";
 
 // import Components
 import NavBar from '../Components/NavBar';
-import BreadCrumbs from '../Components/BreadCrumbs';
+// import BreadCrumbs from '../Components/BreadCrumbs';
 
 
 // import page
@@ -20,7 +20,7 @@ import CreateArticle from '../Pages/Admin/CreateArticle';
 import ShowArticles from '../Pages/Admin/ShowArticles';
 import UpdateArticle from '../Pages/Admin/UpdateArticle';
 
-import ProtectedRoute from './Components/ProtectedRoute'
+// import ProtectedRoute from './Components/ProtectedRoute';
 import axios from 'axios';
 
 // Router
@@ -41,6 +41,7 @@ const AppRouter = (props) => {
             }).catch((error) => {
                 console.log(error);
             })
+            console.log(count_articles);
 
         } else {
             if(localStorage.shoppingUserNoLog) {
@@ -49,7 +50,6 @@ const AppRouter = (props) => {
                 count_articles = list_id.length;
             }
         }
-
     }, [window.location.pathname])
 
 
@@ -57,7 +57,7 @@ const AppRouter = (props) => {
         <BrowserRouter>
             <Fragment>
                 <NavBar />
-                <BreadCrumbs />
+                {/* <BreadCrumbs /> */}
 
                 <Switch>
 
@@ -70,7 +70,7 @@ const AppRouter = (props) => {
                     <Route path='/basket'  component={Basket}  exact={true} />
 
                     {/* Admin Router */}
-                    <ProtectedRoute/>
+                    {/* <ProtectedRoute/> */}
                     <Route path='/admin'  component={HomeAdmin} exact={true} />
                     <Route path='/admin/create_article'  component={CreateArticle} exact={true} />
                     <Route path='/admin/show_articles'  component={ShowArticles} exact={true} />

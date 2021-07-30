@@ -6,8 +6,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { Link, useHistory } from 'react-router-dom';
 
 
-//import style 
-import "../../Styles/UpdateArticles.scss";
+
 
 const UpdateArticle = (props) => {
     const [informations, setInformations] = useState('');
@@ -120,9 +119,9 @@ const UpdateArticle = (props) => {
                             <label>Feature : <textarea defaultValue={informations.Feature} placeholder={"Enter Features"} onChange={(event)=>setFeature(event.target.value)}></textarea></label>
                         </div>
                         <div className="btn">
-                            <button onClick={deleteArticles} id={"remove"}><RiDeleteBin5Line />Delete</button>
-                            <button onClick={cancelUpdate} id={"cancel"}><FiXCircle />Cancel update</button>
-                            <button onClick={submit} id={"save"}><FiSave />Update</button>
+                            <button onClick={deleteArticles} id={"remove"}><RiDeleteBin5Line /> Delete</button>
+                            <button onClick={cancelUpdate} id={"cancel"}><FiXCircle /> Cancel update</button>
+                            <button onClick={submit} id={"save"}><FiSave /> Update</button>
                         </div>
                           
                     </form>

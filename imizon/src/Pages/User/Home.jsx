@@ -8,9 +8,6 @@ import {Container} from 'react-bootstrap';
 import Card from '../../Components/ArticleCard';
 
 
-//import style 
-import "../../Styles/ListingProduct.scss"
-
 const Home = () => {
     const [showArticles, setShowArticles] = useState('');
     let result;
