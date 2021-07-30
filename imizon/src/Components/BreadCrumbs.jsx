@@ -5,13 +5,6 @@ import { Link, useLocation } from "react-router-dom";
 import {RiVipCrownLine, RiHome2Line } from "react-icons/ri"
 import axios from 'axios';
 
-
-
-
-// Import Styles 
-import '../Styles/BreadCrumbs.scss';
-
-
 const BreadCrumbs = (props) =>  {
 
     let pathname = useLocation().pathname;
@@ -25,20 +18,26 @@ const BreadCrumbs = (props) =>  {
 
     const [article, setArticle] = useState('') 
 
+    //REVOIR 2 à 3 trucs genre l'id si pas sur la page article !
+
     id = pathname.lastIndexOf("/");
     id = pathname.substr(id + 1);
 
-    function getName() {
-        
-        axios.get("http://localhost:8000/api/articles/"+id,{
-        }).then((response) => { 
-            let information = response.data;
-            setArticle(information)
-        }).catch((error) => {
-            //console.log(error)
-        })
-    }
-    getName();
+    useEffect(() => {
+        function getName() {
+            
+            axios.get("https://localhost:8000/api/articles/"+id,{
+            }).then((response) => { 
+                let information = response.data;
+                setArticle(information)
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+        getName();
+
+    }, [window.location.pathname])
+
         
     if(pathname === "/"){
         homePath = <Link  to={"/"}> <RiHome2Line/> </Link>;

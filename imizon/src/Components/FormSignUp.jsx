@@ -1,7 +1,6 @@
 import React, {useState, Fragment} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link, useHistory} from 'react-router-dom';
-import '../Styles/FormSingUp.scss';
 import axios from 'axios';
 
 export default function FormSignUp () {
@@ -16,7 +15,7 @@ export default function FormSignUp () {
     // fetch a faire a l'api 
     if (password === confPassword) 
         {
-            axios.post('http://localhost:8000/api/users',{
+            axios.post('https://localhost:8000/api/users',{
                 lastName : lastName, 
                 firstName : name,
                 email : email,

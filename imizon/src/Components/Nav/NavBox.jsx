@@ -3,8 +3,7 @@ import React, { Fragment } from "react";
 import {RiVipCrownLine, RiMoneyDollarBoxLine} from "react-icons/ri"
 import {Link} from 'react-router-dom';
 
-// Import Styles
-import '../../Styles/NavBar.scss';
+
 
 function Navbox(props) {
 return (

@@ -5,8 +5,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {AiFillDelete, AiFillEdit} from 'react-icons/ai';
 
-// Import Styles 
-import "../../Styles/ListingAdmin.scss";
+
 
 
 const ShowArticles = () => {
@@ -18,7 +17,7 @@ const ShowArticles = () => {
 
         
         function getArticles() {
-            axios.get('http://localhost:8000/api/articles?page='+page, {
+            axios.get('https://localhost:8000/api/articles?page='+page, {
             }).then((response) => {
                 let articles = response.data["hydra:member"];
                 if(response.data["hydra:view"] !== undefined){
@@ -40,35 +39,35 @@ const ShowArticles = () => {
                             <div className="article-img" key={element.id + "div_article_img"}>
                                 <img src={element.Image} alt={'image'+element.id} key={element.id + "article_img"}></img>
                             </div>
-                                <div className="article-card-content" key={element.id + "article_content_card"}>
-                                    <div className="head-card" key={element.id + "article_head_card"}>
-                                        <div className="article-title" key={element.id + "article_title"}>
-                                            <h3 key={element.id + "article_title_h3"}>{element.Title}</h3>
-                                        </div>
-                                        <div className="article-price" key={element.id + "article_price"}>
-                                            {element.Price} €
-                                        </div>
-                                        <div className="article-stock" key={element.id + "article_stock"}>
-                                        Stock :  {element.Stock}
-                                        </div>
-                                        <div className="article-stock" key={element.View + "article_view"}>
-                                            View : {element.View}
-                                        </div>
-                                        <div className="article-id" key={element.id + "article_id"}>
-                                            ID : {element.id}
-                                        </div>
+                            <div className="article-card-content" key={element.id + "article_content_card"}>
+                                <div className="head-card" key={element.id + "article_head_card"}>
+                                    <div className="article-title" key={element.id + "article_title"}>
+                                        <h3 key={element.id + "article_title_h3"}>{element.Title}</h3>
                                     </div>
-                                    <div className="article-card-footer" key={element.id + "article_card_footer"}>
-                                        <div className="article-desc" key={element.id + "article_desc"}>
-                                            <p key={element.id + "article_desc_p"}>{element.Description}</p>
-                                        </div>
-                                        <div className="article-button" key={element.id + "article_button"}>
-                                            <Link to={'show_article/update/'+element.id} className="nav-link"><AiFillEdit/></Link>
-                                            <Link to={'#'} onClick={() => deleteArticles(element.id)} className="nav-link"><AiFillDelete/></Link>
-                                        </div>
+                                    <div className="article-price" key={element.id + "article_price"}>
+                                        {element.Price} €
+                                    </div>
+                                    <div className="article-stock" key={element.id + "article_stock"}>
+                                        Stock :  {element.Stock}
+                                    </div>
+                                    <div className="article-stock" key={element.View + "article_view"}>
+                                        View : {element.View}
+                                    </div>
+                                    <div className="article-id" key={element.id + "article_id"}>
+                                        ID : {element.id}
+                                    </div>
+                                </div>
+                                <div className="article-card-footer" key={element.id + "article_card_footer"}>
+                                    <div className="article-desc" key={element.id + "article_desc"}>
+                                        <p key={element.id + "article_desc_p"}>{element.Description}</p>
+                                    </div>
+                                    <div className="article-button" key={element.id + "article_button"}>
+                                        <Link to={'show_article/update/'+element.id} className="nav-link"><AiFillEdit/></Link>
+                                        <Link to={'#'} onClick={() => deleteArticles(element.id)} className="nav-link"><AiFillDelete/></Link>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     )
                 });
                 setArticlesShow(tabArticles);

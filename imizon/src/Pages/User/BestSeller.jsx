@@ -3,9 +3,6 @@ import axios from 'axios';
 import React, { Fragment, useEffect, useState }from 'react'
 import {Container} from 'react-bootstrap';
 
-//import style 
-import "../../Styles/ListingProduct.scss"
-
 import Card from '../../Components/ArticleCard';
 
 const BestSeller = () => {
@@ -13,7 +10,7 @@ const BestSeller = () => {
     let result;
     useEffect(() => {
         function getMostPopular() {
-            axios.get('http://localhost:8000/api/articles/popularity', {
+            axios.get('https://localhost:8000/api/articles/popularity', {
             }).then((response) => {
                 let articles = response.data["hydra:member"];
                 let showArticles = [];

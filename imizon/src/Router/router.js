@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter, Route, Switch,} from "react-router-dom";
 
 // import Components
 import NavBar from '../Components/NavBar';
-import BreadCrumbs from '../Components/BreadCrumbs';
+// import BreadCrumbs from '../Components/BreadCrumbs';
 
 
 // import page
@@ -12,6 +12,7 @@ import Register from '../Pages/User/Register';
 import Login from '../Pages/User/Login';
 import Product from '../Pages/User/ProductSheet'
 import BestSeller from '../Pages/User/BestSeller';
+import Basket from '../Pages/User/Basket';
 
 
 import HomeAdmin from '../Pages/Admin/Home';
@@ -21,16 +22,44 @@ import UpdateArticle from '../Pages/Admin/UpdateArticle';
 import CreateCategory from '../Pages/Admin/CreateCategory';
 
 
-import ProtectedRoute from './Components/ProtectedRoute'
+// import ProtectedRoute from './Components/ProtectedRoute';
+import axios from 'axios';
 
 // Router
 
 const AppRouter = (props) => {
+    useEffect(() => {
+        let count_articles = '';
+
+        if(localStorage.jwt) {
+                const base64Url = localStorage.jwt.split('.')[1];
+                const base64 = base64Url.replace('-', '+').replace('_', '/');
+                let username = JSON.parse(window.atob(base64)).username;
+
+            axios.get('https://localhost:8000/api/baskets/countArticles', {
+                params: {email: username}
+            }).then((response) => {
+                count_articles = response.data["hydra:member"].length
+            }).catch((error) => {
+                console.log(error);
+            })
+            console.log(count_articles);
+
+        } else {
+            if(localStorage.shoppingUserNoLog) {
+                let list_id = localStorage.shoppingUserNoLog;
+                list_id = list_id.split(" ");
+                count_articles = list_id.length;
+            }
+        }
+    }, [window.location.pathname])
+
+
     return (
         <BrowserRouter>
             <Fragment>
                 <NavBar />
-                <BreadCrumbs />
+                {/* <BreadCrumbs /> */}
 
                 <Switch>
 
@@ -40,9 +69,10 @@ const AppRouter = (props) => {
                     <Route path='/login' component={Login} exact={true} /> 
                     <Route path='/product/:id' component={Product} />
                     <Route path='/best-seller'  component={BestSeller}  exact={true}/>
+                    <Route path='/basket'  component={Basket}  exact={true} />
 
                     {/* Admin Router */}
-                    <ProtectedRoute/>
+                    {/* <ProtectedRoute/> */}
                     <Route path='/admin'  component={HomeAdmin} exact={true} />
                     <Route path='/admin/create_article'  component={CreateArticle} exact={true} />
                     <Route path='/admin/show_articles'  component={ShowArticles} exact={true} />
