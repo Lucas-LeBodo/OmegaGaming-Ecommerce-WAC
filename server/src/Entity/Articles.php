@@ -10,6 +10,7 @@ use App\Controller\ArticlesController;
 use App\Controller\MostPopularArticle;
 use App\Repository\ArticlesRepository;
 use App\Controller\ArticlesOrderByName;
+use App\Controller\ArticleRecupChildRef;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use App\Controller\ArticlesOrderByNameASC;
 use App\Controller\ArticlesOrderByNameDESC;
@@ -65,13 +66,19 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'path' => '/articles/recupReferences/',
             'controller' => ArticleReference::class,
         ],
+        'recupChildRef' => [
+            'method' => 'get',
+            'pagination_enabled' => false,
+            'path' => '/articles/recupChildRef/',
+            'controller' => ArticleRecupChildRef::class,
+        ],
         'get',
         'post'
     ],
     normalizationContext: ['groups' => ["article:read"]],
     denormalizationContext: ["groups" => ["article:write"]]
 ),
-ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'Title' => 'partial'])]
+ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'Title' => 'partial', 'sameArticles' => 'exact'])]
 
 class Articles
 {

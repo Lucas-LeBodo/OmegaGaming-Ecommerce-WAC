@@ -84,6 +84,16 @@ class ArticlesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult() ;
     }
+
+    public function getChildRef ($parentChild) 
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.sameArticles = :parent')
+            ->andwhere('a.featureDiff IS NOT NULL')
+            ->setParameter('parent', $parentChild)
+            ->getQuery()
+            ->getResult() ;
+    }
     /*
     public function findOneBySomeField($value): ?Articles
     {

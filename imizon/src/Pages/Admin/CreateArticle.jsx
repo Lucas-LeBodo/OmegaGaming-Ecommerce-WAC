@@ -24,6 +24,8 @@ const CreateArticle = () => {
     const [reference, setReference] = useState('')
     const [pageRef, setPageRef] = useState(1)
     const [allRef, setAllRef] = useState('')
+    const [featureSup, setFeatureSup] = useState('')
+    const [titleRef, setTitleRef] = useState('')
 
    useEffect(() => {
 
@@ -89,15 +91,18 @@ const CreateArticle = () => {
         let disabled = document.getElementById('selectRef').disabled;
         if(disabled){
             document.getElementById('selectRef').disabled = false;
+            document.getElementById('featureSup').disabled = false;
         }else{
             document.getElementById('selectRef').disabled = true;
+            document.getElementById('featureSup').disabled = true;
+
         }
     }
 
     
     const desactivateCheckbox = (event) => {
-        let test = event.target.value
-        if(test !== ''){
+        let select = event.target.value
+        if(select !== ''){
             document.getElementById('ref_checke').disabled = true;
         }else{
             document.getElementById('ref_checke').disabled = false;
@@ -138,7 +143,6 @@ const CreateArticle = () => {
                 console.log(error)
             })
         }else {
-
             axios.post('http://localhost:8000/api/articles',{
                 Title: title,
                 Description: description,
@@ -146,8 +150,9 @@ const CreateArticle = () => {
                 Feature: feature,
                 Price: parseInt(price),
                 Stock: parseInt(stock),
-                category: selectCategory
-
+                category: selectCategory,
+                sameArticles: titleRef,
+                featureDiff: featureSup
             }
             ).then((response) => {
                 console.log(response)
@@ -204,10 +209,16 @@ const CreateArticle = () => {
                 <div className="form-group">
                     <label>
                         Add to a reference :
-                        <select name="reference" id="selectRef" className="form-control" onChange={ (event)=>{ desactivateCheckbox(event)}} >
+                        <select name="reference" id="selectRef" className="form-control" onChange={ (event)=>{ desactivateCheckbox(event); setTitleRef(event.target.value)}} >
                             <option value="">-- Chose reference --</option>
                             {resultRef}
                         </select>
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Additional feature  :
+                        <input id="featureSup" type="textarea" className="form-control" placeholder={feature} onChange={ (event)=>{ setFeatureSup(event.target.value)}} required/>
                     </label>
                 </div>
 
