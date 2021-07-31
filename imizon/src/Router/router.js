@@ -13,6 +13,7 @@ import Login from '../Pages/User/Login';
 import Product from '../Pages/User/ProductSheet'
 import BestSeller from '../Pages/User/BestSeller';
 import Basket from '../Pages/User/Basket';
+import Profil from '../Pages/User/Profil';
 
 
 import HomeAdmin from '../Pages/Admin/Home';
@@ -78,6 +79,7 @@ const AppRouter = (props) => {
                     <Route path='/product/:id' component={Product} />
                     <Route path='/best-seller'  component={BestSeller}  exact={true}/>
                     <Route path='/basket'  component={Basket}  exact={true} />
+                    <Route path='/profil/:name'  component={Profil} />
 
                     {/* Admin Router */}
                     {/* <ProtectedRoute/> */}
