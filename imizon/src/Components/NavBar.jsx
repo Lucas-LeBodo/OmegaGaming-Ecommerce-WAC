@@ -37,7 +37,11 @@ function NavBar(props) {
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
     }
-    if(pathname.startsWith("/") && !jwt){
+    if(pathname === "/register"){
+        registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
+        loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
+    }
+    if(pathname === ("/") && !jwt){
         navbox = <Navbox />
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>

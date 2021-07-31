@@ -274,6 +274,7 @@ $white: #f6f6f6ff;
             text-decoration: none;
 
             h2 {
+                padding-left: 8px;
                 color: $white;
                 font-weight: bold;
                 width: 25vw;
@@ -478,6 +479,77 @@ $white: #f6f6f6ff;
         }
     }
 }
+
+// Search Styles 
+.Panel {
+    position: absolute;
+    z-index: -1;
+    height: 100vh;
+    width: 15em;
+    float: right;
+    background-color:$darkblue;
+
+    .Panel-content {
+        display: flex;
+        flex-direction: column;
+        padding-top: 8em;
+        align-items: center;
+        height: 100%;
+
+        .category-control {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+
+            h3{ 
+                color: $white;
+            }
+
+            .selectCategory {
+                width: 90%;
+                border: none;
+                background-color: $darkblue;
+                color: $darkgrey;
+
+                .css-yk16xz-control {
+                    background-color: $darkblue !important;
+                    border: none !important;
+                }
+
+                .css-1pahdxg-control {
+                    background-color: $darkblue !important;
+                    border: none !important;
+                    box-shadow: none !important;
+                }
+                .css-1okebmr-indicatorSeparator {
+                    display: none !important;
+                }
+
+                &:active {
+                    border: none !important;
+                }
+            }
+        }
+
+        .sort-control{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+
+            h3{ 
+                color: $white;
+            }
+
+            label {
+                color: $white;
+            }
+
+        }
+    }
+}
+
 // --------------------------------- Admin ---------------------------------- //
 
 // Listing Articles Admin
