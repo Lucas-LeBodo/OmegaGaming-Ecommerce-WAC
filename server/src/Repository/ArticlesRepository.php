@@ -73,6 +73,27 @@ class ArticlesRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getReference()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a.sameArticles')
+            ->where('a.sameArticles IS NOT NULL')
+            ->andwhere('a.sameArticles != :val' )
+            ->setParameter('val', "")
+            ->distinct()
+            ->getQuery()
+            ->getResult() ;
+    }
+
+    public function getChildRef ($parentChild) 
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.sameArticles = :parent')
+            ->andwhere('a.featureDiff IS NOT NULL')
+            ->setParameter('parent', $parentChild)
+            ->getQuery()
+            ->getResult() ;
+
     public function getListBasket($listId)
     {
         return $this->createQueryBuilder('a')
@@ -81,6 +102,7 @@ class ArticlesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+
     }
     /*
     public function findOneBySomeField($value): ?Articles
