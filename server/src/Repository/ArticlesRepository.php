@@ -72,6 +72,16 @@ class ArticlesRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function getListBasket($listId)
+    {
+        return $this->createQueryBuilder('a')
+            ->where("a.id IN (:id)")
+            ->setParameter(':id', $listId)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     /*
     public function findOneBySomeField($value): ?Articles
     {
