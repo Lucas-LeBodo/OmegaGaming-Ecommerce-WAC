@@ -19,6 +19,7 @@ export default function informationProduct(props){
             )
             
         })
+    }
 
     let username = '';
     let token = localStorage.jwt;

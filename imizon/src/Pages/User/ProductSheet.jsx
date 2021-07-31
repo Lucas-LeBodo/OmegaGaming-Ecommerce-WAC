@@ -20,8 +20,8 @@ const ProductSheet = (props) => {
     useEffect(() => {
         function getInformations() {
             let id = props.match.params.id;
-    
-            axios.get("https://localhost:8000/api/articles/"+id,{
+        
+            axios.get("http://localhost:8000/api/articles/"+id,{
             }).then((response) => { 
                 let information = response.data;
                 getSameArticles(information)
@@ -68,6 +68,7 @@ const ProductSheet = (props) => {
                     />
                         
                 </Row>
+
                 <Row className="style_card">
                     <Col>
                         <Row> 
@@ -84,10 +85,45 @@ const ProductSheet = (props) => {
                             />
                         </Row>
                     </Col>
+                    
                 </Row>
             </Container>
         )
     }
+    return (
+        <Container fluid id="product_sheet">
+            <Row className="style_card">
+                <CarouselProduct img1={article.Image} img2={article.Image}/>
+                <InformationsProduct 
+                    title={article.Title} 
+                    description={article.Description}
+                    price={article.Price}
+                    stock={article.Stock}
+                    otherArticle={sameArticles}
+                />
+                    
+            </Row>
+
+            <Row className="style_card">
+                <Col>
+                    <Row> 
+                        <Col id="title_product">
+                            <div> - Descriptif - </div>
+                            
+                        </Col> 
+                    </Row>
+                    <Row>
+                        <DescriptionLongProduct/>
+                        <ImgDescriptionLongProduct
+                            id="img"
+                            img={article.Image}
+                        />
+                    </Row>
+                </Col>
+                
+            </Row>
+        </Container>
+    )
 }
 
 export default ProductSheet
