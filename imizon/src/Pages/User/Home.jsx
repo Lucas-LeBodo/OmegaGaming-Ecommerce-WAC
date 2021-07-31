@@ -8,15 +8,12 @@ import {Container} from 'react-bootstrap';
 import Card from '../../Components/ArticleCard';
 
 
-//import style 
-import "../../Styles/ListingProduct.scss"
-
 const Home = () => {
     const [showArticles, setShowArticles] = useState('');
     let result;
     useEffect(() => {
         function getMostPopular() {
-            axios.get('http://localhost:8000/api/articles/popularity', {
+            axios.get('https://localhost:8000/api/articles/popularity', {
                 params: {exist: "oui"}
             }).then((response) => {
                 let articles = response.data["hydra:member"];
