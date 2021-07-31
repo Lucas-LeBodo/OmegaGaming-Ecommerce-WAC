@@ -17,15 +17,16 @@ import ImgDescriptionLongProduct from '../../Components/ProductSheet/ImageDescLo
 
 const ProductSheet = (props) => {
     const [article, setArticle] = useState('');
-    const [sameArticle, setSameArticle] = useState('');
+    const [sameArticles, setSameArticles] = useState('');
 
     useEffect(() => {
         function getInformations() {
             let id = props.match.params.id;
-    
+        
             axios.get("http://localhost:8000/api/articles/"+id,{
             }).then((response) => { 
                 let information = response.data;
+                getSameArticles(information)
                 setArticle(information)
             }).catch((error) => {
                 console.log(error)
@@ -34,23 +35,27 @@ const ProductSheet = (props) => {
             axios.get('http://localhost:8000/api/articles/view', {
                 params: {id: id}
             }).then((response) => {
-                console.log(response)
-            }).catch((error) => {
-                console.log(error)
-            })
-
-            axios.get('http://localhost:8000/api/articles/recupChildRef/?sameArticles=' + , {
-                params: {id: id}
-            }).then((response) => {
-                console.log(response)
+               
             }).catch((error) => {
                 console.log(error)
             })
 
         }
+        const getSameArticles = (information) => {
+            axios.get('http://localhost:8000/api/articles/recupChildRef/?sameArticles=' + information.Title , {
+            }).then((response) => {
+                let allSameArticles = response.data["hydra:member"];
+                setSameArticles(allSameArticles)
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
 
         getInformations();
     }, [])
+
+    console.log(sameArticles)
+
     if(article !== ''){
         return (
             <Container fluid id="product_sheet">
@@ -60,7 +65,10 @@ const ProductSheet = (props) => {
                         title={article.Title} 
                         description={article.Description}
                         price={article.Price}
-                        stock={article.Stock}/>
+                        stock={article.Stock}
+                        otherArticle={sameArticles}
+                    />
+                        
                 </Row>
 
                 <Row className="style_card">

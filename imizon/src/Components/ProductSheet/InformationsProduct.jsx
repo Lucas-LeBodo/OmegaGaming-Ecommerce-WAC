@@ -6,6 +6,20 @@ import { MdAddShoppingCart } from 'react-icons/md';
 import { FcOk } from 'react-icons/fc';
 
 export default function informationProduct(props){
+    
+    let sameArticle = props.otherArticle;
+    let result;
+    if(sameArticle)
+    {
+        result = sameArticle.map((child) => {
+            console.log(child)
+            return(
+                <a key={Math.random().toString(36).substring(7)} href={child.id} >{child.Title} : {child.featureDiff} : {child.Price} <BiEuro /></a>
+            )
+            
+        })
+    }
+
     return(
         <Col>
             <Row> 
@@ -40,6 +54,11 @@ export default function informationProduct(props){
             <Row>
                 <div id="stock" className="margin">
                     <p> {props.stock} En stock <FcOk/> </p>
+                </div>
+            </Row>
+            <Row>
+                <div id="otherArticles" className="margin">
+                    <p> {result} </p>
                 </div>
             </Row>
         </Col>

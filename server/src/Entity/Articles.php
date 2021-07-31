@@ -10,7 +10,6 @@ use App\Controller\ArticlesController;
 use App\Controller\MostPopularArticle;
 use App\Repository\ArticlesRepository;
 use App\Controller\ArticlesOrderByName;
-use App\Controller\ArticleRecupChildRef;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use App\Controller\ArticlesOrderByNameASC;
 use App\Controller\ArticlesOrderByNameDESC;
@@ -21,6 +20,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\ArticleRecupChildRef;
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
