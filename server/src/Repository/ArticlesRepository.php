@@ -93,6 +93,7 @@ class ArticlesRepository extends ServiceEntityRepository
             ->setParameter('parent', $parentChild)
             ->getQuery()
             ->getResult() ;
+    }
 
     public function getListBasket($listId)
     {
