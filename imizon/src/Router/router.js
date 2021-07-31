@@ -43,7 +43,9 @@ const AppRouter = (props) => {
                 params: {email: username}
             }).then((response) => {
                 count_articles = response.data["hydra:member"].length
-                setCountArticles(count_articles);
+                if(count_articles > 0) {
+                    setCountArticles(count_articles);
+                }
             }).catch((error) => {
                 console.log(error);
             })
@@ -53,7 +55,9 @@ const AppRouter = (props) => {
                 let list_id = localStorage.shoppingUserNoLog;
                 list_id = list_id.split(" ");
                 count_articles = list_id.length;
-                setCountArticles(count_articles);
+                if(count_articles > 0) {
+                    setCountArticles(count_articles);
+                }
             }
         }
     }, [window.location.pathname])
