@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Controller\ViewController;
+use App\Controller\ArticleReference;
 use App\Controller\ArticlesByCategory;
 use App\Controller\ArticlesController;
 use App\Controller\MostPopularArticle;
@@ -19,6 +20,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\ArticleRecupChildRef;
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
@@ -37,13 +39,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'method' => 'get',
             'controller' => MostPopularArticle::class,
         ],
-        'createArticle' => [
-            'pagination_enabled' => false,
-            'path' => '/createArticle',
-            'method' => 'post',
-            'controller' => CreateArticleController::class,
-            'read' => false,
-       ],
        'orderByNameASC' => [
         'path' => '/articles/OrderByNameASC',
         'method' => 'get',
@@ -65,13 +60,25 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'pagination_enabled' => false,
             'path' => '/articles/searchArticle/', // cote front la requete api/articles/searchArticle/?Title= 
         ],
+        'recupReference' => [
+            'method' => 'get',
+            'pagination_enabled' => false,
+            'path' => '/articles/recupReferences/',
+            'controller' => ArticleReference::class,
+        ],
+        'recupChildRef' => [
+            'method' => 'get',
+            'pagination_enabled' => false,
+            'path' => '/articles/recupChildRef/',
+            'controller' => ArticleRecupChildRef::class,
+        ],
         'get',
         'post'
     ],
     normalizationContext: ['groups' => ["article:read"]],
     denormalizationContext: ["groups" => ["article:write"]]
 ),
-ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'Title' => 'partial'])]
+ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'Title' => 'partial', 'sameArticles' => 'exact'])]
 
 class Articles
 {
@@ -141,6 +148,18 @@ class Articles
      * @Groups({"article:write", "article:read"})
      */
     private $category;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"article:write", "article:read"})
+     */
+    private $sameArticles;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"article:write", "article:read"})
+     */
+    private $featureDiff;
 
 
     public function __construct()
@@ -244,6 +263,30 @@ class Articles
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getSameArticles(): ?string
+    {
+        return $this->sameArticles;
+    }
+
+    public function setSameArticles(?string $sameArticles): self
+    {
+        $this->sameArticles = $sameArticles;
+
+        return $this;
+    }
+
+    public function getFeatureDiff(): ?string
+    {
+        return $this->featureDiff;
+    }
+
+    public function setFeatureDiff(?string $featureDiff): self
+    {
+        $this->featureDiff = $featureDiff;
 
         return $this;
     }
