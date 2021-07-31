@@ -31,7 +31,8 @@ const CreateArticle = () => {
 
         // recup categories
         const recupCategory = () => {
-            axios.get('http://localhost:8000/api/categories?page='+ pages ,{    
+
+            axios.get('https://localhost:8000/api/categories?page='+ pages ,{
             }).then((response) => {
                 setCategories(response.data["hydra:member"]);
                 if(response.data["hydra:view"] !== undefined){
