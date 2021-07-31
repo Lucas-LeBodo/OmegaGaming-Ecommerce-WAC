@@ -24,7 +24,7 @@ const CreateArticle = () => {
 
         // recup categories
         const recupCategory = () => {
-            axios.get('http://localhost:8000/api/categories?page='+ pages ,{
+            axios.get('https://localhost:8000/api/categories?page='+ pages ,{
                 
             }).then((response) => {
                 setCategories(response.data["hydra:member"]);
@@ -69,7 +69,7 @@ const CreateArticle = () => {
         
         let mb64File =  await toBase64(file);
 
-        axios.post('http://localhost:8000/api/articles',{
+        axios.post('https://localhost:8000/api/articles',{
             Title: title,
             Description: description,
             Image: mb64File,

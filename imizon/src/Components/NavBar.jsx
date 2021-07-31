@@ -37,7 +37,11 @@ function NavBar(props) {
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
     }
-    if(pathname.startsWith("/") && !jwt){
+    if(pathname === "/register"){
+        registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
+        loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
+    }
+    if(pathname === ("/") && !jwt){
         navbox = <Navbox />
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
@@ -47,8 +51,8 @@ function NavBar(props) {
     if(jwt){
         navbox = <Navbox />
         logout = <Link to={'/'}  onClick={() => {localStorage.clear();}}><FiLogOut/> Logout</Link>
-         user = nameUser.split(' ')
-         user = <Link to={'#'} ><FiUser /> {user[0]}</Link>
+        user = nameUser.split(' ')
+        user = <Link to={'#'} ><FiUser /> {user[0]}</Link>
         infoUser(jwt)
     }
          

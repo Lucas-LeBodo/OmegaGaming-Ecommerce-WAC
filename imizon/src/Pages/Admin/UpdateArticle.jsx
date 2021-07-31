@@ -58,7 +58,7 @@ const UpdateArticle = (props) => {
         }
 
         const recupCategory = () => {
-            axios.get('http://localhost:8000/api/categories?page='+ pages ,{
+            axios.get('https://localhost:8000/api/categories?page='+ pages ,{
                 
             }).then((response) => {
                 setCategories(response.data["hydra:member"]);

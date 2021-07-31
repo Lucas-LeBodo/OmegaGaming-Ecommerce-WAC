@@ -13,6 +13,7 @@ import Login from '../Pages/User/Login';
 import Product from '../Pages/User/ProductSheet'
 import BestSeller from '../Pages/User/BestSeller';
 import Basket from '../Pages/User/Basket';
+import Search from '../Pages/User/Search';
 
 
 import HomeAdmin from '../Pages/Admin/Home';
@@ -70,13 +71,15 @@ const AppRouter = (props) => {
                     <Route path='/product/:id' component={Product} />
                     <Route path='/best-seller'  component={BestSeller}  exact={true}/>
                     <Route path='/basket'  component={Basket}  exact={true} />
+                    <Route path='/search'  component={Search}  exact={true} />
+                    
 
                     {/* Admin Router */}
                     {/* <ProtectedRoute/> */}
                     <Route path='/admin'  component={HomeAdmin} exact={true} />
                     <Route path='/admin/create_article'  component={CreateArticle} exact={true} />
                     <Route path='/admin/show_articles'  component={ShowArticles} exact={true} />
-                    <Route path='/admin/createCategory'  component={CreateCategory} exact={true} />
+                    <Route path='/admin/create_category'  component={CreateCategory} exact={true} />
                     <Route path='/admin/show_article/update/:id' component={UpdateArticle} /> 
 
                 </Switch>
