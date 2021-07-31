@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch,} from "react-router-dom";
 
 // import Components
@@ -28,6 +28,9 @@ import axios from 'axios';
 // Router
 
 const AppRouter = (props) => {
+
+    const [countArticles, setCountArticles] = useState('')
+
     useEffect(() => {
         let count_articles = '';
 
@@ -40,6 +43,7 @@ const AppRouter = (props) => {
                 params: {email: username}
             }).then((response) => {
                 count_articles = response.data["hydra:member"].length
+                setCountArticles(count_articles);
             }).catch((error) => {
                 console.log(error);
             })
@@ -49,6 +53,7 @@ const AppRouter = (props) => {
                 let list_id = localStorage.shoppingUserNoLog;
                 list_id = list_id.split(" ");
                 count_articles = list_id.length;
+                setCountArticles(count_articles);
             }
         }
     }, [window.location.pathname])
