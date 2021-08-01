@@ -54,6 +54,7 @@ export default function informationProduct(props){
     }
 
     function addToBasketBDD(id_user) {
+        console.log(props)
         let id_art = props.id;
 
         axios.post('https://localhost:8000/api/baskets', {
@@ -62,6 +63,7 @@ export default function informationProduct(props){
                 idArticles: parseInt(id_art),
             }).then((response) => {
                 console.log(response)
+                window.location.reload()
             }).catch((error) => {
                 console.log(error)
             })
