@@ -30,7 +30,7 @@ const ProductSheet = (props) => {
                 console.log(error)
             })
 
-            axios.get('https://localhost:8000/api/articles/view', {
+            axios.get('http://localhost:8000/api/articles/view', {
                 params: {id: id}
             }).then((response) => {
                
