@@ -45,6 +45,7 @@ const CreateArticle = () => {
                         setMaxPage(max)
                     }
                 }
+                
             })
         }
 
@@ -67,7 +68,7 @@ const CreateArticle = () => {
         recupReferences();
         recupCategory();
     }, [])
-
+ 
     // creation des options pour le select category
     let result;
     if(categories != ''){

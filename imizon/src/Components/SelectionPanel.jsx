@@ -6,7 +6,7 @@ import makeAnimated from 'react-select/animated';
 import axios from 'axios';
 
 
-export default function AnimatedMulti() {
+export default function AnimatedMulti(props) {
   const [categories, setCategories] = useState('');
   const [maxPages, setMaxPages] = useState('');
   const [pages, setPages] = useState(1);
@@ -30,9 +30,8 @@ export default function AnimatedMulti() {
               }
           }
       })
-    }
+    }    
     getCategories();
-
   }, [])
   
   let result;
@@ -46,19 +45,24 @@ export default function AnimatedMulti() {
   }
   options.push(result)
 
-  console.log(options);
+  // console.log(options);
 
 
-const animatedComponents = makeAnimated();
-console.log(selectCategory)
+  const animatedComponents = makeAnimated();
+  //console.log(selectCategory)
 
-if(selectCategory != ''){
-  axios.get('http://localhost:8000/api/categories/' + selectCategory ,{
+  
 
-  }).then((response) => {
-    setArticlesByCategory(response.data);
-  })
-}
+  useEffect(() => {
+    if(selectCategory != ''){
+      axios.get('http://localhost:8000/api/categories/' + selectCategory ,{
+  
+        }).then((response) => {
+          setArticlesByCategory(response.data);
+          props.callBack(response.data)
+        })
+    }
+  }, [selectCategory])
 
 
   return (

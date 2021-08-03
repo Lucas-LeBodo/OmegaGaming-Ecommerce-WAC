@@ -15,7 +15,7 @@ const Home = () => {
         function test() {
             axios.get('http://localhost:8000/api/shippy',{
             }).then((response) => {
-                console.log(response)
+                //console.log(response)
             }).catch((error) => {
                 console.log(error)
             })
@@ -39,6 +39,7 @@ const Home = () => {
                               price={element.Price}
                         />
                     )
+
                 });
                 setShowArticles(showArticles);
             }).catch((error) => {
@@ -49,6 +50,7 @@ const Home = () => {
         getMostPopular();
     },[])
 
+    console.table(showArticles)
     const map = () => {
         let map_def = [];
         let row = [];
