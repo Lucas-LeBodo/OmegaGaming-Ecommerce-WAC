@@ -21,7 +21,7 @@ const ProductSheet = (props) => {
         function getInformations() {
             let id = props.match.params.id;
         
-            axios.get("http://localhost:8000/api/articles/"+id,{
+            axios.get("https://localhost:8000/api/articles/"+id,{
             }).then((response) => { 
                 let information = response.data;
                 getSameArticles(information)
@@ -33,14 +33,14 @@ const ProductSheet = (props) => {
             axios.get('http://localhost:8000/api/articles/view', {
                 params: {id: id}
             }).then((response) => {
-               
+                console.log(response)
             }).catch((error) => {
                 console.log(error)
             })
 
         }
         const getSameArticles = (information) => {
-            axios.get('http://localhost:8000/api/articles/recupChildRef/?sameArticles=' + information.Title , {
+            axios.get('https://localhost:8000/api/articles/recupChildRef/?sameArticles=' + information.Title , {
             }).then((response) => {
                 let allSameArticles = response.data["hydra:member"];
                 setSameArticles(allSameArticles)
@@ -65,6 +65,7 @@ const ProductSheet = (props) => {
                         price={article.Price}
                         stock={article.Stock}
                         otherArticle={sameArticles}
+                        id={article.id}
                     />
                         
                 </Row>

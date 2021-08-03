@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import axios from 'axios';
 import { Link, useLocation } from "react-router-dom";
 import {decode as base64_decode} from 'base-64';
 import {FiLogIn, FiUserPlus, FiUser, FiLogOut, FiSearch} from "react-icons/fi"
@@ -25,6 +26,41 @@ function NavBar(props) {
         var infoRole = info.roles
         let role = infoRole[0];
     }
+
+    const [countArticles, setCountArticles] = useState('')
+
+    useEffect(() => {
+        let count_articles = '';
+
+        if(localStorage.jwt) {
+                const base64Url = localStorage.jwt.split('.')[1];
+                const base64 = base64Url.replace('-', '+').replace('_', '/');
+                let username = JSON.parse(window.atob(base64)).username;
+
+            axios.get('https://localhost:8000/api/baskets/countArticles', {
+                params: {email: username}
+            }).then((response) => {
+                count_articles = response.data["hydra:member"].length
+                if(count_articles > 0) {
+                    setCountArticles(count_articles);
+                }
+            }).catch((error) => {
+                console.log(error);
+            })
+
+        } else {
+            if(localStorage.shoppingUserNoLog) {
+                let list_id = localStorage.shoppingUserNoLog;
+                list_id = list_id.split(" ");
+                count_articles = list_id.length;
+                if(count_articles > 0) {
+                    setCountArticles(count_articles);
+                }
+            }
+        }
+    }, [])
+
+
 
     // conditional display btn login / register
 
@@ -79,7 +115,7 @@ function NavBar(props) {
                             </div>
                         </div>
                         <div className="dropdown">
-                            <div className="boutonmenuprincipal"><Link to={'/basket'} ><MdShoppingCart/></Link></div>
+                            <div className="boutonmenuprincipal"><Link to={'/basket'} ><MdShoppingCart/> {countArticles}</Link></div>
                         </div>
                     </div>
                 </div>

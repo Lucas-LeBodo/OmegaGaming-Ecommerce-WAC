@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter, Route, Switch,} from "react-router-dom";
 
 // import Components
@@ -21,10 +21,9 @@ import CreateArticle from '../Pages/Admin/CreateArticle';
 import ShowArticles from '../Pages/Admin/ShowArticles';
 import UpdateArticle from '../Pages/Admin/UpdateArticle';
 import CreateCategory from '../Pages/Admin/CreateCategory';
-
-
 // import ProtectedRoute from './Components/ProtectedRoute';
-import axios from 'axios';
+
+
 
 // Router
 
