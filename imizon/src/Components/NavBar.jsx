@@ -118,7 +118,6 @@ function NavBar(props) {
     }
     
     const changeHandler = event => {
-        console.log("je viens ici")
       setQuery(event.target.value);
     };
 
