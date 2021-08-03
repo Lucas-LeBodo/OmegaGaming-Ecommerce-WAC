@@ -13,11 +13,8 @@ import Login from '../Pages/User/Login';
 import Product from '../Pages/User/ProductSheet'
 import BestSeller from '../Pages/User/BestSeller';
 import Basket from '../Pages/User/Basket';
-<<<<<<< HEAD
 import Search from '../Pages/User/Search';
-=======
 import Profil from '../Pages/User/Profil';
->>>>>>> updateUser
 
 
 import HomeAdmin from '../Pages/Admin/Home';

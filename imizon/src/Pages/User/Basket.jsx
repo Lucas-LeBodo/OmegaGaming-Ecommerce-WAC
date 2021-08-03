@@ -2,18 +2,21 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
 import { RiDeleteBin5Line } from 'react-icons/ri';
-import {Modal} from 'react-bootstrap';
+import {Modal, Form, Button} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 
 
 const Basket = () => {
     const [listBasketShow, setListBasketShow] = useState([]);    
-    const [listBasketOrder, setListBasketOrder] = useState([]);    
     const [showPrice, setShowPrice] = useState(0);
     const [fullscreen, setFullscreen] = useState(true);
     const [show, setShow] = useState(false);
     const [contentModal, setContentModal] = useState('')
+    const [country, setCountry] = useState('')
+    const [adress, setAdress] = useState('')
+    const [postalCode, setPostalCode] = useState('')
+    const [cardData, setCardData] = useState('')
     const value = "true"
     const history = useHistory();
 
@@ -95,7 +98,6 @@ const Basket = () => {
             params: {tabList:tabList},
         }).then((response) => {
             let listBasketShow = response.data["hydra:member"];
-            setListBasketOrder(listBasketShow);
             let i = 0;
             
             listBasketShow.forEach(element => {
@@ -150,7 +152,6 @@ const Basket = () => {
             params: {tabList:listBasketShow},
         }).then((response) => {
             let listBasketShow = response.data["hydra:member"];
-            setListBasketOrder(listBasketShow);
             
             listBasketShow.forEach(element => {
                 let onStock = "";
@@ -207,18 +208,68 @@ const Basket = () => {
             axios.get('https://localhost:8000/api/me', {
             params: {username: username}
         }).then((response) => {
-            console.log(response)
+            setCountry(response.data.country)
+            setAdress(response.data.adress)
+            setPostalCode(response.data.postalCode)
+            setCardData(response.data.cardData)
+            content = (
+                <Form>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Pays</Form.Label>
+                        <Form.Control type="text" defaultValue={response.data.country} onChange={(event) => { setCountry(event.target.value) }} placeholder="Enter Country" />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Adresse</Form.Label>
+                        <Form.Control type="text" defaultValue={response.data.adress} onChange={(event) => { setAdress(event.target.value) }} placeholder="Enter Adress" />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Code Postal</Form.Label>
+                        <Form.Control type="text" defaultValue={response.data.postalCode} onChange={(event) => { setPostalCode(event.target.value) }} placeholder="Enter Postal Code" />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Paiement</Form.Label>
+                        <Form.Control type="text" defaultValue={response.data.cardData} onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Payer
+                    </Button>
+                </Form>
+            )
+            setContentModal(content)
         }).catch((error) => {
             console.log(error);
         })
             setFullscreen(breakpoint);
             setShow(true);
-            axios.get("")
         } else {
             let check = window.confirm("Avez-vous un compte ? Si vous voulez vous connecter !")
             if(check === true) {
                 history.push("/login")
             } else {
+                content = (
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Pays</Form.Label>
+                            <Form.Control type="text" onChange={(event) => { setCountry(event.target.value) }} placeholder="Enter Country" />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Adresse</Form.Label>
+                            <Form.Control type="text" onChange={(event) => { setAdress(event.target.value) }} placeholder="Enter Adress" />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Code Postal</Form.Label>
+                            <Form.Control type="text" onChange={(event) => { setPostalCode(event.target.value) }} placeholder="Enter Postal Code" />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Paiement</Form.Label>
+                            <Form.Control type="text" onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Payer
+                        </Button>
+                    </Form>
+                )
+                setContentModal(content)
                 setFullscreen(breakpoint);
                 setShow(true);
 
@@ -239,7 +290,7 @@ const Basket = () => {
                 </div>
                 <div>
                     <p>{showPrice + "€"}</p>
-                    <button onClick={() => handleShow(value)}>Paiement</button>
+                    <button onClick={() => handleShow(value)}>Payer</button>
                 </div>
                 <Modal style={{width:"auto"}} show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
                     <Modal.Header closeButton>
