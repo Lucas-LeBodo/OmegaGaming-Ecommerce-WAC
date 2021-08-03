@@ -11,7 +11,8 @@ export default function AnimatedMulti(props) {
   const [maxPages, setMaxPages] = useState('');
   const [pages, setPages] = useState(1);
   const [selectCategory, setSelectCategory] = useState('');
-  const [articlesByCategory, setArticlesByCategory] = useState('')
+
+  const [sort, setSort] = useState('')
   let views;
   
   useEffect(() => {
@@ -44,26 +45,21 @@ export default function AnimatedMulti(props) {
     })
   }
   options.push(result)
-
-  // console.log(options);
-
-
   const animatedComponents = makeAnimated();
-  //console.log(selectCategory)
 
-  
 
   useEffect(() => {
     if(selectCategory != ''){
       axios.get('http://localhost:8000/api/categories/' + selectCategory ,{
-  
         }).then((response) => {
-          setArticlesByCategory(response.data);
           props.callBack(response.data)
         })
     }
   }, [selectCategory])
 
+  if(sort){
+    props.sort(sort)
+  }
 
   return (
       <Fragment>
@@ -75,9 +71,8 @@ export default function AnimatedMulti(props) {
                 </div>
                 <div className="sort-control">
                     <h3> Sort </h3>
-                    <label><input type="radio" value="option1"/> Option 1 </label>
-                    <label><input type="radio" value="option1"/> Option 2 </label>
-
+                    <label><input type="radio" value="ASC" onChange={event => {setSort(event.target.value)}}/> A-Z </label>
+                    <label><input type="radio" value="DESC" onChange={event => {setSort(event.target.value)}}/> Z-A </label>
                 </div>
             </div>
         </div>
