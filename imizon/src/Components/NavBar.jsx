@@ -43,6 +43,8 @@ function NavBar(props) {
                 count_articles = response.data["hydra:member"].length
                 if(count_articles > 0) {
                     setCountArticles(count_articles);
+                } else {
+                    setCountArticles('')
                 }
             }).catch((error) => {
                 console.log(error);
@@ -55,10 +57,12 @@ function NavBar(props) {
                 count_articles = list_id.length;
                 if(count_articles > 0) {
                     setCountArticles(count_articles);
+                } else {
+                    setCountArticles('')
                 }
             }
         }
-    }, [])
+    }, [window.location.pathname])
 
 
 

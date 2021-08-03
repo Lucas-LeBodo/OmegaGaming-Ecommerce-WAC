@@ -2,10 +2,20 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
 import { RiDeleteBin5Line } from 'react-icons/ri';
+import {Modal} from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+
 
 
 const Basket = () => {
-    const [listBasket, setListBasket] = useState([]);    
+    const [listBasketShow, setListBasketShow] = useState([]);    
+    const [listBasketOrder, setListBasketOrder] = useState([]);    
+    const [showPrice, setShowPrice] = useState(0);
+    const [fullscreen, setFullscreen] = useState(true);
+    const [show, setShow] = useState(false);
+    const [contentModal, setContentModal] = useState('')
+    const value = "true"
+    const history = useHistory();
 
     useEffect(() => {
         let list_id = [];
@@ -74,6 +84,7 @@ const Basket = () => {
     }
 
     const requestConnected = (list_articles) => {
+        let price = 0;
         let tabList = [];
         let showBasket = [];
         list_articles.forEach(element => {
@@ -83,10 +94,11 @@ const Basket = () => {
         axios.get('https://localhost:8000/api/baskets/listBasket', {
             params: {tabList:tabList},
         }).then((response) => {
-            let listBasket = response.data["hydra:member"];
+            let listBasketShow = response.data["hydra:member"];
+            setListBasketOrder(listBasketShow);
             let i = 0;
             
-            listBasket.forEach(element => {
+            listBasketShow.forEach(element => {
                 let onStock = "";
                 let { id, Title, Image, Price, Stock} = element;
                 if(Stock >= 1){
@@ -95,6 +107,7 @@ const Basket = () => {
                     onStock = "Indisponible"
                 }
                 let idBasket = list_articles[i].id
+                price = price + element.Price
                 
                 showBasket.push(
                     <div className="article-card" key={id + "_article-card"}>
@@ -121,22 +134,25 @@ const Basket = () => {
                 )
                 i = i + 1;
             });
-            setListBasket(showBasket);
+            setShowPrice(price)
+            setListBasketShow(showBasket);
             
         }).catch((error) => {
             console.log(error)
         })
     }
 
-    const requestNotConnected = (listBasket) => {
+    const requestNotConnected = (listBasketShow) => {
         let showBasket = [];
+        let price = 0;
 
         axios.get('https://localhost:8000/api/baskets/listBasket', {
-            params: {tabList:listBasket},
+            params: {tabList:listBasketShow},
         }).then((response) => {
-            let listBasket = response.data["hydra:member"];
+            let listBasketShow = response.data["hydra:member"];
+            setListBasketOrder(listBasketShow);
             
-            listBasket.forEach(element => {
+            listBasketShow.forEach(element => {
                 let onStock = "";
                 let { id, Title, Image, Price, Stock} = element;
                 if(Stock >= 1){
@@ -144,6 +160,7 @@ const Basket = () => {
                 } else {
                     onStock = "Indisponible"
                 }
+                price = price + element.Price;
 
                 showBasket.push(
                     <div className="article-card" key={id + "_article-card"}>
@@ -169,12 +186,45 @@ const Basket = () => {
                 </div>
                 )
             });
-            setListBasket(showBasket);
+            setListBasketShow(showBasket);
+            setShowPrice(price)
             
         }).catch((error) => {
             console.log(error)
         })
     }
+
+    const order = () => {
+        
+    }
+
+    function handleShow(breakpoint) {
+        let content = '';
+        if(localStorage.jwt) {
+            const base64Url = localStorage.jwt.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            let username = JSON.parse(window.atob(base64)).username;
+            axios.get('https://localhost:8000/api/me', {
+            params: {username: username}
+        }).then((response) => {
+            console.log(response)
+        }).catch((error) => {
+            console.log(error);
+        })
+            setFullscreen(breakpoint);
+            setShow(true);
+            axios.get("")
+        } else {
+            let check = window.confirm("Avez-vous un compte ? Si vous voulez vous connecter !")
+            if(check === true) {
+                history.push("/login")
+            } else {
+                setFullscreen(breakpoint);
+                setShow(true);
+
+            }
+        }
+      }
 
 
     return (
@@ -185,8 +235,20 @@ const Basket = () => {
                     <h3>Prix</h3>
                 </div>
                 <div className="container_card">
-                    {listBasket}
+                    {listBasketShow}
                 </div>
+                <div>
+                    <p>{showPrice + "€"}</p>
+                    <button onClick={() => handleShow(value)}>Paiement</button>
+                </div>
+                <Modal style={{width:"auto"}} show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {contentModal}
+                    </Modal.Body>
+                </Modal>
             </div>            
         </Fragment>
     )
