@@ -27,7 +27,7 @@ const Basket = () => {
             const base64 = base64Url.replace('-', '+').replace('_', '/');
             let username = JSON.parse(window.atob(base64)).username;
             
-            axios.get('https://localhost:8000/api/baskets/countArticles', {
+            axios.get('http://localhost:8000/api/baskets/countArticles', {
                 params: {email: username}
             }).then((response) => {
                 list_articles = response.data["hydra:member"]
@@ -49,7 +49,7 @@ const Basket = () => {
         if(connected === "connected") {
             let check = window.confirm("Are you sure ?");
             if(check === true) {
-                axios.delete('https://localhost:8000/api/baskets/'+id, {
+                axios.delete('http://localhost:8000/api/baskets/'+id, {
                 }).then((response) => {
                     console.log(response)
                     window.location.reload();
@@ -92,7 +92,7 @@ const Basket = () => {
             tabList.push(element.idArticles)
         });
 
-        axios.get('https://localhost:8000/api/baskets/listBasket', {
+        axios.get('http://localhost:8000/api/baskets/listBasket', {
             params: {tabList:tabList},
         }).then((response) => {
             let listBasketShow = response.data["hydra:member"];
@@ -146,7 +146,7 @@ const Basket = () => {
         let showBasket = [];
         let price = 0;
 
-        axios.get('https://localhost:8000/api/baskets/listBasket', {
+        axios.get('http://localhost:8000/api/baskets/listBasket', {
             params: {tabList:listBasketShow},
         }).then((response) => {
             let listBasketShow = response.data["hydra:member"];
@@ -193,13 +193,17 @@ const Basket = () => {
         })
     }
 
+    const submit = () => {
+        alert("submit")
+    }
+
     function handleShow() {
         let content = '';
         if(localStorage.jwt) {
             const base64Url = localStorage.jwt.split('.')[1];
             const base64 = base64Url.replace('-', '+').replace('_', '/');
             let username = JSON.parse(window.atob(base64)).username;
-            axios.get('https://localhost:8000/api/me', {
+            axios.get('http://localhost:8000/api/me', {
             params: {username: username}
         }).then((response) => {
             setCountry(response.data.country)
@@ -207,7 +211,7 @@ const Basket = () => {
             setPostalCode(response.data.postalCode)
             setCardData(response.data.cardData)
             content = (
-                <Form>
+                <Form onSubmit={submit}>
                     <Form.Group className="mb-3">
                         <Form.Label>Pays</Form.Label>
                         <Form.Control type="text" defaultValue={response.data.country} onChange={(event) => { setCountry(event.target.value) }} placeholder="Enter Country" />
@@ -224,6 +228,8 @@ const Basket = () => {
                         <Form.Label>Paiement</Form.Label>
                         <Form.Control type="text" defaultValue={response.data.cardData} onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
                     </Form.Group>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </Form>
             )
             setContentModal(content)
@@ -236,7 +242,7 @@ const Basket = () => {
                 history.push("/login")
             } else {
                 content = (
-                    <Form>
+                    <Form onSubmit={submit}>
                         <Form.Group className="mb-3">
                             <Form.Label>Pays</Form.Label>
                             <Form.Control type="text" onChange={(event) => { setCountry(event.target.value) }} placeholder="Enter Country" />
@@ -288,10 +294,6 @@ const Basket = () => {
                         <div className="modal-content">
                             <div className="modal-body">
                                 {contentModal}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>

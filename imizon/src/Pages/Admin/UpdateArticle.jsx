@@ -33,7 +33,7 @@ const UpdateArticle = (props) => {
             let id = props.match.params.id
             setId(id);
             
-            axios.get('https://localhost:8000/api/articles/'+id, {
+            axios.get('http://localhost:8000/api/articles/'+id, {
             }).then((response) => {
                 let information = response.data;
                 setInformations(information)
@@ -49,7 +49,7 @@ const UpdateArticle = (props) => {
             })
             
             //REQUEST FOR UP VIEW + 1
-            axios.get('https://localhost:8000/api/articles/view', {
+            axios.get('http://localhost:8000/api/articles/view', {
                 params: {id: id}
             }).then((response) => {
             }).catch((error) => {
@@ -58,7 +58,7 @@ const UpdateArticle = (props) => {
         }
 
         const recupCategory = () => {
-            axios.get('https://localhost:8000/api/categories?page='+ pages ,{
+            axios.get('http://localhost:8000/api/categories?page='+ pages ,{
                 
             }).then((response) => {
                 setCategories(response.data["hydra:member"]);
@@ -96,7 +96,7 @@ const UpdateArticle = (props) => {
     const submit = (event) => {
         
         event.preventDefault();
-        axios.put('https://localhost:8000/api/articles/'+id,{
+        axios.put('http://localhost:8000/api/articles/'+id,{
             Title: title,
             Description: description,
             Feature: feature,
@@ -112,7 +112,7 @@ const UpdateArticle = (props) => {
 
     const deleteArticles = (event) => {
         event.preventDefault();
-        axios.delete('https://localhost:8000/api/articles/'+id, {
+        axios.delete('http://localhost:8000/api/articles/'+id, {
             data : {id:id}
         }).then((response) => {
             history.push("/admin/show_articles");

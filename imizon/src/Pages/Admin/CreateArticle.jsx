@@ -32,7 +32,7 @@ const CreateArticle = () => {
         // recup categories
         const recupCategory = () => {
 
-            axios.get('https://localhost:8000/api/categories?page='+ pages ,{
+            axios.get('http://localhost:8000/api/categories?page='+ pages ,{
             }).then((response) => {
                 setCategories(response.data["hydra:member"]);
                 if(response.data["hydra:view"] !== undefined){
@@ -49,7 +49,7 @@ const CreateArticle = () => {
         }
 
         const recupReferences = () => {
-            axios.get('https://localhost:8000/api/articles/recupReferences?page='+ pages ,{    
+            axios.get('http://localhost:8000/api/articles/recupReferences?page='+ pages ,{    
             }).then((response) => {
                 setAllRef(response.data["hydra:member"]);
                 if(response.data["hydra:view"] !== undefined){
@@ -127,7 +127,7 @@ const CreateArticle = () => {
        
         if(checked){
             setReference(title);
-            axios.post('https://localhost:8000/api/articles',{
+            axios.post('http://localhost:8000/api/articles',{
                 Title: title,
                 Description: description,
                 Image: mb64File,
@@ -144,7 +144,7 @@ const CreateArticle = () => {
                 console.log(error)
             })
         }else {
-            axios.post('https://localhost:8000/api/articles',{
+            axios.post('http://localhost:8000/api/articles',{
                 Title: title,
                 Description: description,
                 Image: mb64File,
