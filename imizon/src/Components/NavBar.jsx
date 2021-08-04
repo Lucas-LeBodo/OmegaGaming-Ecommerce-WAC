@@ -58,7 +58,7 @@ function NavBar(props) {
                 }
             }
         }
-    }, [window.location.pathname])
+    }, [])
 
 
 

@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch,} from "react-router-dom";
+import axios from 'axios';
 
 // import Components
 import NavBar from '../Components/NavBar';
@@ -21,14 +22,47 @@ import CreateArticle from '../Pages/Admin/CreateArticle';
 import ShowArticles from '../Pages/Admin/ShowArticles';
 import UpdateArticle from '../Pages/Admin/UpdateArticle';
 import CreateCategory from '../Pages/Admin/CreateCategory';
-
-
 // import ProtectedRoute from './Components/ProtectedRoute';
-import axios from 'axios';
+
+
 
 // Router
 
 const AppRouter = (props) => {
+
+    const [countArticles, setCountArticles] = useState('')
+
+    useEffect(() => {
+        let count_articles = '';
+
+        if(localStorage.jwt) {
+                const base64Url = localStorage.jwt.split('.')[1];
+                const base64 = base64Url.replace('-', '+').replace('_', '/');
+                let username = JSON.parse(window.atob(base64)).username;
+
+            axios.get('http://localhost:8000/api/baskets/countArticles', {
+                params: {email: username}
+            }).then((response) => {
+                count_articles = response.data["hydra:member"].length
+                if(count_articles > 0) {
+                    setCountArticles(count_articles);
+                }
+            }).catch((error) => {
+                console.log(error);
+            })
+
+        } else {
+            if(localStorage.shoppingUserNoLog) {
+                let list_id = localStorage.shoppingUserNoLog;
+                list_id = list_id.split(" ");
+                count_articles = list_id.length;
+                if(count_articles > 0) {
+                    setCountArticles(count_articles);
+                }
+            }
+        }
+    }, [window.location.pathname])
+
 
     return (
         <BrowserRouter>

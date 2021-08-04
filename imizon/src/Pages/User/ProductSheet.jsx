@@ -30,10 +30,10 @@ const ProductSheet = (props) => {
                 console.log(error)
             })
 
-            axios.get('httpss://localhost:8000/api/articles/view', {
+            axios.get('https://localhost:8000/api/articles/view', {
                 params: {id: id}
             }).then((response) => {
-               
+                console.log(response)
             }).catch((error) => {
                 console.log(error)
             })
@@ -65,6 +65,7 @@ const ProductSheet = (props) => {
                         price={article.Price}
                         stock={article.Stock}
                         otherArticle={sameArticles}
+                        id={article.id}
                     />
                         
                 </Row>

@@ -34,7 +34,7 @@ export default function informationProduct(props){
         if(token){
             let id_user = "";
 
-            axios.get('https://localhost:8000/api/me', {
+            axios.get('http://localhost:8000/api/me', {
                 params: {username: username}
             }).then((response) => {
                 id_user = response.data.id
@@ -54,14 +54,16 @@ export default function informationProduct(props){
     }
 
     function addToBasketBDD(id_user) {
+        console.log(props)
         let id_art = props.id;
 
-        axios.post('https://localhost:8000/api/baskets', {
+        axios.post('http://localhost:8000/api/baskets', {
                 price: parseInt(props.price),
                 idUser: parseInt(id_user),
                 idArticles: parseInt(id_art),
             }).then((response) => {
                 console.log(response)
+                window.location.reload()
             }).catch((error) => {
                 console.log(error)
             })
