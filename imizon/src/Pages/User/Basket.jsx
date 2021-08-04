@@ -10,15 +10,13 @@ import { useHistory } from 'react-router-dom';
 const Basket = () => {
     const [listBasketShow, setListBasketShow] = useState([]);    
     const [showPrice, setShowPrice] = useState(0);
-    const [fullscreen, setFullscreen] = useState(true);
-    const [show, setShow] = useState(false);
     const [contentModal, setContentModal] = useState('')
     const [country, setCountry] = useState('')
     const [adress, setAdress] = useState('')
     const [postalCode, setPostalCode] = useState('')
     const [cardData, setCardData] = useState('')
-    const value = "true"
     const history = useHistory();
+    let showPriceDiv = '';
 
     useEffect(() => {
         let list_id = [];
@@ -195,11 +193,7 @@ const Basket = () => {
         })
     }
 
-    const order = () => {
-        
-    }
-
-    function handleShow(breakpoint) {
+    function handleShow() {
         let content = '';
         if(localStorage.jwt) {
             const base64Url = localStorage.jwt.split('.')[1];
@@ -230,17 +224,12 @@ const Basket = () => {
                         <Form.Label>Paiement</Form.Label>
                         <Form.Control type="text" defaultValue={response.data.cardData} onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Payer
-                    </Button>
                 </Form>
             )
             setContentModal(content)
         }).catch((error) => {
             console.log(error);
         })
-            setFullscreen(breakpoint);
-            setShow(true);
         } else {
             let check = window.confirm("Avez-vous un compte ? Si vous voulez vous connecter !")
             if(check === true) {
@@ -264,17 +253,22 @@ const Basket = () => {
                             <Form.Label>Paiement</Form.Label>
                             <Form.Control type="text" onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
                         </Form.Group>
-                        <Button variant="primary" type="submit">
-                            Payer
-                        </Button>
                     </Form>
                 )
                 setContentModal(content)
-                setFullscreen(breakpoint);
-                setShow(true);
-
             }
         }
+      }
+
+      if(listBasketShow.length > 0) {
+          showPriceDiv = (
+            <div>
+                <p>{showPrice + "€"}</p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
+                    Payer
+                </button>
+            </div>
+          )
       }
 
 
@@ -288,18 +282,20 @@ const Basket = () => {
                 <div className="container_card">
                     {listBasketShow}
                 </div>
-                <div>
-                    <p>{showPrice + "€"}</p>
-                    <button onClick={() => handleShow(value)}>Payer</button>
+                {showPriceDiv}
+                <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-xl">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                {contentModal}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <Modal style={{width:"auto"}} show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modal</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        {contentModal}
-                    </Modal.Body>
-                </Modal>
             </div>            
         </Fragment>
     )

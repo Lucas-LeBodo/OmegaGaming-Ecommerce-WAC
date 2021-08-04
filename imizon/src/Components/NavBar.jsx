@@ -17,6 +17,7 @@ function NavBar(props) {
     let jwt = localStorage.jwt
     let nameUser = localStorage.name
     let user = '';
+    let admin = '';
     
     const infoUser = (jwt) => {
         let split = jwt.split('.');
@@ -93,7 +94,14 @@ function NavBar(props) {
         logout = <Link to={'/'}  onClick={() => {localStorage.clear();}}><FiLogOut/> Logout</Link>
         user = nameUser.split(' ')
         user = <Link to={'/profil/'+nameUser} ><FiUser /> {user[0]}</Link>
-        infoUser(jwt)
+        // infoUser(jwt)
+
+        let split = jwt.split('.');
+        let info = base64_decode(split[1]);
+        info = JSON.parse(info);
+        if(info.roles["roles"] === "ROLE_ADMIN") {
+            admin = <Link to={'/admin'} ><FiUser />Admin</Link>
+        }
     }
          
 
@@ -112,6 +120,7 @@ function NavBar(props) {
                         <div className="dropdown">
                             <div className="boutonmenuprincipal"><FiUser /></div>
                             <div className="dropdown-child">
+                                {admin}
                                 {user}
                                 {loginPath}
                                 {registerPath}
