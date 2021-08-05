@@ -22,6 +22,7 @@ const BestSeller = () => {
                               image={element.Image}
                               description={element.Description}
                               price={element.Price}
+                              discount={element.discount}
                         />
                     )
                 });

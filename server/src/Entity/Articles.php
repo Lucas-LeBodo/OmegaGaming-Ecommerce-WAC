@@ -8,6 +8,7 @@ use App\Controller\ArticleReference;
 use App\Controller\ArticlesByCategory;
 use App\Controller\ArticlesController;
 use App\Controller\MostPopularArticle;
+use App\Controller\DiscountController;
 use App\Repository\ArticlesRepository;
 use App\Controller\ArticlesOrderByName;
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -39,10 +40,10 @@ use App\Controller\ArticleRecupChildRef;
             'method' => 'get',
             'controller' => MostPopularArticle::class,
         ],
-       'orderByNameASC' => [
-        'path' => '/articles/OrderByNameASC',
-        'method' => 'get',
-        'controller' => ArticlesOrderByNameASC::class,
+        'orderByNameASC' => [
+            'path' => '/articles/OrderByNameASC',
+            'method' => 'get',
+            'controller' => ArticlesOrderByNameASC::class,
         ],
         'orderByNameDESC' => [
             'path' => '/articles/OrderByNameDESC',
@@ -71,6 +72,12 @@ use App\Controller\ArticleRecupChildRef;
             'pagination_enabled' => false,
             'path' => '/articles/recupChildRef/',
             'controller' => ArticleRecupChildRef::class,
+        ],
+        'recupPromo' => [
+            'method' => 'get',
+            'pagination_enabled' => false,
+            'path' => '/articles/discount/',
+            'controller' => DiscountController::class,
         ],
         'get',
         'post'
