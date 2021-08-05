@@ -17,7 +17,7 @@ export default function AnimatedMulti(props) {
   
   useEffect(() => {
     const getCategories = () => {
-      axios.get('http://localhost:8000/api/categories?page='+ pages ,{
+      axios.get('https://localhost:8000/api/categories?page='+ pages ,{
       }).then((response) => {
           setCategories(response.data["hydra:member"]);
           if(response.data["hydra:view"] !== undefined){
@@ -50,7 +50,7 @@ export default function AnimatedMulti(props) {
 
   useEffect(() => {
     if(selectCategory != ''){
-      axios.get('http://localhost:8000/api/categories/' + selectCategory ,{
+      axios.get('https://localhost:8000/api/categories/' + selectCategory ,{
         }).then((response) => {
           props.callBack(response.data)
         })

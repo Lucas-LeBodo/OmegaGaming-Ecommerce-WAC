@@ -10,7 +10,7 @@ export default function FormSignIn() {
     
     const submit = () => {
         // fetch a faire a l'api 
-        axios.post('http://localhost:8000/authentication_token',{
+        axios.post('https://localhost:8000/authentication_token',{
                 email : email,
                 password : password
             }
@@ -20,7 +20,6 @@ export default function FormSignIn() {
             }).catch((error) => {
                 console.log(error)
             })
-    
     }
 
     function parseJwt(token) {
@@ -30,7 +29,7 @@ export default function FormSignIn() {
         let username = JSON.parse(window.atob(base64)).username;
         // let roles = JSON.parse(window.atob(base64)).roles;
         
-        axios.get('http://localhost:8000/api/me', {
+        axios.get('https://localhost:8000/api/me', {
             params: {username: username}
         }).then((response) => {
             let name = response.data.firstName + " " + response.data.lastName
@@ -43,10 +42,10 @@ export default function FormSignIn() {
                 list_id = list_id.split(" ");
 
                 list_id.forEach(element => {
-                    axios.get('http://localhost:8000/api/articles/'+element, {
+                    axios.get('https://localhost:8000/api/articles/'+element, {
                     }).then((response) => {
                         console.log(response)
-                        axios.post('http://localhost:8000/api/baskets', {
+                        axios.post('https://localhost:8000/api/baskets', {
                             price: parseInt(response.data.Price),
                             idUser: parseInt(id_user),
                             idArticles: parseInt(element),

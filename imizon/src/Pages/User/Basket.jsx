@@ -2,10 +2,21 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
 import { RiDeleteBin5Line } from 'react-icons/ri';
+import {Modal, Form, Button} from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+
 
 
 const Basket = () => {
-    const [listBasket, setListBasket] = useState([]);    
+    const [listBasketShow, setListBasketShow] = useState([]);    
+    const [showPrice, setShowPrice] = useState(0);
+    const [contentModal, setContentModal] = useState('')
+    const [country, setCountry] = useState('')
+    const [adress, setAdress] = useState('')
+    const [postalCode, setPostalCode] = useState('')
+    const [cardData, setCardData] = useState('')
+    const history = useHistory();
+    let showPriceDiv = '';
 
     useEffect(() => {
         let list_id = [];
@@ -16,7 +27,7 @@ const Basket = () => {
             const base64 = base64Url.replace('-', '+').replace('_', '/');
             let username = JSON.parse(window.atob(base64)).username;
             
-            axios.get('http://localhost:8000/api/baskets/countArticles', {
+            axios.get('https://localhost:8000/api/baskets/countArticles', {
                 params: {email: username}
             }).then((response) => {
                 list_articles = response.data["hydra:member"]
@@ -38,7 +49,7 @@ const Basket = () => {
         if(connected === "connected") {
             let check = window.confirm("Are you sure ?");
             if(check === true) {
-                axios.delete('http://localhost:8000/api/baskets/'+id, {
+                axios.delete('https://localhost:8000/api/baskets/'+id, {
                 }).then((response) => {
                     console.log(response)
                     window.location.reload();
@@ -74,19 +85,20 @@ const Basket = () => {
     }
 
     const requestConnected = (list_articles) => {
+        let price = 0;
         let tabList = [];
         let showBasket = [];
         list_articles.forEach(element => {
             tabList.push(element.idArticles)
         });
 
-        axios.get('http://localhost:8000/api/baskets/listBasket', {
+        axios.get('https://localhost:8000/api/baskets/listBasket', {
             params: {tabList:tabList},
         }).then((response) => {
-            let listBasket = response.data["hydra:member"];
+            let listBasketShow = response.data["hydra:member"];
             let i = 0;
             
-            listBasket.forEach(element => {
+            listBasketShow.forEach(element => {
                 let onStock = "";
                 let { id, Title, Image, Price, Stock} = element;
                 if(Stock >= 1){
@@ -95,6 +107,7 @@ const Basket = () => {
                     onStock = "Indisponible"
                 }
                 let idBasket = list_articles[i].id
+                price = price + element.Price
                 
                 showBasket.push(
                     <div className="article-card" key={id + "_article-card"}>
@@ -121,22 +134,24 @@ const Basket = () => {
                 )
                 i = i + 1;
             });
-            setListBasket(showBasket);
+            setShowPrice(price)
+            setListBasketShow(showBasket);
             
         }).catch((error) => {
             console.log(error)
         })
     }
 
-    const requestNotConnected = (listBasket) => {
+    const requestNotConnected = (listBasketShow) => {
         let showBasket = [];
+        let price = 0;
 
-        axios.get('http://localhost:8000/api/baskets/listBasket', {
-            params: {tabList:listBasket},
+        axios.get('https://localhost:8000/api/baskets/listBasket', {
+            params: {tabList:listBasketShow},
         }).then((response) => {
-            let listBasket = response.data["hydra:member"];
+            let listBasketShow = response.data["hydra:member"];
             
-            listBasket.forEach(element => {
+            listBasketShow.forEach(element => {
                 let onStock = "";
                 let { id, Title, Image, Price, Stock} = element;
                 if(Stock >= 1){
@@ -144,6 +159,7 @@ const Basket = () => {
                 } else {
                     onStock = "Indisponible"
                 }
+                price = price + element.Price;
 
                 showBasket.push(
                     <div className="article-card" key={id + "_article-card"}>
@@ -169,12 +185,91 @@ const Basket = () => {
                 </div>
                 )
             });
-            setListBasket(showBasket);
+            setListBasketShow(showBasket);
+            setShowPrice(price)
             
         }).catch((error) => {
             console.log(error)
         })
     }
+
+    function handleShow() {
+        let content = '';
+        if(localStorage.jwt) {
+            const base64Url = localStorage.jwt.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            let username = JSON.parse(window.atob(base64)).username;
+            axios.get('https://localhost:8000/api/me', {
+            params: {username: username}
+        }).then((response) => {
+            setCountry(response.data.country)
+            setAdress(response.data.adress)
+            setPostalCode(response.data.postalCode)
+            setCardData(response.data.cardData)
+            content = (
+                <Form>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Pays</Form.Label>
+                        <Form.Control type="text" defaultValue={response.data.country} onChange={(event) => { setCountry(event.target.value) }} placeholder="Enter Country" />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Adresse</Form.Label>
+                        <Form.Control type="text" defaultValue={response.data.adress} onChange={(event) => { setAdress(event.target.value) }} placeholder="Enter Adress" />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Code Postal</Form.Label>
+                        <Form.Control type="text" defaultValue={response.data.postalCode} onChange={(event) => { setPostalCode(event.target.value) }} placeholder="Enter Postal Code" />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Paiement</Form.Label>
+                        <Form.Control type="text" defaultValue={response.data.cardData} onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
+                    </Form.Group>
+                </Form>
+            )
+            setContentModal(content)
+        }).catch((error) => {
+            console.log(error);
+        })
+        } else {
+            let check = window.confirm("Avez-vous un compte ? Si vous voulez vous connecter !")
+            if(check === true) {
+                history.push("/login")
+            } else {
+                content = (
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Pays</Form.Label>
+                            <Form.Control type="text" onChange={(event) => { setCountry(event.target.value) }} placeholder="Enter Country" />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Adresse</Form.Label>
+                            <Form.Control type="text" onChange={(event) => { setAdress(event.target.value) }} placeholder="Enter Adress" />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Code Postal</Form.Label>
+                            <Form.Control type="text" onChange={(event) => { setPostalCode(event.target.value) }} placeholder="Enter Postal Code" />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Paiement</Form.Label>
+                            <Form.Control type="text" onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
+                        </Form.Group>
+                    </Form>
+                )
+                setContentModal(content)
+            }
+        }
+      }
+
+      if(listBasketShow.length > 0) {
+          showPriceDiv = (
+            <div>
+                <p>{showPrice + "€"}</p>
+                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
+                    Payer
+                </button>
+            </div>
+          )
+      }
 
 
     return (
@@ -185,7 +280,21 @@ const Basket = () => {
                     <h3>Prix</h3>
                 </div>
                 <div className="container_card">
-                    {listBasket}
+                    {listBasketShow}
+                </div>
+                {showPriceDiv}
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-xl">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                {contentModal}
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>            
         </Fragment>

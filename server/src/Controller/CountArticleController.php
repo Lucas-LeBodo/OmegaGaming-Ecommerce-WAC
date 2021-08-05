@@ -9,16 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CountArticleController extends AbstractController
-{
-    #[Route('/count/article', name: 'count_article')]
-    public function index(): Response
-    {
-        return $this->render('count_article/index.html.twig', [
-            'controller_name' => 'CountArticleController',
-        ]);
-    }
-
-    
+{   
     public function __invoke()
     {
         $email = $_GET["email"];
