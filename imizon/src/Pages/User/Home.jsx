@@ -37,6 +37,7 @@ const Home = () => {
                               image={element.Image}
                               description={element.Description}
                               price={element.Price}
+                              discount={element.discount}
                         />
                     )
 
@@ -50,7 +51,6 @@ const Home = () => {
         getMostPopular();
     },[])
 
-    console.table(showArticles)
     const map = () => {
         let map_def = [];
         let row = [];

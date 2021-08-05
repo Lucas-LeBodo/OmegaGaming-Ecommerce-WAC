@@ -52,8 +52,6 @@ const ProductSheet = (props) => {
         getInformations();
     }, [])
 
-    console.log(sameArticles)
-
     if(article !== ''){
         return (
             <Container fluid id="product_sheet">
@@ -66,6 +64,7 @@ const ProductSheet = (props) => {
                         stock={article.Stock}
                         otherArticle={sameArticles}
                         id={article.id}
+                        discount={article.discount}
                     />
                         
                 </Row>

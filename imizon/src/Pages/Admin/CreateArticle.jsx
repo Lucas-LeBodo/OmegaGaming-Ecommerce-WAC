@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Container, Form} from 'react-bootstrap';
 
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const CreateArticle = () => {
 
@@ -10,6 +11,7 @@ const CreateArticle = () => {
     const [description, setDescription] = useState('');
     const [feature, setFeature] = useState('');
     const [price, setPrice] = useState('');
+    const [discount, setDiscount] = useState(0);
     const [stock, setStock] = useState('');
     const [selectCategory, setSelectCategory] = useState('');
 
@@ -136,11 +138,12 @@ const CreateArticle = () => {
                 Price: parseInt(price),
                 Stock: parseInt(stock),
                 category: selectCategory,
-                sameArticles: reference
+                sameArticles: reference,
+                discount: parseInt(discount)
             }
             ).then((response) => {
                 console.log(response)
-                //window.location.reload();
+                window.location.reload();
             }).catch((error) => {
                 console.log(error)
             })
@@ -154,7 +157,8 @@ const CreateArticle = () => {
                 Stock: parseInt(stock),
                 category: selectCategory,
                 sameArticles: titleRef,
-                featureDiff: featureSup
+                featureDiff: featureSup,
+                discount: parseInt(discount)
             }
             ).then((response) => {
                 console.log(response)
@@ -196,11 +200,15 @@ const CreateArticle = () => {
                 </div>
                 <div className="form-group">
                     <label>Stock</label>
-                    <input type="number" className="form-control" placeholder={stock} onChange={ (event)=>{ setStock(event.target.value)}} required/>
+                    <input type="number" className="form-control" placeholder={stock} min="0" onChange={ (event)=>{ setStock(event.target.value)}} required/>
                 </div>
                 <div className="form-group">
                     <label>Price (€)</label>
-                    <input type="number" className="form-control" placeholder={price} onChange={ (event)=>{ setPrice(event.target.value)}} required/>
+                    <input type="number" className="form-control" placeholder={price} min="1" onChange={ (event)=>{ setPrice(event.target.value)}} required/>
+                </div>
+                <div className="form-group">
+                    <label>Discount (%)</label>
+                    <input type="number" className="form-control" placeholder={price} min="0" max="100" onChange={ (event)=>{ setDiscount(event.target.value)}} required/>
                 </div>
                 <div className="form-group">
                     <label>

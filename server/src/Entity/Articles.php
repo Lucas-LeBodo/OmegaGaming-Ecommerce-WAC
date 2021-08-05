@@ -161,6 +161,12 @@ class Articles
      */
     private $featureDiff;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"article:write", "article:read"})
+     */
+    private $discount;
+
 
     public function __construct()
     {
@@ -287,6 +293,18 @@ class Articles
     public function setFeatureDiff(?string $featureDiff): self
     {
         $this->featureDiff = $featureDiff;
+
+        return $this;
+    }
+
+    public function getDiscount(): ?int
+    {
+        return $this->discount;
+    }
+
+    public function setDiscount(?int $discount): self
+    {
+        $this->discount = $discount;
 
         return $this;
     }

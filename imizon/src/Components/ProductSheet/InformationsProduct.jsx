@@ -69,6 +69,27 @@ export default function informationProduct(props){
             })
     }
 
+    //DISCOUNT
+    let discountPrice = '';
+    let newPrice = '';
+
+    if(props.discount !== null && props.discount !== 0) {
+        newPrice = props.price * props.discount / 100
+        discountPrice = (
+            <div id="price" className="margin"> 
+                    <p> <del>{props.price}<BiEuro /></del></p> <p>{props.price - newPrice}</p>
+                    <p id="eco_parti">dont éco-participation 1€44</p>
+                </div> 
+        )
+    } else {
+        discountPrice = (
+            <div id="price" className="margin"> 
+                    <p> {props.price}<BiEuro /></p>
+                    <p id="eco_parti">dont éco-participation 1€44</p>
+                </div> 
+        )
+    }
+
     return(
         <Col>
             <Row> 
@@ -83,10 +104,7 @@ export default function informationProduct(props){
                 </div> 
             </Row>
             <Row> 
-                <div id="price" className="margin"> 
-                    <p> {props.price}<BiEuro /></p>
-                    <p id="eco_parti">dont éco-participation 1€44</p>
-                </div> 
+                {discountPrice}
             </Row>
             <Row> 
                 <Col>
