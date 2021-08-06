@@ -39,6 +39,7 @@ const Home = () => {
                               price={element.Price}
                         />
                     )
+
                 });
                 setShowArticles(showArticles);
             }).catch((error) => {
@@ -49,6 +50,7 @@ const Home = () => {
         getMostPopular();
     },[])
 
+    console.table(showArticles)
     const map = () => {
         let map_def = [];
         let row = [];
