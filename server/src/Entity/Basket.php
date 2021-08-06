@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
             'controller' => CountArticleController::class,
         ],
         'shippy' => [
-            'path' => '/shippy',
+            'path' => '/shippy/getRates',
             'method' => 'get',
             'controller' => ShippyController::class,
         ],
@@ -57,6 +57,11 @@ class Basket
      * @ORM\Column(type="integer")
      */
     private $price;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $weight;
 
     public function getId(): ?int
     {
@@ -95,6 +100,18 @@ class Basket
     public function setPrice(int $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getWeight(): ?int
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(int $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }

@@ -6,8 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ShippyController extends AbstractController
 {
+   
+
     public function __invoke()
-    {
+    { 
+
+        $data = $_GET['params'];
+
         $ch = \curl_init();
 
         \curl_setopt($ch, CURLOPT_URL, "https://www.shippypro.com/api");
@@ -17,9 +22,7 @@ class ShippyController extends AbstractController
         \curl_setopt($ch, CURLOPT_POST, TRUE);
 
         \curl_setopt($ch, CURLOPT_POSTFIELDS, "{
-          \"Method\": \"Ping\",
-          \"Params\": {}
-        }");
+          \"Method\": \"GetRates\", \"Params\": " . $data . " }");
 
         \curl_setopt($ch, CURLOPT_HTTPHEADER, array(
           "Content-Type: application/json",

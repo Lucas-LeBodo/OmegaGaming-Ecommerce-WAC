@@ -161,6 +161,11 @@ class Articles
      */
     private $featureDiff;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"article:read", "article:write"})
+     */
+    private $weight;
 
     public function __construct()
     {
@@ -287,6 +292,18 @@ class Articles
     public function setFeatureDiff(?string $featureDiff): self
     {
         $this->featureDiff = $featureDiff;
+
+        return $this;
+    }
+
+    public function getWeight(): ?int
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(int $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }

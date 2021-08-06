@@ -11,47 +11,155 @@ const Basket = () => {
     const [listBasketShow, setListBasketShow] = useState([]);    
     const [showPrice, setShowPrice] = useState(0);
     const [contentModal, setContentModal] = useState('')
+    
+    // pour les frais de port
     const [country, setCountry] = useState('')
     const [adress, setAdress] = useState('')
     const [postalCode, setPostalCode] = useState('')
     const [cardData, setCardData] = useState('')
+    const [rates, setRates] = useState('')
+    const [firstname, setFirstName] = useState('')
+    const [lastname, setLasttName] = useState('')
+    const [email, setEmail] = useState('')
+
+    const [test, setTest] = useState('')
     const history = useHistory();
     let showPriceDiv = '';
 
     useEffect(() => {
         let list_id = [];
         let list_articles = '';
-        
+    
+
+        const getInformation = () =>{
+            if(localStorage.jwt) {
+                const base64Url = localStorage.jwt.split('.')[1];
+                const base64 = base64Url.replace('-', '+').replace('_', '/');
+                let username = JSON.parse(window.atob(base64)).username;
+                axios.get('http://localhost:8000/api/me', {
+                params: {username: username}
+                }).then((response) => {
+                    let weightTotal = 0;
+                    if(list_articles.length > 1){
+                        list_articles.forEach((article) => {
+                            weightTotal = article.weight + weightTotal;
+                        })
+                    }
+                    getRates(response.data, weightTotal)
+                })
+            }else{
+                let weightTotal = 0;
+                let infos = {
+                    adress: "Rue d'Avron 116",
+                    postalCode: "75020",
+                    email: "johndoe@gmail.com",
+                    lastName: "John",
+                    firstName: "Doe",
+                    country: "FR"
+                }
+                axios.get('http://localhost:8000/api/baskets/listBasket', {
+                    params: {tabList:list_id},
+                }).then((response) => {
+                    let list_articles = response.data["hydra:member"];
+                    list_articles.forEach((element) => {
+                        weightTotal = element.weight + weightTotal
+                    })
+                    getRates(infos, weightTotal,list_articles)
+                })
+                
+            }
+        }
+        const getRates = (info, W, listArt) => {
+         
+            let data = JSON.stringify({
+                "to_address": {
+                    "name": info.firstName,
+                    "company": "ShippyPro",
+                    "street1": info.adress,
+                    "street2": "",
+                    "city": "Paris",
+                    "state": "Département de Paris",
+                    "zip": info.postalCode,
+                    "country": "FR", // changer l'entree dans le form mettre initial (ex: Fr)
+                    "phone": "5551231234",
+                    "email": info.email
+                },
+                "from_address": {
+                    "name": "Damien Legrand",
+                    "company": "Aucune",
+                    "street1": "Rue d'Avron 116",
+                    "street2": "",
+                    "city": "Paris",
+                    "state": "Département de Paris",
+                    "zip": "75020",
+                    "country": "FR",
+                    "phone": "+33 623525172",
+                    "email": "damienlg06@hotmail.com"
+                },
+                "parcels": [
+                    {
+                        "length": 5,
+                        "width": 5,
+                        "height": 5,
+                        "weight": W
+                    }
+                ],
+                "Insurance": 0,
+                "InsuranceCurrency": "EUR",
+                "CashOnDelivery": 0,
+                "CashOnDeliveryCurrency": "EUR",
+                "ContentDescription": "Shoes",
+                "TotalValue": "50.25 EUR",
+                "ShippingService": "Standard"
+            })
+            
+            if(list_articles != "" || listArt != ""){
+                axios.get('http://localhost:8000/api/shippy/getRates?params=' + data,{  
+                }).then((response) => {
+                    setRates(response.data.Rates['hydra:member'][0])
+                }).catch((error) => {
+                    
+                })
+            }
+        }
+
+
         if(localStorage.jwt) {
             const base64Url = localStorage.jwt.split('.')[1];
             const base64 = base64Url.replace('-', '+').replace('_', '/');
             let username = JSON.parse(window.atob(base64)).username;
             
-            axios.get('https://localhost:8000/api/baskets/countArticles', {
+            axios.get('http://localhost:8000/api/baskets/countArticles', {
                 params: {email: username}
             }).then((response) => {
                 list_articles = response.data["hydra:member"]
                 requestConnected(list_articles)
+                getInformation()
             }).catch((error) => {
                 console.log(error);
             })
+            
 
         } else {
             if(localStorage.shoppingUserNoLog) {
                 list_id = localStorage.shoppingUserNoLog;
                 list_id = list_id.split(" ");
                 requestNotConnected(list_id)
+                getInformation()
             }
         }
+
+        
+        
+
     }, [])
 
     const deleteArticles = (id, connected) => {
         if(connected === "connected") {
             let check = window.confirm("Are you sure ?");
             if(check === true) {
-                axios.delete('https://localhost:8000/api/baskets/'+id, {
+                axios.delete('http://localhost:8000/api/baskets/'+id, {
                 }).then((response) => {
-                    console.log(response)
                     window.location.reload();
                 }).catch((error) => {
                     console.log(error)
@@ -91,8 +199,7 @@ const Basket = () => {
         list_articles.forEach(element => {
             tabList.push(element.idArticles)
         });
-
-        axios.get('https://localhost:8000/api/baskets/listBasket', {
+        axios.get('http://localhost:8000/api/baskets/listBasket', {
             params: {tabList:tabList},
         }).then((response) => {
             let listBasketShow = response.data["hydra:member"];
@@ -145,12 +252,11 @@ const Basket = () => {
     const requestNotConnected = (listBasketShow) => {
         let showBasket = [];
         let price = 0;
-
-        axios.get('https://localhost:8000/api/baskets/listBasket', {
+        
+        axios.get('http://localhost:8000/api/baskets/listBasket', {
             params: {tabList:listBasketShow},
         }).then((response) => {
             let listBasketShow = response.data["hydra:member"];
-            
             listBasketShow.forEach(element => {
                 let onStock = "";
                 let { id, Title, Image, Price, Stock} = element;
@@ -193,21 +299,45 @@ const Basket = () => {
         })
     }
 
+
+ 
+    /**
+     *  fonction de submit de command
+     * 
+     * @param {*} e
+     */
+
+    const submit = (e) => {
+        e.preventDefault()
+        let country = e.target[0];
+        let address = e.target[1];
+        let zip = e.target[2];
+        let payment =  e.target[3];
+
+        let totalBasket = showPrice;
+    }
+
+    
+
+
     function handleShow() {
         let content = '';
         if(localStorage.jwt) {
             const base64Url = localStorage.jwt.split('.')[1];
             const base64 = base64Url.replace('-', '+').replace('_', '/');
             let username = JSON.parse(window.atob(base64)).username;
-            axios.get('https://localhost:8000/api/me', {
+            axios.get('http://localhost:8000/api/me', {
             params: {username: username}
         }).then((response) => {
             setCountry(response.data.country)
             setAdress(response.data.adress)
             setPostalCode(response.data.postalCode)
             setCardData(response.data.cardData)
+            setEmail(response.data.email)
+            setLasttName(response.data.lastname)
+            setFirstName(response.data.firstname)
             content = (
-                <Form>
+                <Form onSubmit={(event) => {submit(event)}}>
                     <Form.Group className="mb-3">
                         <Form.Label>Pays</Form.Label>
                         <Form.Control type="text" defaultValue={response.data.country} onChange={(event) => { setCountry(event.target.value) }} placeholder="Enter Country" />
@@ -224,6 +354,8 @@ const Basket = () => {
                         <Form.Label>Paiement</Form.Label>
                         <Form.Control type="text" defaultValue={response.data.cardData} onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
                     </Form.Group>
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" className="btn btn-primary">Save changes</button>
                 </Form>
             )
             setContentModal(content)
@@ -236,7 +368,7 @@ const Basket = () => {
                 history.push("/login")
             } else {
                 content = (
-                    <Form>
+                    <Form onSubmit={submit}>
                         <Form.Group className="mb-3">
                             <Form.Label>Pays</Form.Label>
                             <Form.Control type="text" onChange={(event) => { setCountry(event.target.value) }} placeholder="Enter Country" />
@@ -253,6 +385,8 @@ const Basket = () => {
                             <Form.Label>Paiement</Form.Label>
                             <Form.Control type="text" onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
                         </Form.Group>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" className="btn btn-primary">Save changes</button>
                     </Form>
                 )
                 setContentModal(content)
@@ -264,6 +398,7 @@ const Basket = () => {
           showPriceDiv = (
             <div>
                 <p>{showPrice + "€"}</p>
+                <p>{"Frais de port : " + rates.rate + "€"}</p>
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
                     Payer
                 </button>
@@ -288,10 +423,6 @@ const Basket = () => {
                         <div className="modal-content">
                             <div className="modal-body">
                                 {contentModal}
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
