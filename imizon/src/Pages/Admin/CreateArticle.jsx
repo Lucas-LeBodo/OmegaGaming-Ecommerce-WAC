@@ -208,7 +208,7 @@ const CreateArticle = () => {
                 </div>
                 <div className="form-group">
                     <label>Discount (%)</label>
-                    <input type="number" className="form-control" placeholder={price} min="0" max="100" onChange={ (event)=>{ setDiscount(event.target.value)}} required/>
+                    <input type="number" className="form-control" placeholder={discount} min="0" max="100" onChange={ (event)=>{ setDiscount(event.target.value)}} required/>
                 </div>
                 <div className="form-group">
                     <label>

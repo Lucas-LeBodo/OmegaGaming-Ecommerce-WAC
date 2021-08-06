@@ -77,7 +77,11 @@ export default function informationProduct(props){
         newPrice = props.price * props.discount / 100
         discountPrice = (
             <div id="price" className="margin"> 
-                    <p> <del>{props.price}<BiEuro /></del></p> <p>{props.price - newPrice}</p>
+                <div className="d-flex">
+                    <p> <del>{props.price}<BiEuro /></del></p>
+                    <p className="badge bg-danger">Promotion : {props.discount + "% !!!"}</p>
+                </div>
+                    <p>{props.price - newPrice}</p>
                     <p id="eco_parti">dont éco-participation 1€44</p>
                 </div> 
         )
