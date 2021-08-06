@@ -56,11 +56,12 @@ export default function informationProduct(props){
     function addToBasketBDD(id_user) {
         console.log(props)
         let id_art = props.id;
-
+        console.log(props.weight)
         axios.post('http://localhost:8000/api/baskets', {
                 price: parseInt(props.price),
                 idUser: parseInt(id_user),
                 idArticles: parseInt(id_art),
+                weight : parseInt(props.weight)
             }).then((response) => {
                 console.log(response)
                 window.location.reload()

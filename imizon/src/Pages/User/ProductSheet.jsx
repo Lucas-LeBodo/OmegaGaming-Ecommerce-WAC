@@ -66,6 +66,7 @@ const ProductSheet = (props) => {
                         stock={article.Stock}
                         otherArticle={sameArticles}
                         id={article.id}
+                        weight={article.weight}
                     />
                         
                 </Row>
@@ -101,6 +102,7 @@ const ProductSheet = (props) => {
                     price={article.Price}
                     stock={article.Stock}
                     otherArticle={sameArticles}
+                    weight={article.weight}
                 />
                     
             </Row>
