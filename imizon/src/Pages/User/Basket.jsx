@@ -313,8 +313,68 @@ const Basket = () => {
         let address = e.target[1];
         let zip = e.target[2];
         let payment =  e.target[3];
-
         let totalBasket = showPrice;
+        console.log(e.target)
+
+        let data = JSON.stringify({
+            "to_address": {
+                "name": "John Doe",
+                "company": "ShippyPro",
+                "street1": "Rue d'Avron 116",
+                "street2": "",
+                "city": "Paris",
+                "state": "Département de Paris",
+                "zip": "75020",
+                "country": "FR",
+                "phone": "5551231234",
+                "email": "johndoe@gmail.com"
+            },
+            "from_address": {
+                "name": "Damien Legrand",
+                "company": "Aucune",
+                "street1": "Rue d'Avron 116",
+                "street2": "",
+                "city": "Paris",
+                "state": "Département de Paris",
+                "zip": "75020",
+                "country": "FR",
+                "phone": "+33 623525172",
+                "email": "damienlg06@hotmail.com"
+            },
+            "parcels": [
+                {
+                    "length": 5,
+                    "width": 5,
+                    "height": 5,
+                    "weight": 2
+                }
+            ],
+            "TotalValue": "20.90 EUR",
+            "TransactionID": "ORDER2365",
+            "ContentDescription": "Shoes",
+            "Insurance": 0,
+            "InsuranceCurrency": "EUR",
+            "CashOnDelivery": 0,
+            "CashOnDeliveryCurrency": "EUR",
+            "CashOnDeliveryType": 0,
+            "CarrierName": "Generic",
+            "CarrierService": "Standard",
+            "CarrierID": 2747,
+            "OrderID": "",
+            "RateID": "",
+            "Incoterm": "DAP",
+            "BillAccountNumber": "",
+            "Note": "Ship by 06/08/2021",
+            "Async": false
+        })
+   
+        axios.get('http://localhost:8000/api/shippy/postOrder?params=' + data,{  
+        }).then((response) => {
+            setRates(response.data.Rates['hydra:member'][0])
+        }).catch((error) => {
+            
+        })
+
     }
 
     
@@ -353,6 +413,9 @@ const Basket = () => {
                     <Form.Group className="mb-3">
                         <Form.Label>Paiement</Form.Label>
                         <Form.Control type="text" defaultValue={response.data.cardData} onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Control type="hidden" defaultValue={response.data.firstname} onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
                     </Form.Group>
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" className="btn btn-primary">Save changes</button>
