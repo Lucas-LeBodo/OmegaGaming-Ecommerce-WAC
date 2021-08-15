@@ -18,6 +18,7 @@ const UpdateArticle = (props) => {
     const [id, setId] = useState('');
     const [image, setImage] = useState('')
     const [category, setCategory] = useState('')
+    const [weight, setWeight] = useState('');
 
     //affichage des categories
     const [pages, setPages] = useState(1);
@@ -102,9 +103,10 @@ const UpdateArticle = (props) => {
             Feature: feature,
             Price: parseInt(price),
             Stock: parseInt(stock),
-            category: selectCategory
+            category: selectCategory,
+            weight: parseInt(weight)
         }).then((response) => {
-            window.location.reload()
+            //window.location.reload()
         }).catch((error) => {
             console.log(error);
         })
@@ -138,6 +140,7 @@ const UpdateArticle = (props) => {
                             <div className="flex-head-top">
                             <label>Title : <input type="text" id={'title'} placeholder={"Enter a title"} defaultValue={informations.Title} onChange={(event)=>setTitle(event.target.value)}></input></label>    
                             <label>Price : <input type="text" defaultValue={informations.Price} placeholder={"Enter Prices"} onChange={(event)=>setPrice(event.target.value)}></input> </label>
+                            <label>Weight : <input type="text" defaultValue={informations.weight} placeholder={"Enter Weight"} onChange={(event)=>setWeight(event.target.value)}></input> </label>
                             </div>
                             <div className="flex-head-bottom">
                             <label>Stocks : <input type="text" defaultValue={informations.Stock} placeholder={"Enter Stock"} onChange={(event)=>setStock(event.target.value)}></input></label>
@@ -163,7 +166,7 @@ const UpdateArticle = (props) => {
                             <label>
                                 Category : 
                                 <select onChange={ (event)=>{ setSelectCategory(event.target.value)}} >
-                                    <option> {category} </option>
+                                    <option> --- Chose category --- </option>
                                     {result}
                                 </select> 
                             </label>

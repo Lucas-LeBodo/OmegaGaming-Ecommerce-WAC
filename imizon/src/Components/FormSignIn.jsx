@@ -20,7 +20,6 @@ export default function FormSignIn() {
             }).catch((error) => {
                 console.log(error)
             })
-    
     }
 
     function parseJwt(token) {

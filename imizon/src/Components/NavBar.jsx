@@ -17,6 +17,7 @@ function NavBar(props) {
     let jwt = localStorage.jwt
     let nameUser = localStorage.name
     let user = '';
+    let admin = '';
     
     const infoUser = (jwt) => {
         let split = jwt.split('.');
@@ -37,12 +38,14 @@ function NavBar(props) {
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
                 let username = JSON.parse(window.atob(base64)).username;
 
-            axios.get('https://localhost:8000/api/baskets/countArticles', {
+            axios.get('http://localhost:8000/api/baskets/countArticles', {
                 params: {email: username}
             }).then((response) => {
                 count_articles = response.data["hydra:member"].length
                 if(count_articles > 0) {
                     setCountArticles(count_articles);
+                } else {
+                    setCountArticles('')
                 }
             }).catch((error) => {
                 console.log(error);
@@ -55,10 +58,12 @@ function NavBar(props) {
                 count_articles = list_id.length;
                 if(count_articles > 0) {
                     setCountArticles(count_articles);
+                } else {
+                    setCountArticles('')
                 }
             }
         }
-    }, [])
+    }, [window.location.pathname])
 
 
 
@@ -88,8 +93,15 @@ function NavBar(props) {
         navbox = <Navbox />
         logout = <Link to={'/'}  onClick={() => {localStorage.clear();}}><FiLogOut/> Logout</Link>
         user = nameUser.split(' ')
-        user = <Link to={'#'} ><FiUser /> {user[0]}</Link>
-        infoUser(jwt)
+        user = <Link to={'/profil/'+nameUser} ><FiUser /> {user[0]}</Link>
+        // infoUser(jwt)
+
+        let split = jwt.split('.');
+        let info = base64_decode(split[1]);
+        info = JSON.parse(info);
+        if(info.roles["roles"] === "ROLE_ADMIN") {
+            admin = <Link to={'/admin'} ><FiUser />Admin</Link>
+        }
     }
          
 
@@ -108,6 +120,7 @@ function NavBar(props) {
                         <div className="dropdown">
                             <div className="boutonmenuprincipal"><FiUser /></div>
                             <div className="dropdown-child">
+                                {admin}
                                 {user}
                                 {loginPath}
                                 {registerPath}

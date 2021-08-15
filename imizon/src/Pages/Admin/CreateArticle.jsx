@@ -12,6 +12,7 @@ const CreateArticle = () => {
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
     const [selectCategory, setSelectCategory] = useState('');
+    const [weight, setWeight] = useState('');
 
 
     //affichage des categories
@@ -50,7 +51,7 @@ const CreateArticle = () => {
         }
 
         const recupReferences = () => {
-            axios.get('https://localhost:8000/api/articles/recupReferences?page='+ pages ,{    
+            axios.get('http://localhost:8000/api/articles/recupReferences?page='+ pages ,{    
             }).then((response) => {
                 setAllRef(response.data["hydra:member"]);
                 if(response.data["hydra:view"] !== undefined){
@@ -128,7 +129,7 @@ const CreateArticle = () => {
        
         if(checked){
             setReference(title);
-            axios.post('https://localhost:8000/api/articles',{
+            axios.post('http://localhost:8000/api/articles',{
                 Title: title,
                 Description: description,
                 Image: mb64File,
@@ -136,16 +137,15 @@ const CreateArticle = () => {
                 Price: parseInt(price),
                 Stock: parseInt(stock),
                 category: selectCategory,
-                sameArticles: reference
-            }
-            ).then((response) => {
-                console.log(response)
-                //window.location.reload();
+                sameArticles: reference,
+                weight: parseInt(weight)
+            }).then((response) => {
+                window.location.reload();
             }).catch((error) => {
                 console.log(error)
             })
         }else {
-            axios.post('https://localhost:8000/api/articles',{
+            axios.post('http://localhost:8000/api/articles',{
                 Title: title,
                 Description: description,
                 Image: mb64File,
@@ -154,10 +154,10 @@ const CreateArticle = () => {
                 Stock: parseInt(stock),
                 category: selectCategory,
                 sameArticles: titleRef,
-                featureDiff: featureSup
+                featureDiff: featureSup,
+                weight: parseInt(weight)
             }
             ).then((response) => {
-                console.log(response)
                 window.location.reload();
             }).catch((error) => {
                 console.log(error)
@@ -200,7 +200,11 @@ const CreateArticle = () => {
                 </div>
                 <div className="form-group">
                     <label>Price (€)</label>
-                    <input type="number" className="form-control" placeholder={price} onChange={ (event)=>{ setPrice(event.target.value)}} required/>
+                    <input type="number" className="form-control" placeholder={price} onChange={ (event)=>{ setPrice(event.target.value)}} min="0" required/>
+                </div>
+                <div className="form-group">
+                    <label>Weight (Kg)</label>
+                    <input type="number" className="form-control" placeholder={weight} onChange={ (event)=>{ setWeight(event.target.value)}} min="0" required/>
                 </div>
                 <div className="form-group">
                     <label>

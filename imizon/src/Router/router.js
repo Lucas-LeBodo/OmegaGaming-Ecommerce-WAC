@@ -15,6 +15,7 @@ import Product from '../Pages/User/ProductSheet'
 import BestSeller from '../Pages/User/BestSeller';
 import Basket from '../Pages/User/Basket';
 import Search from '../Pages/User/Search';
+import Profil from '../Pages/User/Profil';
 
 
 import HomeAdmin from '../Pages/Admin/Home';
@@ -80,6 +81,7 @@ const AppRouter = (props) => {
                     <Route path='/best-seller'  component={BestSeller}  exact={true}/>
                     <Route path='/basket'  component={Basket}  exact={true} />
                     <Route path='/search'  component={Search}  exact={true} />
+                    <Route path='/profil/:name'  component={Profil} />
                     
 
                     {/* Admin Router */}
