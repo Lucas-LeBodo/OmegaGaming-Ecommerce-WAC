@@ -34,7 +34,7 @@ export default function informationProduct(props){
         if(token){
             let id_user = "";
 
-            axios.get('http://localhost:8000/api/me', {
+            axios.get('https://localhost:8000/api/me', {
                 params: {username: username}
             }).then((response) => {
                 id_user = response.data.id
@@ -57,7 +57,7 @@ export default function informationProduct(props){
         console.log(props)
         let id_art = props.id;
 
-        axios.post('http://localhost:8000/api/baskets', {
+        axios.post('https://localhost:8000/api/baskets', {
                 price: parseInt(props.price),
                 idUser: parseInt(id_user),
                 idArticles: parseInt(id_art),

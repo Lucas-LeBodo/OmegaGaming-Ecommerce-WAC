@@ -17,7 +17,7 @@ const ShowArticles = () => {
 
         
         function getArticles() {
-            axios.get('http://localhost:8000/api/articles?page='+page, {
+            axios.get('https://localhost:8000/api/articles?page='+page, {
             }).then((response) => {
                 let articles = response.data["hydra:member"];
                 if(response.data["hydra:view"] !== undefined){

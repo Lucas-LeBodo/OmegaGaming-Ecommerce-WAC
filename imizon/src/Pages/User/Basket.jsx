@@ -16,7 +16,7 @@ const Basket = () => {
             const base64 = base64Url.replace('-', '+').replace('_', '/');
             let username = JSON.parse(window.atob(base64)).username;
             
-            axios.get('http://localhost:8000/api/baskets/countArticles', {
+            axios.get('https://localhost:8000/api/baskets/countArticles', {
                 params: {email: username}
             }).then((response) => {
                 list_articles = response.data["hydra:member"]
@@ -38,7 +38,7 @@ const Basket = () => {
         if(connected === "connected") {
             let check = window.confirm("Are you sure ?");
             if(check === true) {
-                axios.delete('http://localhost:8000/api/baskets/'+id, {
+                axios.delete('https://localhost:8000/api/baskets/'+id, {
                 }).then((response) => {
                     console.log(response)
                     window.location.reload();
@@ -80,7 +80,7 @@ const Basket = () => {
             tabList.push(element.idArticles)
         });
 
-        axios.get('http://localhost:8000/api/baskets/listBasket', {
+        axios.get('https://localhost:8000/api/baskets/listBasket', {
             params: {tabList:tabList},
         }).then((response) => {
             let listBasket = response.data["hydra:member"];
@@ -131,7 +131,7 @@ const Basket = () => {
     const requestNotConnected = (listBasket) => {
         let showBasket = [];
 
-        axios.get('http://localhost:8000/api/baskets/listBasket', {
+        axios.get('https://localhost:8000/api/baskets/listBasket', {
             params: {tabList:listBasket},
         }).then((response) => {
             let listBasket = response.data["hydra:member"];

@@ -8,7 +8,7 @@ const CreateCategory = () => {
 
      const submit = async () => {
     
-        axios.post('http://localhost:8000/api/categories',{
+        axios.post('https://localhost:8000/api/categories',{
             categoryName: category
         }
         ).then((response) => {
