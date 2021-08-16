@@ -36,7 +36,7 @@ const Basket = () => {
                 const base64Url = localStorage.jwt.split('.')[1];
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
                 let username = JSON.parse(window.atob(base64)).username;
-                axios.get('http://localhost:8000/api/me', {
+                axios.get('https://localhost:8000/api/me', {
                 params: {username: username}
                 }).then((response) => {
                     let weightTotal = 0;
@@ -57,7 +57,7 @@ const Basket = () => {
                     firstName: "Doe",
                     country: "FR"
                 }
-                axios.get('http://localhost:8000/api/baskets/listBasket', {
+                axios.get('https://localhost:8000/api/baskets/listBasket', {
                     params: {tabList:list_id},
                 }).then((response) => {
                     let list_articles = response.data["hydra:member"];
@@ -114,7 +114,7 @@ const Basket = () => {
             })
             
             if(list_articles != "" || listArt != ""){
-                axios.get('http://localhost:8000/api/shippy/getRates?params=' + data,{  
+                axios.get('https://localhost:8000/api/shippy/getRates?params=' + data,{  
                 }).then((response) => {
                     setRates(response.data.Rates['hydra:member'][0])
                 }).catch((error) => {
@@ -199,7 +199,7 @@ const Basket = () => {
         list_articles.forEach(element => {
             tabList.push(element.idArticles)
         });
-        axios.get('http://localhost:8000/api/baskets/listBasket', {
+        axios.get('https://localhost:8000/api/baskets/listBasket', {
             params: {tabList:tabList},
         }).then((response) => {
             let listBasketShow = response.data["hydra:member"];
@@ -253,7 +253,7 @@ const Basket = () => {
         let showBasket = [];
         let price = 0;
         
-        axios.get('http://localhost:8000/api/baskets/listBasket', {
+        axios.get('https://localhost:8000/api/baskets/listBasket', {
             params: {tabList:listBasketShow},
         }).then((response) => {
             let listBasketShow = response.data["hydra:member"];
@@ -326,7 +326,7 @@ const Basket = () => {
             const base64Url = localStorage.jwt.split('.')[1];
             const base64 = base64Url.replace('-', '+').replace('_', '/');
             let username = JSON.parse(window.atob(base64)).username;
-            axios.get('http://localhost:8000/api/me', {
+            axios.get('https://localhost:8000/api/me', {
             params: {username: username}
         }).then((response) => {
             setCountry(response.data.country)

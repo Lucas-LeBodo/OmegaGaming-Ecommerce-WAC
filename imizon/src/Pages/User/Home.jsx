@@ -13,7 +13,7 @@ const Home = () => {
     let result;
     useEffect(() => {
         // function test() {
-        //     axios.get('http://localhost:8000/api/shippy',{
+        //     axios.get('https://localhost:8000/api/shippy',{
         //     }).then((response) => {
         //         console.log(response)
         //     }).catch((error) => {

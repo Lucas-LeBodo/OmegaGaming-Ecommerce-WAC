@@ -57,7 +57,7 @@ export default function informationProduct(props){
         console.log(props)
         let id_art = props.id;
         console.log(props.weight)
-        axios.post('http://localhost:8000/api/baskets', {
+        axios.post('https://localhost:8000/api/baskets', {
                 price: parseInt(props.price),
                 idUser: parseInt(id_user),
                 idArticles: parseInt(id_art),
