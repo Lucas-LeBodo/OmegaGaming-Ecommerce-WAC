@@ -21,10 +21,16 @@ $white: #f6f6f6ff;
     left: 0;
 }
 
+.App { 
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
 .container {
     margin-top: 5em;
     width:100%;
 }
+
 
 .head-list {
     display: flex;
@@ -294,6 +300,7 @@ $white: #f6f6f6ff;
         justify-content: center;
         top: 48px;
         background-color: $darkgrey;
+        z-index: 1;
         font-size: 18px;
 
         .best a {
@@ -482,11 +489,10 @@ $white: #f6f6f6ff;
 
 // Search Styles 
 .Panel {
-    position: absolute;
+    position: fixed;
     z-index: 0;
-    height: 100vh;
-    width: 15em;
-    float: right;
+    min-height: 100%;
+    width: 15vw;
     background-color:$darkblue;
 
     .Panel-content {
@@ -494,6 +500,7 @@ $white: #f6f6f6ff;
         flex-direction: column;
         padding-top: 8em;
         align-items: center;
+        overflow-y: auto;
         height: 100%;
 
         .category-control {
@@ -503,32 +510,14 @@ $white: #f6f6f6ff;
         width: 100%;
 
             h3{ 
+                padding-bottom: 5%;
                 color: $white;
+                text-decoration:  underline;
             }
 
-            .selectCategory {
-                width: 90%;
-                border: none;
-                background-color: $darkblue;
-                color: $darkgrey;
-
-                .css-yk16xz-control {
-                    background-color: $darkblue !important;
-                    border: none !important;
-                }
-
-                .css-1pahdxg-control {
-                    background-color: $darkblue !important;
-                    border: none !important;
-                    box-shadow: none !important;
-                }
-                .css-1okebmr-indicatorSeparator {
-                    display: none !important;
-                }
-
-                &:active {
-                    border: none !important;
-                }
+            .category-container {
+                width: 80%;
+                color: $white;
             }
         }
 
@@ -538,16 +527,27 @@ $white: #f6f6f6ff;
             align-items: center;
             width: 100%;
 
-            h3{ 
+            h3{
+                padding-bottom: 5%;
                 color: $white;
+                text-decoration:  underline;
             }
 
-            label {
+            .sort-container {
+                width: 80%;
                 color: $white;
             }
 
         }
+        
     }
+    
+}
+.cardSearch-container { 
+    display: block;
+    width: 75vw;
+    margin: 0 0 0 20%;
+
 }
 
 // --------------------------------- Admin ---------------------------------- //

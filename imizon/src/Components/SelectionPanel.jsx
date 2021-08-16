@@ -66,12 +66,14 @@ export default function AnimatedMulti(props) {
             <div className="Panel-content">
                 <div className="category-control">
                     <h3> Category </h3>
-                    {result}
+                   <div className="category-container">{result}</div> 
                 </div>
                 <div className="sort-control">
                     <h3> Sort </h3>
-                    <label><input type="radio" value="ASC" onChange={event => {setSort(event.target.value)}}/> A-Z </label>
-                    <label><input type="radio" value="DESC" onChange={event => {setSort(event.target.value)}}/> Z-A </label>
+                    <div className="sort-container">
+                      <div><label><input type="checkbox" value="ASC" onChange={event => {setSort(event.target.value)}}/> A-Z </label></div>
+                      <div><label><input type="checkbox" value="DESC" onChange={event => {setSort(event.target.value)}}/> Z-A </label></div>
+                    </div>
                 </div>
             </div>
         </div>

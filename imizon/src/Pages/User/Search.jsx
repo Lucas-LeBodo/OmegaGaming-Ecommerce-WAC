@@ -1,5 +1,4 @@
 import React, {useEffect, Fragment, useState} from 'react';
-import { Container } from "react-bootstrap";
 import axios from 'axios';
 
 // Import Components
@@ -77,7 +76,7 @@ const Search = (props) => {
 
     useEffect(() => {
         setRow(map());
-    }, [showArticles])
+    }, [showArticles]);
     
     const getSort = (sort) => {
         setSort(sort)
@@ -91,8 +90,8 @@ const Search = (props) => {
                 nbRow = Math.ceil(showArticles.length/3);
                 for (let i = 0; i < nbRow; i++){
                     for (let j = 0; j < 3 ; j++){
-                    row [j] = showArticles[j]
-                        if(j == 2 ){
+                    row[j] = showArticles[j]
+                        if(j === 2 ){
                             map_def.push(row)
                             row = []
                             showArticles.splice(0, 3);
@@ -102,8 +101,8 @@ const Search = (props) => {
             }else{
                 for (let i = 0; i < nbRow; i++){
                     for (let j = 0; j < 3 ; j++){
-                    row [j] = showArticles[j]
-                        if(j == 2){
+                    row[j] = showArticles[j]
+                        if(j === 2){
                             map_def.push(row)
                             row = []
                         }
@@ -126,7 +125,7 @@ const Search = (props) => {
 
 
 
-    if(row != ''){
+    if(row !== ''){
         result = row.map((cards, index) => {
             // console.log("cards : ")
             // console.log(cards)
@@ -142,7 +141,7 @@ const Search = (props) => {
     return(
         <Fragment >
             <SelectionPanel callBack={getArticle} sort={getSort}/>
-            <Container style={{marginLeft: '30%'}}>{result}</Container>
+            <div className="cardSearch-container">{result}</div> 
         </Fragment>
     )
 
