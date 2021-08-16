@@ -1,7 +1,7 @@
 // import libs
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
-import {Link, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 
 const Profil = () => {
@@ -29,7 +29,7 @@ const Profil = () => {
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
                 let username = JSON.parse(window.atob(base64)).username;
                 
-                axios.get('http://localhost:8000/api/me', {
+                axios.get('https://localhost:8000/api/me', {
                     params: {username: username}
                 }).then((response) => {
                     console.log(response.data)

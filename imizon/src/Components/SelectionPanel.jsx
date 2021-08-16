@@ -17,7 +17,7 @@ export default function AnimatedMulti(props) {
   
   useEffect(() => {
     const getCategories = () => {
-      axios.get('http://localhost:8000/api/categories?page='+ pages ,{
+      axios.get('https://localhost:8000/api/categories?page='+ pages ,{
       }).then((response) => {
           setCategories(response.data["hydra:member"]);
           if(response.data["hydra:view"] !== undefined){
@@ -39,18 +39,17 @@ export default function AnimatedMulti(props) {
   let options = [];
   if(categories != ""){
     result = categories.map((category) => {
-        return(
-          { value: category.id, label: category.category_name }
+      return(
+        <div key={Math.random().toString(36).substring(7)}><label><input type="checkbox" onChange={event => {setSort(event.target.value)}}/> {category.category_name }</label></div>
         )
     })
   }
   options.push(result)
-  const animatedComponents = makeAnimated();
 
 
   useEffect(() => {
     if(selectCategory != ''){
-      axios.get('http://localhost:8000/api/categories/' + selectCategory ,{
+      axios.get('https://localhost:8000/api/categories/' + selectCategory ,{
         }).then((response) => {
           props.callBack(response.data)
         })
@@ -67,12 +66,14 @@ export default function AnimatedMulti(props) {
             <div className="Panel-content">
                 <div className="category-control">
                     <h3> Category </h3>
-                    <Select closeMenuOnSelect={false} components={animatedComponents} isMulti options={options[0]} className={'selectCategory'} onChange={(event) => {setSelectCategory(event[0].value)}}/>  
+                   <div className="category-container">{result}</div> 
                 </div>
                 <div className="sort-control">
                     <h3> Sort </h3>
-                    <label><input type="radio" value="ASC" onChange={event => {setSort(event.target.value)}}/> A-Z </label>
-                    <label><input type="radio" value="DESC" onChange={event => {setSort(event.target.value)}}/> Z-A </label>
+                    <div className="sort-container">
+                      <div><label><input type="checkbox" value="ASC" onChange={event => {setSort(event.target.value)}}/> A-Z </label></div>
+                      <div><label><input type="checkbox" value="DESC" onChange={event => {setSort(event.target.value)}}/> Z-A </label></div>
+                    </div>
                 </div>
             </div>
         </div>
