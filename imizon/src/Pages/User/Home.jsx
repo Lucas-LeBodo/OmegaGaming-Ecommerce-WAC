@@ -9,11 +9,12 @@ import Card from '../../Components/ArticleCard';
 
 
 const Home = () => {
+
     const [showArticles, setShowArticles] = useState('');
     let result;
     useEffect(() => {
         // function test() {
-        //     axios.get('http://localhost:8000/api/shippy',{
+        //     axios.get('https://localhost:8000/api/shippy',{
         //     }).then((response) => {
         //         console.log(response)
         //     }).catch((error) => {
@@ -24,7 +25,7 @@ const Home = () => {
 
 
         function getMostPopular() {
-            axios.get('http://localhost:8000/api/articles/popularity', {
+            axios.get('https://localhost:8000/api/articles/popularity', {
                 params: {exist: "oui"}
             }).then((response) => {
                 let articles = response.data["hydra:member"];
@@ -44,7 +45,7 @@ const Home = () => {
                 });
                 setShowArticles(showArticles);
             }).catch((error) => {
-                //console.log(error);
+                console.log(error);
             })
         }
         
@@ -96,7 +97,7 @@ const Home = () => {
     }
 
 
-    let row  = map();
+    let row = map();
    
     if(row){
         result = row.map((cards, index) => {
