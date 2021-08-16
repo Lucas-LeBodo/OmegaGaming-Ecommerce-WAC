@@ -8,7 +8,7 @@ import CardSearch from '../../Components/CardSearch';
 import Card from '../../Components/ArticleCard';
 
 
-const Search = (props) => {
+const Search = () => {
     const [showArticles, setShowArticles] = useState([]);    
     const [row, setRow] = useState('');
     const [sort, setSort] = useState('')
@@ -19,7 +19,7 @@ const Search = (props) => {
         
         let allArticles = articles.articles;
 
-        let articlesArr = new Array();
+        let articlesArr = [];
         allArticles.forEach((value, index, array) => {
             articlesArr.push( <CardSearch value={value} callback={getSort} />)
         })
@@ -47,11 +47,11 @@ const Search = (props) => {
                                 discount={element.discount}
                             />
                         )
-
                     });
                     setShowArticles(showArticles.sort());
                 })
-            }else{
+
+            } else{
                 axios.get('https://localhost:8000/api/articles/OrderByNameASC?page=1', {
                     params: {exist: "oui"}
                 }).then((response) => {
@@ -93,8 +93,8 @@ const Search = (props) => {
                 nbRow = Math.ceil(showArticles.length/3);
                 for (let i = 0; i < nbRow; i++){
                     for (let j = 0; j < 3 ; j++){
-                    row [j] = showArticles[j]
-                        if(j == 2 ){
+                    row[j] = showArticles[j]
+                        if(j === 2){
                             map_def.push(row)
                             row = []
                             showArticles.splice(0, 3);
@@ -104,8 +104,8 @@ const Search = (props) => {
             }else{
                 for (let i = 0; i < nbRow; i++){
                     for (let j = 0; j < 3 ; j++){
-                    row [j] = showArticles[j]
-                        if(j == 2){
+                    row[j] = showArticles[j]
+                        if(j === 2){
                             map_def.push(row)
                             row = []
                         }
@@ -123,12 +123,12 @@ const Search = (props) => {
                 </div>
             )
         });
-        return renderCardRow
+        return renderCardRow;
     }
 
 
 
-    if(row != ''){
+    if(row !== ''){
         result = row.map((cards, index) => {
             // console.log("cards : ")
             // console.log(cards)

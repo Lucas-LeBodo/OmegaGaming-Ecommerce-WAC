@@ -2,7 +2,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
 import { RiDeleteBin5Line } from 'react-icons/ri';
-import {Modal, Form, Button} from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 
 
@@ -29,101 +29,7 @@ const Basket = () => {
     useEffect(() => {
         let list_id = [];
         let list_articles = '';
-    
-
-        const getInformation = () =>{
-            if(localStorage.jwt) {
-                const base64Url = localStorage.jwt.split('.')[1];
-                const base64 = base64Url.replace('-', '+').replace('_', '/');
-                let username = JSON.parse(window.atob(base64)).username;
-                axios.get('https://localhost:8000/api/me', {
-                params: {username: username}
-                }).then((response) => {
-                    let weightTotal = 0;
-                    if(list_articles.length > 1){
-                        list_articles.forEach((article) => {
-                            weightTotal = article.weight + weightTotal;
-                        })
-                    }
-                    getRates(response.data, weightTotal)
-                })
-            }else{
-                let weightTotal = 0;
-                let infos = {
-                    adress: "Rue d'Avron 116",
-                    postalCode: "75020",
-                    email: "johndoe@gmail.com",
-                    lastName: "John",
-                    firstName: "Doe",
-                    country: "FR"
-                }
-                axios.get('https://localhost:8000/api/baskets/listBasket', {
-                    params: {tabList:list_id},
-                }).then((response) => {
-                    let list_articles = response.data["hydra:member"];
-                    list_articles.forEach((element) => {
-                        weightTotal = element.weight + weightTotal
-                    })
-                    getRates(infos, weightTotal,list_articles)
-                })
-                
-            }
-        }
-        const getRates = (info, W, listArt) => {
-         
-            let data = JSON.stringify({
-                "to_address": {
-                    "name": info.firstName,
-                    "company": "ShippyPro",
-                    "street1": info.adress,
-                    "street2": "",
-                    "city": "Paris",
-                    "state": "Département de Paris",
-                    "zip": info.postalCode,
-                    "country": "FR", // changer l'entree dans le form mettre initial (ex: Fr)
-                    "phone": "5551231234",
-                    "email": info.email
-                },
-                "from_address": {
-                    "name": "Damien Legrand",
-                    "company": "Aucune",
-                    "street1": "Rue d'Avron 116",
-                    "street2": "",
-                    "city": "Paris",
-                    "state": "Département de Paris",
-                    "zip": "75020",
-                    "country": "FR",
-                    "phone": "+33 623525172",
-                    "email": "damienlg06@hotmail.com"
-                },
-                "parcels": [
-                    {
-                        "length": 5,
-                        "width": 5,
-                        "height": 5,
-                        "weight": W
-                    }
-                ],
-                "Insurance": 0,
-                "InsuranceCurrency": "EUR",
-                "CashOnDelivery": 0,
-                "CashOnDeliveryCurrency": "EUR",
-                "ContentDescription": "Shoes",
-                "TotalValue": "50.25 EUR",
-                "ShippingService": "Standard"
-            })
-            
-            if(list_articles != "" || listArt != ""){
-                axios.get('https://localhost:8000/api/shippy/getRates?params=' + data,{  
-                }).then((response) => {
-                    setRates(response.data.Rates['hydra:member'][0])
-                }).catch((error) => {
-                    
-                })
-            }
-        }
-
-
+        
         if(localStorage.jwt) {
             const base64Url = localStorage.jwt.split('.')[1];
             const base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -134,25 +40,116 @@ const Basket = () => {
             }).then((response) => {
                 list_articles = response.data["hydra:member"]
                 requestConnected(list_articles)
-                getInformation()
+                getInformation(list_articles)
             }).catch((error) => {
                 console.log(error);
             })
-            
-
+    
         } else {
             if(localStorage.shoppingUserNoLog) {
                 list_id = localStorage.shoppingUserNoLog;
                 list_id = list_id.split(" ");
                 requestNotConnected(list_id)
-                getInformation()
+                getInformation(list_id)
             }
         }
-
-        
-        
-
     }, [])
+
+    const getInformation = (list_articles) =>{
+        if(localStorage.jwt) {
+            const base64Url = localStorage.jwt.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            let username = JSON.parse(window.atob(base64)).username;
+            axios.get('https://localhost:8000/api/me', {
+            params: {username: username}
+            }).then((response) => {
+                let weightTotal = 0;
+                if(list_articles.length > 0){
+                    list_articles.forEach((article) => {
+                        weightTotal = article.weight + weightTotal;
+                    })
+                    getRates(response.data, weightTotal)
+                }
+            })
+        }else{
+            let weightTotal = 0;
+            let infos = {
+                adress: "Rue d'Avron 116",
+                postalCode: "75020",
+                email: "johndoe@gmail.com",
+                lastName: "John",
+                firstName: "Doe",
+                country: "FR"
+            }
+            axios.get('https://localhost:8000/api/baskets/listBasket', {
+                params: {tabList:list_articles},
+            }).then((response) => {
+                let list_articles = response.data["hydra:member"];
+                if(list_articles.length > 0) {
+                    list_articles.forEach((element) => {
+                        weightTotal = element.weight + weightTotal;
+                    })
+                    getRates(infos, weightTotal, list_articles)
+                }
+            })
+            
+        }
+    }
+    const getRates = (info, W, listArt) => {
+     
+        let data = JSON.stringify({
+            "to_address": {
+                "name": info.firstName,
+                "company": "ShippyPro",
+                "street1": info.adress,
+                "street2": "",
+                "city": info.town,
+                "state": "Département de Paris",
+                "zip": info.postalCode,
+                "country": "FR", // changer l'entree dans le form mettre initial (ex: Fr)
+                "phone": "5551231234",
+                "email": info.email
+            },
+            "from_address": {
+                "name": "Damien Legrand",
+                "company": "Aucune",
+                "street1": "Rue d'Avron 116",
+                "street2": "",
+                "city": "Paris",
+                "state": "Département de Paris",
+                "zip": "75020",
+                "country": "FR",
+                "phone": "+33 623525172",
+                "email": "damienlg06@hotmail.com"
+            },
+            "parcels": [
+                {
+                    "length": 5,
+                    "width": 5,
+                    "height": 5,
+                    "weight": W
+                }
+            ],
+            "Insurance": 0,
+            "InsuranceCurrency": "EUR",
+            "CashOnDelivery": 0,
+            "CashOnDeliveryCurrency": "EUR",
+            "ContentDescription": "Shoes",
+            "TotalValue": "50.25 EUR",
+            "ShippingService": "Standard"
+        })
+        
+        if(listArt !== ""){
+            console.log(JSON.parse(data))
+            axios.get('https://localhost:8000/api/shippy/getRates?params=' + data,{  
+            }).then((response) => {
+                console.log(response)
+                setRates(response.data.Rates['hydra:member'][0])
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+    }
 
     const deleteArticles = (id, connected) => {
         if(connected === "connected") {
@@ -170,7 +167,7 @@ const Basket = () => {
             if(check === true) {
                 let list_id = localStorage.shoppingUserNoLog;
                 list_id = list_id.split(" ");
-                let indexSplice = list_id.findIndex(element => element == id)
+                let indexSplice = list_id.findIndex(element => element === id)
                 list_id.splice(indexSplice, 1)
 
                 localStorage.removeItem("shoppingUserNoLog")
@@ -202,68 +199,70 @@ const Basket = () => {
         axios.get('https://localhost:8000/api/baskets/listBasket', {
             params: {tabList:tabList},
         }).then((response) => {
-            let listBasketShow = response.data["hydra:member"];
-            let i = 0;
+            if(response.data !== null) {
+                let listBasketShow = response.data["hydra:member"];
+                let i = 0;
+                        
+                listBasketShow.forEach(element => {
+                    let onStock = "";
+                    let { id, Title, Image, Price, Stock, discount} = element;
+                    let discountPrice = '';
+                    let newPrice = '';
+    
+                    if(Stock >= 1){
+                        onStock = "Disponible"
+                    } else {
+                        onStock = "Indisponible"
+                    }
+                    let idBasket = list_articles[i].id
                     
-            listBasketShow.forEach(element => {
-                let onStock = "";
-                let { id, Title, Image, Price, Stock, discount} = element;
-                let discountPrice = '';
-                let newPrice = '';
-
-                if(Stock >= 1){
-                    onStock = "Disponible"
-                } else {
-                    onStock = "Indisponible"
-                }
-                let idBasket = list_articles[i].id
-                
-                
-                if(discount !== null && discount !== 0) {
-                    let pricePromo = '';
-                    newPrice = Price * discount / 100
-                    discountPrice = (
-                        <div className="article-price" key={id + "_article-price"}>
-                            Promotion : {Price - newPrice} €
-                        </div> 
-                    )
-                    pricePromo = Price - newPrice
-                    price = price + pricePromo
-                } else {
-                    discountPrice = (
-                        <div className="article-price" key={id + "_article-price"}>
-                            {Price} €
-                        </div> 
-                    )
-                    price = price + element.Price
-                }
-                
-                
-                showBasket.push(
-                    <div className="article-card" key={id + "_article-card"}>
-                    <div className="article-img" key={id + "_article-img"}>
-                        <img src={Image} alt={'image_'+id} key={id + "_article-image"}></img>
-                    </div>
-                    <div className="article-card-content" key={id + "_article-card-content"}>
-                        <div className="head-card" key={id + "_article-head-card"}>
-                            <div className="article-title" key={id + "_article-title"}>
-                                <Link to={"/product/"+id}><h3 key={id + "_article-h3"}>{Title}</h3></Link>
-                                <div className="article-stock" key={id + "_article-stock"}>
-                                Stock : {onStock}
-                            </div>
-                            </div>
-                            {discountPrice}
+                    
+                    if(discount !== null && discount !== 0) {
+                        let pricePromo = '';
+                        newPrice = Price * discount / 100
+                        discountPrice = (
+                            <div className="article-price" key={id + "_article-price"}>
+                                Promotion : {Price - newPrice} €
+                            </div> 
+                        )
+                        pricePromo = Price - newPrice
+                        price = price + pricePromo
+                    } else {
+                        discountPrice = (
+                            <div className="article-price" key={id + "_article-price"}>
+                                {Price} €
+                            </div> 
+                        )
+                        price = price + element.Price
+                    }
+                    
+                    
+                    showBasket.push(
+                        <div className="article-card" key={id + "_article-card"}>
+                        <div className="article-img" key={id + "_article-img"}>
+                            <img src={Image} alt={'image_'+id} key={id + "_article-image"}></img>
                         </div>
-                        <div className={"article-card-footer"} key={id + "_article-card-footer"}>
-                            <button onClick={() => deleteArticles(idBasket, "connected")} id={"remove"} key={id + "_article-remove-btn"}><RiDeleteBin5Line /> Delete</button>
+                        <div className="article-card-content" key={id + "_article-card-content"}>
+                            <div className="head-card" key={id + "_article-head-card"}>
+                                <div className="article-title" key={id + "_article-title"}>
+                                    <Link to={"/product/"+id}><h3 key={id + "_article-h3"}>{Title}</h3></Link>
+                                    <div className="article-stock" key={id + "_article-stock"}>
+                                    Stock : {onStock}
+                                </div>
+                                </div>
+                                {discountPrice}
+                            </div>
+                            <div className={"article-card-footer"} key={id + "_article-card-footer"}>
+                                <button onClick={() => deleteArticles(idBasket, "connected")} id={"remove"} key={id + "_article-remove-btn"}><RiDeleteBin5Line /> Delete</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                )
-                i = i + 1;
-            });
-            setShowPrice(price)
-            setListBasketShow(showBasket);
+                    )
+                    i = i + 1;
+                });
+                setShowPrice(price)
+                setListBasketShow(showBasket);
+            }
             
         }).catch((error) => {
             console.log(error)
@@ -419,7 +418,7 @@ const Basket = () => {
           showPriceDiv = (
             <div>
                 <p>{showPrice + "€"}</p>
-                <p>{"Frais de port : " + rates.rate + "€"}</p>
+                {/* <p>{"Frais de port : " + rates.rate + "€"}</p> */}
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
                     Payer
                 </button>

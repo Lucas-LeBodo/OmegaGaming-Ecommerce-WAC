@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 
 
 
-function Navbox(props) {
+function Navbox() {
 return (
     <Fragment>
         <div className={'navbox'}>

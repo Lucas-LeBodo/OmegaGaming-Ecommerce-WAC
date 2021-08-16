@@ -54,9 +54,7 @@ export default function informationProduct(props){
     }
 
     function addToBasketBDD(id_user) {
-        console.log(props)
         let id_art = props.id;
-        console.log(props.weight)
         axios.post('https://localhost:8000/api/baskets', {
                 price: parseInt(props.price),
                 idUser: parseInt(id_user),

@@ -6,8 +6,6 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { Link, useHistory } from 'react-router-dom';
 
 
-
-
 const UpdateArticle = (props) => {
     const [informations, setInformations] = useState('');
     const [title, setTitle] = useState('');
@@ -17,27 +15,22 @@ const UpdateArticle = (props) => {
     const [price, setPrice] = useState('');
     const [id, setId] = useState('');
     const [image, setImage] = useState('')
-    const [category, setCategory] = useState('')
     const [weight, setWeight] = useState('');
     const [discount, setDiscount] = useState(0)
 
     //affichage des categories
-    const [pages, setPages] = useState(1);
-    const [maxPage, setMaxPage] = useState(1);
     const [selectCategory, setSelectCategory] = useState('');
     const [categories, setCategories] = useState('');
-    let views;
     const history = useHistory();
 
 
-    useEffect(() => {
+    useEffect((props) => {
         function getInformations() {
             let id = props.match.params.id
             setId(id);
             
             axios.get('https://localhost:8000/api/articles/'+id, {
             }).then((response) => {
-                console.log(response)
                 let information = response.data;
                 setInformations(information)
                 setTitle(information.Title)
@@ -46,7 +39,6 @@ const UpdateArticle = (props) => {
                 setPrice(information.Price)
                 setStock(information.Stock)
                 setImage(information.Image)
-                setCategory(information.category.category_name)
                 setDiscount(information.discount)
             }).catch((error) => {
                 console.log(error)
@@ -54,20 +46,11 @@ const UpdateArticle = (props) => {
         }
 
         const recupCategory = () => {
+            let pages = 1;
             axios.get('https://localhost:8000/api/categories?page='+ pages ,{
                 
             }).then((response) => {
                 setCategories(response.data["hydra:member"]);
-                if(response.data["hydra:view"] !== undefined){
-                    views = response.data["hydra:view"];
-                }
-                
-                if(categories !== [] && views !== [] && views !== undefined) {
-                    if(views["hydra:last"] !== undefined) {
-                        let max = views["hydra:last"].substr(-1);
-                        setMaxPage(max)
-                    }
-                }
             })
         }
         recupCategory();
@@ -78,7 +61,7 @@ const UpdateArticle = (props) => {
 
     // creation des options pour le select category
     let result;
-    if(categories != ''){
+    if(categories !== ''){
         result = categories.map((category) => {
             return(
                 <option value={'\/api\/categories\/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
@@ -143,7 +126,7 @@ const UpdateArticle = (props) => {
                         </div>
                         <div className="flex-body">
                             <div className="flex-img">
-                                <img src={image} alt={"Image"}></img>
+                                <img src={image} alt={image}></img>
                                 <div className="flex-bottom">
                                     <div className="flex-img-button"> 
                                         <input type="file" id="myFile" className="form-control" required/>

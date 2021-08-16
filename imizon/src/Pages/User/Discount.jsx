@@ -44,8 +44,8 @@ const BestSeller = () => {
             nbRow = Math.ceil(showArticles.length/4);
             for (let i = 0; i < nbRow; i++){
                 for (let j = 0; j < 4 ; j++){
-                row [j] = showArticles[j]
-                    if(j == 3 ){
+                row[j] = showArticles[j]
+                    if(j === 3){
                         map_def.push(row)
                         row = []
                         showArticles.splice(0, 4);
@@ -55,8 +55,8 @@ const BestSeller = () => {
         }else{
             for (let i = 0; i < nbRow; i++){
                 for (let j = 0; j < 4 ; j++){
-                row [j] = showArticles[j]
-                    if(j == 3){
+                row[j] = showArticles[j]
+                    if(j === 3){
                         map_def.push(row)
                         row = []
                     }

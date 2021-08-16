@@ -17,7 +17,7 @@ const ProductSheet = (props) => {
     const [article, setArticle] = useState('');
     const [sameArticles, setSameArticles] = useState('');
 
-    useEffect(() => {
+    useEffect((props) => {
         function getInformations() {
             let id = props.match.params.id;
         

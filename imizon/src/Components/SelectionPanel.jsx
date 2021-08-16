@@ -7,29 +7,17 @@ import axios from 'axios';
 
 
 export default function AnimatedMulti(props) {
-  const [categories, setCategories] = useState('');
-  const [maxPages, setMaxPages] = useState('');
-  const [pages, setPages] = useState(1);
-  const [selectCategory, setSelectCategory] = useState('');
 
+  const [categories, setCategories] = useState('');
+  const [selectCategory, setSelectCategory] = useState('');
   const [sort, setSort] = useState('')
-  let views;
   
   useEffect(() => {
+    let pages = 1;
     const getCategories = () => {
       axios.get('https://localhost:8000/api/categories?page='+ pages ,{
       }).then((response) => {
           setCategories(response.data["hydra:member"]);
-          if(response.data["hydra:view"] !== undefined){
-              views = response.data["hydra:view"];
-          }
-          
-          if(categories !== [] && views !== [] && views !== undefined) {
-              if(views["hydra:last"] !== undefined) {
-                  let max = views["hydra:last"].substr(-1);
-                  setMaxPages(max)
-              }
-          }
       })
     }    
     getCategories();
@@ -37,7 +25,7 @@ export default function AnimatedMulti(props) {
   
   let result;
   let options = [];
-  if(categories != ""){
+  if(categories !== ""){
     result = categories.map((category) => {
         return(
           { value: category.id, label: category.category_name }
@@ -48,8 +36,8 @@ export default function AnimatedMulti(props) {
   const animatedComponents = makeAnimated();
 
 
-  useEffect(() => {
-    if(selectCategory != ''){
+  useEffect((props) => {
+    if(selectCategory !== ''){
       axios.get('https://localhost:8000/api/categories/' + selectCategory ,{
         }).then((response) => {
           props.callBack(response.data)
