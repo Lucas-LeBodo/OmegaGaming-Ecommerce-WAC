@@ -3,7 +3,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import {Modal, Form, Button} from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 
 
@@ -204,17 +204,40 @@ const Basket = () => {
         }).then((response) => {
             let listBasketShow = response.data["hydra:member"];
             let i = 0;
-            
+                    
             listBasketShow.forEach(element => {
                 let onStock = "";
-                let { id, Title, Image, Price, Stock} = element;
+                let { id, Title, Image, Price, Stock, discount} = element;
+                let discountPrice = '';
+                let newPrice = '';
+
                 if(Stock >= 1){
                     onStock = "Disponible"
                 } else {
                     onStock = "Indisponible"
                 }
                 let idBasket = list_articles[i].id
-                price = price + element.Price
+                
+                
+                if(discount !== null && discount !== 0) {
+                    let pricePromo = '';
+                    newPrice = Price * discount / 100
+                    discountPrice = (
+                        <div className="article-price" key={id + "_article-price"}>
+                            Promotion : {Price - newPrice} €
+                        </div> 
+                    )
+                    pricePromo = Price - newPrice
+                    price = price + pricePromo
+                } else {
+                    discountPrice = (
+                        <div className="article-price" key={id + "_article-price"}>
+                            {Price} €
+                        </div> 
+                    )
+                    price = price + element.Price
+                }
+                
                 
                 showBasket.push(
                     <div className="article-card" key={id + "_article-card"}>
@@ -224,14 +247,12 @@ const Basket = () => {
                     <div className="article-card-content" key={id + "_article-card-content"}>
                         <div className="head-card" key={id + "_article-head-card"}>
                             <div className="article-title" key={id + "_article-title"}>
-                                <h3 key={id + "_article-h3"}>{Title}</h3>
+                                <Link to={"/product/"+id}><h3 key={id + "_article-h3"}>{Title}</h3></Link>
                                 <div className="article-stock" key={id + "_article-stock"}>
                                 Stock : {onStock}
                             </div>
                             </div>
-                            <div className="article-price" key={id + "_article-price"}>
-                                {Price} €
-                            </div> 
+                            {discountPrice}
                         </div>
                         <div className={"article-card-footer"} key={id + "_article-card-footer"}>
                             <button onClick={() => deleteArticles(idBasket, "connected")} id={"remove"} key={id + "_article-remove-btn"}><RiDeleteBin5Line /> Delete</button>

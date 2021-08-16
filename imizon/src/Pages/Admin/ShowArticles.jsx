@@ -33,7 +33,12 @@ const ShowArticles = () => {
 
                 let tabArticles = [];
                 articles.forEach(element => {
-                    
+                    let discount = ""
+                    if(element.discount === null) {
+                        discount = 0
+                    } else {
+                        discount = element.discount + "%"
+                    }
                     tabArticles.push(
                         <div className="article-card" key={element.id + "article_card"}>
                             <div className="article-img" key={element.id + "div_article_img"}>
@@ -52,6 +57,9 @@ const ShowArticles = () => {
                                     </div>
                                     <div className="article-stock" key={element.View + "article_view"}>
                                         View : {element.View}
+                                    </div>
+                                    <div className="article-stock" key={element.discount + "article_discount"}>
+                                        Discount : {discount}
                                     </div>
                                     <div className="article-id" key={element.id + "article_id"}>
                                         ID : {element.id}

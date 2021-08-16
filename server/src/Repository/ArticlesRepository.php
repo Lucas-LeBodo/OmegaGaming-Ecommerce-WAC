@@ -34,6 +34,17 @@ class ArticlesRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getPromotion()
+    {
+        return $this->createQueryBuilder('a')
+            ->where("a.discount > 0")
+            ->orderBy('a.View', "DESC")
+            ->setMaxResults(30)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function getMostPopularHome()
     {
         return $this->createQueryBuilder('a')
