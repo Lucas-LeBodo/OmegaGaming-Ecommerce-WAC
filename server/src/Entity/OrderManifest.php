@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use ShippyShipController;
+use App\Controller\DeleteBasket;
 use Doctrine\ORM\Mapping as ORM;
+use App\Controller\ShippyShipController;
 use App\Repository\OrderManifestRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=OrderManifestRepository::class)
@@ -16,6 +18,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
             'path' => '/shippy/postOrder',
             'method' => 'get',
             'controller' => ShippyShipController::class,
+        ],
+        'deleteBasket' => [
+            'path' => '/shippy/deleteBasket',
+            'method' => 'get',
+            'controller' => DeleteBasket::class,
         ],
         'get',
         'post'
@@ -34,21 +41,25 @@ class OrderManifest
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("OrderManifest:write")
      */
     private $orderId;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("OrderManifest:write")
      */
     private $content;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("OrderManifest:write")
      */
     private $userId;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("OrderManifest:write")
      */
     private $price;
 

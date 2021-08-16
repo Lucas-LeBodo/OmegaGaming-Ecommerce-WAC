@@ -11,18 +11,14 @@ const Basket = () => {
     const [listBasketShow, setListBasketShow] = useState([]);    
     const [showPrice, setShowPrice] = useState(0);
     const [contentModal, setContentModal] = useState('')
-    
+    const [allArticles, setAllArticles] = useState('');
+
     // pour les frais de port
     const [country, setCountry] = useState('')
     const [adress, setAdress] = useState('')
     const [postalCode, setPostalCode] = useState('')
     const [cardData, setCardData] = useState('')
     const [rates, setRates] = useState('')
-    const [firstname, setFirstName] = useState('')
-    const [lastname, setLasttName] = useState('')
-    const [email, setEmail] = useState('')
-
-    const [test, setTest] = useState('')
     const history = useHistory();
     let showPriceDiv = '';
 
@@ -30,7 +26,7 @@ const Basket = () => {
         let list_id = [];
         let list_articles = '';
     
-
+    
         const getInformation = () =>{
             if(localStorage.jwt) {
                 const base64Url = localStorage.jwt.split('.')[1];
@@ -39,7 +35,7 @@ const Basket = () => {
                 axios.get('http://localhost:8000/api/me', {
                 params: {username: username}
                 }).then((response) => {
-                    let weightTotal = 0;
+                    let weightTotal = 0.01;
                     if(list_articles.length > 1){
                         list_articles.forEach((article) => {
                             weightTotal = article.weight + weightTotal;
@@ -48,7 +44,7 @@ const Basket = () => {
                     getRates(response.data, weightTotal)
                 })
             }else{
-                let weightTotal = 0;
+                let weightTotal = 0.01;
                 let infos = {
                     adress: "Rue d'Avron 116",
                     postalCode: "75020",
@@ -116,6 +112,7 @@ const Basket = () => {
             if(list_articles != "" || listArt != ""){
                 axios.get('http://localhost:8000/api/shippy/getRates?params=' + data,{  
                 }).then((response) => {
+                    console.log(response);
                     setRates(response.data.Rates['hydra:member'][0])
                 }).catch((error) => {
                     
@@ -148,10 +145,6 @@ const Basket = () => {
                 getInformation()
             }
         }
-
-        
-        
-
     }, [])
 
     const deleteArticles = (id, connected) => {
@@ -204,7 +197,7 @@ const Basket = () => {
         }).then((response) => {
             let listBasketShow = response.data["hydra:member"];
             let i = 0;
-            
+            setAllArticles(listBasketShow)
             listBasketShow.forEach(element => {
                 let onStock = "";
                 let { id, Title, Image, Price, Stock} = element;
@@ -292,8 +285,7 @@ const Basket = () => {
                 )
             });
             setListBasketShow(showBasket);
-            setShowPrice(price)
-            
+            setShowPrice(price)   
         }).catch((error) => {
             console.log(error)
         })
@@ -313,21 +305,32 @@ const Basket = () => {
         let address = e.target[1];
         let zip = e.target[2];
         let payment =  e.target[3];
-        let totalBasket = showPrice;
-        console.log(e.target)
+        let firstname = e.target[4]
+        let lastname = e.target[5]
+        let email = e.target[6]
+        let idUser = e.target[7].value
+        let totalPriceBasket = showPrice;
+        let weight = 0 ;
+        if(allArticles.length == 1){
+            weight = allArticles[0].weight;
+        }else{
+            allArticles.forEach(element => {
+                weight = element.weight + weight
+            })
+        }
 
         let data = JSON.stringify({
             "to_address": {
-                "name": "John Doe",
+                "name": firstname.value + " " + lastname.value,
                 "company": "ShippyPro",
-                "street1": "Rue d'Avron 116",
+                "street1": address.value,
                 "street2": "",
-                "city": "Paris",
+                "city": "Paris", //add city
                 "state": "Département de Paris",
-                "zip": "75020",
+                "zip": zip.value,
                 "country": "FR",
                 "phone": "5551231234",
-                "email": "johndoe@gmail.com"
+                "email": email.value
             },
             "from_address": {
                 "name": "Damien Legrand",
@@ -346,12 +349,12 @@ const Basket = () => {
                     "length": 5,
                     "width": 5,
                     "height": 5,
-                    "weight": 2
+                    "weight": weight
                 }
             ],
-            "TotalValue": "20.90 EUR",
+            "TotalValue":  totalPriceBasket + " EUR",
             "TransactionID": "ORDER2365",
-            "ContentDescription": "Shoes",
+            "ContentDescription": "Multi_Articles",
             "Insurance": 0,
             "InsuranceCurrency": "EUR",
             "CashOnDelivery": 0,
@@ -370,11 +373,43 @@ const Basket = () => {
    
         axios.get('http://localhost:8000/api/shippy/postOrder?params=' + data,{  
         }).then((response) => {
-            setRates(response.data.Rates['hydra:member'][0])
+          let order =  JSON.parse(response.data)
+           if(order.Result == "OK"){
+               let NbOrder = order.NewOrderID
+               sendToOrderManifest(idUser, NbOrder, totalPriceBasket)
+           }
         }).catch((error) => {
             
         })
 
+        const sendToOrderManifest = (idUser, NbOrder, totalPrice) => {
+            axios.post('http://localhost:8000/api/order_manifests', { 
+                orderId : parseInt(NbOrder),
+                content : JSON.stringify(allArticles),
+                userId : parseInt(idUser),
+                price : parseInt(totalPrice)
+            }).then((response) => {
+                console.log(response)
+                if(response.statusText == "Created"){
+                    deleteBasket(idUser)
+                }
+                
+            }).catch((error) => {
+                
+            })
+        }
+
+        const deleteBasket = (idUser) => {
+            axios.get('http://localhost:8000/api/shippy/deleteBasket?params='+ idUser, { 
+            }).then((response) => {
+                console.log(response)       
+                if(response.statusText == "OK"){
+                    history.push("/")
+                }         
+            }).catch((error) => {
+                
+            })
+        }
     }
 
     
@@ -393,9 +428,6 @@ const Basket = () => {
             setAdress(response.data.adress)
             setPostalCode(response.data.postalCode)
             setCardData(response.data.cardData)
-            setEmail(response.data.email)
-            setLasttName(response.data.lastname)
-            setFirstName(response.data.firstname)
             content = (
                 <Form onSubmit={(event) => {submit(event)}}>
                     <Form.Group className="mb-3">
@@ -415,7 +447,16 @@ const Basket = () => {
                         <Form.Control type="text" defaultValue={response.data.cardData} onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Control type="hidden" defaultValue={response.data.firstname} onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
+                        <Form.Control type="hidden" defaultValue={response.data.firstName}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Control type="hidden" defaultValue={response.data.lastName}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Control type="hidden" defaultValue={response.data.email}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Control type="hidden" defaultValue={response.data.id}/>
                     </Form.Group>
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" className="btn btn-primary">Save changes</button>

@@ -32,6 +32,6 @@ class ShippyShipController extends AbstractController
         $response = \curl_exec($ch);
         \curl_close($ch);
 
-        return json_decode($response);
+        return $response;
     }
 }

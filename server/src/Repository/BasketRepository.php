@@ -19,6 +19,15 @@ class BasketRepository extends ServiceEntityRepository
         parent::__construct($registry, Basket::class);
     }
 
+    public function deleteBasket($idUser){
+        return $this->createQueryBuilder('a')
+            ->delete()
+            ->where('a.id_user = :id')
+            ->setParameter('id', $idUser)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     // /**
     //  * @return Basket[] Returns an array of Basket objects
     //  */
