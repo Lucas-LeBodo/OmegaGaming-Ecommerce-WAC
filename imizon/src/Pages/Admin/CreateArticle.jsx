@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {Container, Form} from 'react-bootstrap';
 
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 const CreateArticle = () => {
 
@@ -18,14 +17,10 @@ const CreateArticle = () => {
 
 
     //affichage des categories
-    const [pages, setPages] = useState(1);
-    const [maxPage, setMaxPage] = useState(1);
     const [categories, setCategories] = useState('');
-    let views;
 
     // ajout de references
     const [reference, setReference] = useState('')
-    const [pageRef, setPageRef] = useState(1)
     const [allRef, setAllRef] = useState('')
     const [featureSup, setFeatureSup] = useState('')
     const [titleRef, setTitleRef] = useState('')
@@ -33,22 +28,11 @@ const CreateArticle = () => {
    useEffect(() => {
 
         // recup categories
+        let pages = 1;
         const recupCategory = () => {
-
             axios.get('https://localhost:8000/api/categories?page='+ pages ,{
             }).then((response) => {
                 setCategories(response.data["hydra:member"]);
-                if(response.data["hydra:view"] !== undefined){
-                    views = response.data["hydra:view"];
-                }
-                
-                if(categories !== [] && views !== [] && views !== undefined) {
-                    if(views["hydra:last"] !== undefined) {
-                        let max = views["hydra:last"].substr(-1);
-                        setMaxPage(max)
-                    }
-                }
-                
             })
         }
 
@@ -56,16 +40,6 @@ const CreateArticle = () => {
             axios.get('https://localhost:8000/api/articles/recupReferences?page='+ pages ,{    
             }).then((response) => {
                 setAllRef(response.data["hydra:member"]);
-                if(response.data["hydra:view"] !== undefined){
-                    views = response.data["hydra:view"];
-                }
-                
-                if(categories !== [] && views !== [] && views !== undefined) {
-                    if(views["hydra:last"] !== undefined) {
-                        let max = views["hydra:last"].substr(-1);
-                        setMaxPage(max)
-                    }
-                }
             })
         }
         recupReferences();
@@ -74,7 +48,7 @@ const CreateArticle = () => {
  
     // creation des options pour le select category
     let result;
-    if(categories != ''){
+    if(categories !== ''){
         result = categories.map((category) => {
             return(
                 <option value={'\/api\/categories\/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
@@ -84,7 +58,7 @@ const CreateArticle = () => {
 
     // creation des options pour le select references
     let resultRef;
-    if(allRef != ''){
+    if(allRef !== ''){
         resultRef = allRef.map((refs) => {
             return(
                 <option value={refs.sameArticles} key={Math.random().toString(36).substring(7)}>{refs.sameArticles}</option>

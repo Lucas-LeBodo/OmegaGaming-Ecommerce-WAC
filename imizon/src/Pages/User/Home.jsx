@@ -9,7 +9,9 @@ import Card from '../../Components/ArticleCard';
 
 
 const Home = () => {
+
     const [showArticles, setShowArticles] = useState('');
+    
     let result;
     useEffect(() => {
         // function test() {
@@ -44,12 +46,12 @@ const Home = () => {
                 });
                 setShowArticles(showArticles);
             }).catch((error) => {
-                //console.log(error);
+                console.log(error);
             })
         }
         
         getMostPopular();
-    },[])
+    }, [])
 
     const map = () => {
         let map_def = [];
@@ -60,8 +62,8 @@ const Home = () => {
             nbRow = Math.ceil(showArticles.length/4);
             for (let i = 0; i < nbRow; i++){
                 for (let j = 0; j < 4 ; j++){
-                row [j] = showArticles[j]
-                    if(j == 3 ){
+                row[j] = showArticles[j]
+                    if(j === 3){
                         map_def.push(row)
                         row = []
                         showArticles.splice(0, 4);
@@ -71,8 +73,8 @@ const Home = () => {
         }else{
             for (let i = 0; i < nbRow; i++){
                 for (let j = 0; j < 4 ; j++){
-                row [j] = showArticles[j]
-                    if(j == 3){
+                row[j] = showArticles[j]
+                    if(j === 3){
                         map_def.push(row)
                         row = []
                     }
@@ -96,7 +98,7 @@ const Home = () => {
     }
 
 
-    let row  = map();
+    let row = map();
    
     if(row){
         result = row.map((cards, index) => {

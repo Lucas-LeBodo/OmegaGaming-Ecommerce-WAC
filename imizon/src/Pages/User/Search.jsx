@@ -7,7 +7,7 @@ import CardSearch from '../../Components/CardSearch';
 import Card from '../../Components/ArticleCard';
 
 
-const Search = (props) => {
+const Search = () => {
     const [showArticles, setShowArticles] = useState([]);    
     const [row, setRow] = useState('');
     const [sort, setSort] = useState('')
@@ -18,7 +18,7 @@ const Search = (props) => {
         
         let allArticles = articles.articles;
 
-        let articlesArr = new Array();
+        let articlesArr = [];
         allArticles.forEach((value, index, array) => {
             articlesArr.push( <CardSearch value={value} callback={getSort} />)
         })
@@ -43,9 +43,9 @@ const Search = (props) => {
                                 image={element.Image}
                                 description={element.Description}
                                 price={element.Price}
+                                discount={element.discount}
                             />
                         )
-
                     });
                     setShowArticles(showArticles.sort());
                 })
@@ -63,6 +63,7 @@ const Search = (props) => {
                                 image={element.Image}
                                 description={element.Description}
                                 price={element.Price}
+                                discount={element.discount}
                             />
                         )
 
@@ -86,23 +87,23 @@ const Search = (props) => {
             let map_def = [];
             let row = [];
             let nbRow = 1;
-            if(showArticles.length >= 3){
-                nbRow = Math.ceil(showArticles.length/3);
+            if(showArticles.length >= 4){
+                nbRow = Math.ceil(showArticles.length/4);
                 for (let i = 0; i < nbRow; i++){
-                    for (let j = 0; j < 3 ; j++){
+                    for (let j = 0; j < 4 ; j++){
                     row[j] = showArticles[j]
-                        if(j === 2 ){
+                        if(j === 3){
                             map_def.push(row)
                             row = []
-                            showArticles.splice(0, 3);
+                            showArticles.splice(0, 4);
                         }
                     }
                 }
             }else{
                 for (let i = 0; i < nbRow; i++){
-                    for (let j = 0; j < 3 ; j++){
+                    for (let j = 0; j < 4 ; j++){
                     row[j] = showArticles[j]
-                        if(j === 2){
+                        if(j === 3){
                             map_def.push(row)
                             row = []
                         }
@@ -120,7 +121,7 @@ const Search = (props) => {
                 </div>
             )
         });
-        return renderCardRow
+        return renderCardRow;
     }
 
 

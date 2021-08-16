@@ -12,10 +12,10 @@ const ShowArticles = () => {
     const [articlesShow, setArticlesShow] = useState('');
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
-    let views
+    
     useEffect(() => {
+        let views
 
-        
         function getArticles() {
             axios.get('https://localhost:8000/api/articles?page='+page, {
             }).then((response) => {

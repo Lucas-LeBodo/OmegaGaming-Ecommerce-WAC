@@ -65,7 +65,7 @@ const Profil = () => {
             }
         }
         check();
-    }, [])
+    }, [history])
 
     const submit = () => {
         if(country === "") {
@@ -81,7 +81,7 @@ const Profil = () => {
                 cardData : cardData,
                 postalCode: postalCode,
                 phone: parseInt(phone),
-                town: town,
+                town: town
             }
             ).then((response) => {
                 console.log(response)

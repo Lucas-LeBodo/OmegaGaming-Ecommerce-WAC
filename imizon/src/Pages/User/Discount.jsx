@@ -8,6 +8,7 @@ import Card from '../../Components/ArticleCard';
 const BestSeller = () => {
     const [showArticles, setShowArticles] = useState('');
     let result;
+    
     useEffect(() => {
         function getMostPopular() {
             axios.get('https://localhost:8000/api/articles/discount', {
@@ -44,8 +45,8 @@ const BestSeller = () => {
             nbRow = Math.ceil(showArticles.length/4);
             for (let i = 0; i < nbRow; i++){
                 for (let j = 0; j < 4 ; j++){
-                row [j] = showArticles[j]
-                    if(j == 3 ){
+                row[j] = showArticles[j]
+                    if(j === 3){
                         map_def.push(row)
                         row = []
                         showArticles.splice(0, 4);
@@ -55,8 +56,8 @@ const BestSeller = () => {
         }else{
             for (let i = 0; i < nbRow; i++){
                 for (let j = 0; j < 4 ; j++){
-                row [j] = showArticles[j]
-                    if(j == 3){
+                row[j] = showArticles[j]
+                    if(j === 3){
                         map_def.push(row)
                         row = []
                     }

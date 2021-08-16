@@ -19,14 +19,14 @@ function NavBar(props) {
     let user = '';
     let admin = '';
     
-    const infoUser = (jwt) => {
-        let split = jwt.split('.');
-        let info = base64_decode(split[1]);
-        info = JSON.parse(info);
+    // const infoUser = (jwt) => {
+    //     let split = jwt.split('.');
+    //     let info = base64_decode(split[1]);
+    //     info = JSON.parse(info);
         
-        var infoRole = info.roles
-        let role = infoRole[0];
-    }
+    //     var infoRole = info.roles
+    //     let role = infoRole[0];
+    // }
 
     const [countArticles, setCountArticles] = useState('')
 
@@ -63,7 +63,7 @@ function NavBar(props) {
                 }
             }
         }
-    }, [window.location.pathname])
+    }, [])
 
 
 
