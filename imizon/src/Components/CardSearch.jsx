@@ -8,14 +8,14 @@ import Card from './ArticleCard';
 const CardSearch = (props) => {
     const [article, setArticle] = useState('')
 
-   useEffect((props) => {
+   useEffect(() => {
         axios.get('https://localhost:8000'+ props.value, {
         }).then((response) => {
             setArticle(response.data);
         }).catch((error) => {
             console.log(error);
         })
-   }, [])
+   }, [props])
 
     return(
         <Card 

@@ -418,7 +418,7 @@ const Basket = () => {
           showPriceDiv = (
             <div>
                 <p>{showPrice + "€"}</p>
-                {/* <p>{"Frais de port : " + rates.rate + "€"}</p> */}
+                <p>{"Frais de port : " + rates.rate + "€"}</p>
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
                     Payer
                 </button>

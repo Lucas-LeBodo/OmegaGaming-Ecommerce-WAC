@@ -89,23 +89,23 @@ const Search = () => {
             let map_def = [];
             let row = [];
             let nbRow = 1;
-            if(showArticles.length >= 3){
-                nbRow = Math.ceil(showArticles.length/3);
+            if(showArticles.length >= 4){
+                nbRow = Math.ceil(showArticles.length/4);
                 for (let i = 0; i < nbRow; i++){
-                    for (let j = 0; j < 3 ; j++){
+                    for (let j = 0; j < 4 ; j++){
                     row[j] = showArticles[j]
-                        if(j === 2){
+                        if(j === 3){
                             map_def.push(row)
                             row = []
-                            showArticles.splice(0, 3);
+                            showArticles.splice(0, 4);
                         }
                     }
                 }
             }else{
                 for (let i = 0; i < nbRow; i++){
-                    for (let j = 0; j < 3 ; j++){
+                    for (let j = 0; j < 4 ; j++){
                     row[j] = showArticles[j]
-                        if(j === 2){
+                        if(j === 3){
                             map_def.push(row)
                             row = []
                         }

@@ -11,6 +11,7 @@ import Card from '../../Components/ArticleCard';
 const Home = () => {
 
     const [showArticles, setShowArticles] = useState('');
+    
     let result;
     useEffect(() => {
         // function test() {
@@ -50,7 +51,7 @@ const Home = () => {
         }
         
         getMostPopular();
-    },[])
+    }, [])
 
     const map = () => {
         let map_def = [];

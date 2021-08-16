@@ -8,6 +8,7 @@ import Card from '../../Components/ArticleCard';
 const BestSeller = () => {
     const [showArticles, setShowArticles] = useState('');
     let result;
+    
     useEffect(() => {
         function getMostPopular() {
             axios.get('https://localhost:8000/api/articles/popularity', {

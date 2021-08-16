@@ -12,6 +12,7 @@ const ShowArticles = () => {
     const [articlesShow, setArticlesShow] = useState('');
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
+    
     useEffect(() => {
         let views
 

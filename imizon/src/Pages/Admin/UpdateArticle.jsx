@@ -24,7 +24,7 @@ const UpdateArticle = (props) => {
     const history = useHistory();
 
 
-    useEffect((props) => {
+    useEffect(() => {
         function getInformations() {
             let id = props.match.params.id
             setId(id);
@@ -56,7 +56,7 @@ const UpdateArticle = (props) => {
         recupCategory();
 
         getInformations();
-    }, [])
+    }, [props])
 
 
     // creation des options pour le select category

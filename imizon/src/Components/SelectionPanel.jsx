@@ -36,14 +36,14 @@ export default function AnimatedMulti(props) {
   const animatedComponents = makeAnimated();
 
 
-  useEffect((props) => {
+  useEffect(() => {
     if(selectCategory !== ''){
       axios.get('https://localhost:8000/api/categories/' + selectCategory ,{
         }).then((response) => {
           props.callBack(response.data)
         })
     }
-  }, [selectCategory])
+  }, [selectCategory, props])
 
   if(sort){
     props.sort(sort)
