@@ -116,6 +116,16 @@ class ArticlesRepository extends ServiceEntityRepository
             ;
 
     }
+    public function getNewArticle()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+            ;
+
+    }
     /*
     public function findOneBySomeField($value): ?Articles
     {

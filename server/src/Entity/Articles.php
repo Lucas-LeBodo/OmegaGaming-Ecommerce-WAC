@@ -22,6 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\ArticleRecupChildRef;
+use App\Controller\NewArticlesController;
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
@@ -78,6 +79,12 @@ use App\Controller\ArticleRecupChildRef;
             'pagination_enabled' => false,
             'path' => '/articles/discount/',
             'controller' => DiscountController::class,
+        ],
+        'recupNewArticles' => [
+            'method' => 'get',
+            'pagination_enabled' => false,
+            'path' => '/articles/newArticles/',
+            'controller' => NewArticlesController::class,
         ],
         'get',
         'post'

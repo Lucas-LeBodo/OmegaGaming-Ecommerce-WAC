@@ -16,6 +16,7 @@ import Discount from '../Pages/User/Discount';
 import Basket from '../Pages/User/Basket';
 import Search from '../Pages/User/Search';
 import Profil from '../Pages/User/Profil';
+import NewArticles from '../Pages/User/NewArticles';
 
 
 import HomeAdmin from '../Pages/Admin/Home';
@@ -46,6 +47,7 @@ const AppRouter = () => {
                     <Route path='/product/:id' component={Product} />
                     <Route path='/best-seller'  component={BestSeller}  exact={true}/>
                     <Route path='/discount'  component={Discount}  exact={true}/>
+                    <Route path='/new_articles'  component={NewArticles}  exact={true}/>
                     <Route path='/basket'  component={Basket}  exact={true} />
                     <Route path='/search'  component={Search}  exact={true} />
                     <Route path='/profil/:name'  component={Profil} />
