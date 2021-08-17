@@ -15,7 +15,7 @@ const Home = () => {
     let result;
     useEffect(() => {
         // function test() {
-        //     axios.get('https://localhost:8000/api/shippy',{
+        //     axios.get('http://localhost:8000/api/shippy',{
         //     }).then((response) => {
         //         console.log(response)
         //     }).catch((error) => {
@@ -26,7 +26,7 @@ const Home = () => {
 
 
         function getMostPopular() {
-            axios.get('https://localhost:8000/api/articles/popularity', {
+            axios.get('http://localhost:8000/api/articles/popularity', {
                 params: {exist: "oui"}
             }).then((response) => {
                 let articles = response.data["hydra:member"];

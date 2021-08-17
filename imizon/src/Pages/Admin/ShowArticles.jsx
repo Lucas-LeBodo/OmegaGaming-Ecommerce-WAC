@@ -17,7 +17,7 @@ const ShowArticles = () => {
         let views
 
         function getArticles() {
-            axios.get('https://localhost:8000/api/articles?page='+page, {
+            axios.get('http://localhost:8000/api/articles?page='+page, {
             }).then((response) => {
                 let articles = response.data["hydra:member"];
                 if(response.data["hydra:view"] !== undefined){
@@ -110,7 +110,7 @@ const ShowArticles = () => {
 
     const deleteArticles = (id) => {
         console.log(id)
-        axios.delete('https://localhost:8000/api/articles/'+id, {
+        axios.delete('http://localhost:8000/api/articles/'+id, {
             data : {id:id}
         }).then((response) => {
             window.location.reload()
