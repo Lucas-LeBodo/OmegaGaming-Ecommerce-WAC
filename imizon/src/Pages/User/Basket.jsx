@@ -26,6 +26,7 @@ const Basket = () => {
         let list_id = [];
         let list_articles = '';
     
+    
         const getInformation = () =>{
             if(localStorage.jwt) {
                 const base64Url = localStorage.jwt.split('.')[1];
@@ -144,62 +145,6 @@ const Basket = () => {
             }
         }
     }, [])
-
-    const getRates = (info, W, listArt) => {
-     
-        let data = JSON.stringify({
-            "to_address": {
-                "name": info.firstName,
-                "company": "ShippyPro",
-                "street1": info.adress,
-                "street2": "",
-                "city": info.town,
-                "state": "Département de Paris",
-                "zip": info.postalCode,
-                "country": "FR", // changer l'entree dans le form mettre initial (ex: Fr)
-                "phone": "5551231234",
-                "email": info.email
-            },
-            "from_address": {
-                "name": "Damien Legrand",
-                "company": "Aucune",
-                "street1": "Rue d'Avron 116",
-                "street2": "",
-                "city": "Paris",
-                "state": "Département de Paris",
-                "zip": "75020",
-                "country": "FR",
-                "phone": "+33 623525172",
-                "email": "damienlg06@hotmail.com"
-            },
-            "parcels": [
-                {
-                    "length": 5,
-                    "width": 5,
-                    "height": 5,
-                    "weight": W
-                }
-            ],
-            "Insurance": 0,
-            "InsuranceCurrency": "EUR",
-            "CashOnDelivery": 0,
-            "CashOnDeliveryCurrency": "EUR",
-            "ContentDescription": "Shoes",
-            "TotalValue": "50.25 EUR",
-            "ShippingService": "Standard"
-        })
-        
-        if(listArt !== ""){
-            console.log(JSON.parse(data))
-            axios.get('http://localhost:8000/api/shippy/getRates?params=' + data,{  
-            }).then((response) => {
-                console.log(response)
-                setRates(response.data.Rates['hydra:member'][0])
-            }).catch((error) => {
-                console.log(error)
-            })
-        }
-    }
 
     const deleteArticles = (id, connected) => {
         if(connected === "connected") {
@@ -451,7 +396,7 @@ const Basket = () => {
    
         axios.get('http://localhost:8000/api/shippy/postOrder?params=' + data,{  
         }).then((response) => {
-          let order =  JSON.parse(response.data)
+          let order = JSON.parse(response.data)
            if(order.Result == "OK"){
                let NbOrder = order.NewOrderID
                sendToOrderManifest(idUser, NbOrder, totalPriceBasket)
@@ -468,7 +413,7 @@ const Basket = () => {
                 price : parseInt(totalPrice)
             }).then((response) => {
                 if(response.statusText == "Created"){
-                    deleteBasket(idUser)
+                    deleteBasket(idUser, NbOrder)
                 }
                 
             }).catch((error) => {
@@ -477,22 +422,23 @@ const Basket = () => {
         }
 
 
-
-
         /**
          *  fonction de reinitialisation du basket 
          * 
-         *  changer history.push sur la route tracking order
-         *
+         *  on peut transmettre  des donne via state: { nbOrder: NbOrder }
+         *  
          * @param {*} idUser
          */
 
-        const deleteBasket = (idUser) => {
+        const deleteBasket = (idUser, NbOrder) => {
             axios.get('http://localhost:8000/api/shippy/deleteBasket?params='+ idUser, { 
-            }).then((response) => {
-                console.log(response)       
+            }).then((response) => {     
                 if(response.statusText == "OK"){
-                    history.push("/")
+                    history.push({
+                        pathname: '/tracking',
+                        // search: '?query=abc',
+                        state: { nbOrder: NbOrder }
+                      })
                     window.location.reload();
                 }         
             }).catch((error) => {
@@ -598,7 +544,6 @@ const Basket = () => {
             </div>
           )
       }
-
 
     return (
         <Fragment>

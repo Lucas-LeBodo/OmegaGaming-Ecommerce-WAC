@@ -15,7 +15,7 @@ class ShippyController extends AbstractController
 
         $ch = \curl_init();
 
-        \curl_setopt($ch, CURLOPT_URL, "http://www.shippypro.com/api");
+        \curl_setopt($ch, CURLOPT_URL, "https://www.shippypro.com/api");
         \curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         \curl_setopt($ch, CURLOPT_HEADER, FALSE);
 
