@@ -399,6 +399,17 @@ const Basket = () => {
             })
         }
 
+
+
+
+        /**
+         *  fonction de reinitialisation du basket 
+         * 
+         *  changer history.push sur la route tracking order
+         *
+         * @param {*} idUser
+         */
+
         const deleteBasket = (idUser) => {
             axios.get('http://localhost:8000/api/shippy/deleteBasket?params='+ idUser, { 
             }).then((response) => {
