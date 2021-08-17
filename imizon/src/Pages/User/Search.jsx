@@ -15,10 +15,9 @@ const Search = () => {
     let result;
     
     const getArticle = (articles) => {
-        
         let allArticles = articles.articles;
-
         let articlesArr = [];
+        
         allArticles.forEach((value, index, array) => {
             articlesArr.push( <CardSearch value={value} callback={getSort} />);
         });
