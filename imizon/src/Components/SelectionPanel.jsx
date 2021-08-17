@@ -7,29 +7,17 @@ import axios from 'axios';
 
 
 export default function AnimatedMulti(props) {
-  const [categories, setCategories] = useState('');
-  const [maxPages, setMaxPages] = useState('');
-  const [pages, setPages] = useState(1);
-  const [selectCategory, setSelectCategory] = useState('');
 
+  const [categories, setCategories] = useState('');
+  const [selectCategory, setSelectCategory] = useState('');
   const [sort, setSort] = useState('')
-  let views;
   
   useEffect(() => {
+    let pages = 1;
     const getCategories = () => {
       axios.get('http://localhost:8000/api/categories?page='+ pages ,{
       }).then((response) => {
           setCategories(response.data["hydra:member"]);
-          if(response.data["hydra:view"] !== undefined){
-              views = response.data["hydra:view"];
-          }
-          
-          if(categories !== [] && views !== [] && views !== undefined) {
-              if(views["hydra:last"] !== undefined) {
-                  let max = views["hydra:last"].substr(-1);
-                  setMaxPages(max)
-              }
-          }
       })
     }    
     getCategories();
@@ -37,25 +25,24 @@ export default function AnimatedMulti(props) {
   
   let result;
   let options = [];
-  if(categories != ""){
+  if(categories !== ""){
     result = categories.map((category) => {
-        return(
-          { value: category.id, label: category.category_name }
+      return(
+        <div key={Math.random().toString(36).substring(7)}><label><input type="checkbox" onChange={event => {setSort(event.target.value)}}/> {category.category_name }</label></div>
         )
     })
   }
   options.push(result)
-  const animatedComponents = makeAnimated();
 
 
   useEffect(() => {
-    if(selectCategory != ''){
+    if(selectCategory !== ''){
       axios.get('http://localhost:8000/api/categories/' + selectCategory ,{
         }).then((response) => {
           props.callBack(response.data)
         })
     }
-  }, [selectCategory])
+  }, [selectCategory, props])
 
   if(sort){
     props.sort(sort)
@@ -67,12 +54,14 @@ export default function AnimatedMulti(props) {
             <div className="Panel-content">
                 <div className="category-control">
                     <h3> Category </h3>
-                    <Select closeMenuOnSelect={false} components={animatedComponents} isMulti options={options[0]} className={'selectCategory'} onChange={(event) => {setSelectCategory(event[0].value)}}/>  
+                   <div className="category-container">{result}</div> 
                 </div>
                 <div className="sort-control">
                     <h3> Sort </h3>
-                    <label><input type="radio" value="ASC" onChange={event => {setSort(event.target.value)}}/> A-Z </label>
-                    <label><input type="radio" value="DESC" onChange={event => {setSort(event.target.value)}}/> Z-A </label>
+                    <div className="sort-container">
+                      <div><label><input type="checkbox" value="ASC" onChange={event => {setSort(event.target.value)}}/> A-Z </label></div>
+                      <div><label><input type="checkbox" value="DESC" onChange={event => {setSort(event.target.value)}}/> Z-A </label></div>
+                    </div>
                 </div>
             </div>
         </div>

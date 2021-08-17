@@ -11,8 +11,9 @@ const BestSeller = () => {
     
     useEffect(() => {
         function getMostPopular() {
-            axios.get('http://localhost:8000/api/articles/popularity', {
+            axios.get('http://localhost:8000/api/articles/discount', {
             }).then((response) => {
+                console.log(response)
                 let articles = response.data["hydra:member"];
                 let showArticles = [];
                 articles.forEach(element => {
@@ -45,7 +46,7 @@ const BestSeller = () => {
             for (let i = 0; i < nbRow; i++){
                 for (let j = 0; j < 4 ; j++){
                 row[j] = showArticles[j]
-                    if(j === 3 ){
+                    if(j === 3){
                         map_def.push(row)
                         row = []
                         showArticles.splice(0, 4);

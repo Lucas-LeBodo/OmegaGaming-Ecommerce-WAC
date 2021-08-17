@@ -36,7 +36,7 @@ const BreadCrumbs = (props) =>  {
         }
         getName();
 
-    }, [window.location.pathname])
+    }, [props])
 
         
     if(pathname === "/"){

@@ -1,5 +1,4 @@
 import React, {useEffect, Fragment, useState} from 'react';
-import { Container } from "react-bootstrap";
 import axios from 'axios';
 
 // Import Components
@@ -8,7 +7,7 @@ import CardSearch from '../../Components/CardSearch';
 import Card from '../../Components/ArticleCard';
 
 
-const Search = (props) => {
+const Search = () => {
     const [showArticles, setShowArticles] = useState([]);    
     const [row, setRow] = useState('');
     const [sort, setSort] = useState('')
@@ -19,7 +18,7 @@ const Search = (props) => {
         
         let allArticles = articles.articles;
 
-        let articlesArr = new Array();
+        let articlesArr = [];
         allArticles.forEach((value, index, array) => {
             articlesArr.push( <CardSearch value={value} callback={getSort} />)
         })
@@ -44,9 +43,9 @@ const Search = (props) => {
                                 image={element.Image}
                                 description={element.Description}
                                 price={element.Price}
+                                discount={element.discount}
                             />
                         )
-
                     });
                     setShowArticles(showArticles.sort());
                 })
@@ -64,6 +63,7 @@ const Search = (props) => {
                                 image={element.Image}
                                 description={element.Description}
                                 price={element.Price}
+                                discount={element.discount}
                             />
                         )
 
@@ -77,7 +77,7 @@ const Search = (props) => {
 
     useEffect(() => {
         setRow(map());
-    }, [showArticles])
+    }, [showArticles]);
     
     const getSort = (sort) => {
         setSort(sort)
@@ -87,23 +87,23 @@ const Search = (props) => {
             let map_def = [];
             let row = [];
             let nbRow = 1;
-            if(showArticles.length >= 3){
-                nbRow = Math.ceil(showArticles.length/3);
+            if(showArticles.length >= 4){
+                nbRow = Math.ceil(showArticles.length/4);
                 for (let i = 0; i < nbRow; i++){
-                    for (let j = 0; j < 3 ; j++){
-                    row [j] = showArticles[j]
-                        if(j == 2 ){
+                    for (let j = 0; j < 4 ; j++){
+                    row[j] = showArticles[j]
+                        if(j === 3){
                             map_def.push(row)
                             row = []
-                            showArticles.splice(0, 3);
+                            showArticles.splice(0, 4);
                         }
                     }
                 }
             }else{
                 for (let i = 0; i < nbRow; i++){
-                    for (let j = 0; j < 3 ; j++){
-                    row [j] = showArticles[j]
-                        if(j == 2){
+                    for (let j = 0; j < 4 ; j++){
+                    row[j] = showArticles[j]
+                        if(j === 3){
                             map_def.push(row)
                             row = []
                         }
@@ -121,12 +121,12 @@ const Search = (props) => {
                 </div>
             )
         });
-        return renderCardRow
+        return renderCardRow;
     }
 
 
 
-    if(row != ''){
+    if(row !== ''){
         result = row.map((cards, index) => {
             // console.log("cards : ")
             // console.log(cards)
@@ -142,7 +142,7 @@ const Search = (props) => {
     return(
         <Fragment >
             <SelectionPanel callBack={getArticle} sort={getSort}/>
-            <Container style={{marginLeft: '30%'}}>{result}</Container>
+            <div className="cardSearch-container">{result}</div> 
         </Fragment>
     )
 

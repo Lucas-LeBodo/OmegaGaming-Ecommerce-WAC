@@ -5,13 +5,13 @@ import {Link} from 'react-router-dom';
 
 
 
-function Navbox(props) {
+function Navbox() {
 return (
     <Fragment>
         <div className={'navbox'}>
             <p>
                 <span className={"best"}><Link to={'/best-seller'} ><RiVipCrownLine/> Best Sellers</Link></span>
-                <span className={"promo"}><Link to={'/'} ><RiMoneyDollarBoxLine/> Promo</Link></span>
+                <span className={"promo"}><Link to={'/discount'} ><RiMoneyDollarBoxLine/> Promo</Link></span>
                 <Link to={'/'} >Gaming</Link>
                 <Link to={'/'} >Streaming</Link>
             </p>

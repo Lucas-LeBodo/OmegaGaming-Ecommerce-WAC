@@ -33,9 +33,7 @@ const ProductSheet = (props) => {
             axios.get('http://localhost:8000/api/articles/view', {
                 params: {id: id}
             }).then((response) => {
-                console.log(response)
             }).catch((error) => {
-                console.log(error)
             })
 
         }
@@ -50,11 +48,9 @@ const ProductSheet = (props) => {
         }
 
         getInformations();
-    }, [])
+    }, [props])
 
-    console.log(sameArticles)
-
-    if(article !== ''){
+    if(article !== ""){
         return (
             <Container fluid id="product_sheet">
                 <Row className="style_card">
@@ -67,6 +63,7 @@ const ProductSheet = (props) => {
                         otherArticle={sameArticles}
                         id={article.id}
                         weight={article.weight}
+                        discount={article.discount}
                     />
                         
                 </Row>
@@ -91,42 +88,13 @@ const ProductSheet = (props) => {
                 </Row>
             </Container>
         )
+    } else {
+        return (
+            <Container>
+                <p></p>
+            </Container>
+        )
     }
-    return (
-        <Container fluid id="product_sheet">
-            <Row className="style_card">
-                <CarouselProduct img1={article.Image} img2={article.Image}/>
-                <InformationsProduct 
-                    title={article.Title} 
-                    description={article.Description}
-                    price={article.Price}
-                    stock={article.Stock}
-                    otherArticle={sameArticles}
-                    weight={article.weight}
-                />
-                    
-            </Row>
-
-            <Row className="style_card">
-                <Col>
-                    <Row> 
-                        <Col id="title_product">
-                            <div> - Descriptif - </div>
-                            
-                        </Col> 
-                    </Row>
-                    <Row>
-                        <DescriptionLongProduct/>
-                        <ImgDescriptionLongProduct
-                            id="img"
-                            img={article.Image}
-                        />
-                    </Row>
-                </Col>
-                
-            </Row>
-        </Container>
-    )
 }
 
 export default ProductSheet

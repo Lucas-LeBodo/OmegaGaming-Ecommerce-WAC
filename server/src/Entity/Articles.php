@@ -8,6 +8,7 @@ use App\Controller\ArticleReference;
 use App\Controller\ArticlesByCategory;
 use App\Controller\ArticlesController;
 use App\Controller\MostPopularArticle;
+use App\Controller\DiscountController;
 use App\Repository\ArticlesRepository;
 use App\Controller\ArticlesOrderByName;
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -21,6 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\ArticleRecupChildRef;
+use App\Controller\NewArticlesController;
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
@@ -39,10 +41,10 @@ use App\Controller\ArticleRecupChildRef;
             'method' => 'get',
             'controller' => MostPopularArticle::class,
         ],
-       'orderByNameASC' => [
-        'path' => '/articles/OrderByNameASC',
-        'method' => 'get',
-        'controller' => ArticlesOrderByNameASC::class,
+        'orderByNameASC' => [
+            'path' => '/articles/OrderByNameASC',
+            'method' => 'get',
+            'controller' => ArticlesOrderByNameASC::class,
         ],
         'orderByNameDESC' => [
             'path' => '/articles/OrderByNameDESC',
@@ -71,6 +73,18 @@ use App\Controller\ArticleRecupChildRef;
             'pagination_enabled' => false,
             'path' => '/articles/recupChildRef/',
             'controller' => ArticleRecupChildRef::class,
+        ],
+        'recupPromo' => [
+            'method' => 'get',
+            'pagination_enabled' => false,
+            'path' => '/articles/discount/',
+            'controller' => DiscountController::class,
+        ],
+        'recupNewArticles' => [
+            'method' => 'get',
+            'pagination_enabled' => false,
+            'path' => '/articles/newArticles/',
+            'controller' => NewArticlesController::class,
         ],
         'get',
         'post'
@@ -166,6 +180,12 @@ class Articles
      * @Groups({"article:read", "article:write"})
      */
     private $weight;
+
+    /**
+    * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"article:write", "article:read"})
+     */
+    private $discount;
 
     public function __construct()
     {
@@ -304,6 +324,18 @@ class Articles
     public function setWeight(int $weight): self
     {
         $this->weight = $weight;
+
+        return $this;
+    }
+
+    public function getDiscount(): ?int
+    {
+        return $this->discount;
+    }
+
+    public function setDiscount(?int $discount): self
+    {
+        $this->discount = $discount;
 
         return $this;
     }

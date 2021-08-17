@@ -1,7 +1,7 @@
 import { Row, Col } from "react-bootstrap";
 
 
-export default function description (props) {
+export default function description () {
     return(
         <Col id="description_product">
             <Row> 

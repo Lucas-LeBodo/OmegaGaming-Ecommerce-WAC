@@ -34,6 +34,17 @@ class ArticlesRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getPromotion()
+    {
+        return $this->createQueryBuilder('a')
+            ->where("a.discount > 0")
+            ->orderBy('a.View', "DESC")
+            ->setMaxResults(30)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function getMostPopularHome()
     {
         return $this->createQueryBuilder('a')
@@ -100,6 +111,16 @@ class ArticlesRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->where("a.id IN (:id)")
             ->setParameter(':id', $listId)
+            ->getQuery()
+            ->getResult()
+            ;
+
+    }
+    public function getNewArticle()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id', 'DESC')
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult()
             ;
