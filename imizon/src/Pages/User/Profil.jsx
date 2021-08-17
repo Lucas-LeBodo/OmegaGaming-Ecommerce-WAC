@@ -96,10 +96,10 @@ const Profil = () => {
             <div className={"containers-form"} style={{background: "blue"}}>
                 <div className={"containers-signup"}>
                     <h3>Update your's informations</h3>
-                    <input type="email"     className="signup-form"     defaultValue={email} placeholder={"Email"} onChange={ (event)=>{ setEmail(event.target.value)}} required/>
-                    <input type="password"  className="signup-form"     defaultValue={password} placeholder={"Password"} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
-                    <input type="text"      className="signup-form"     defaultValue={firstName} placeholder={"First Name"} onChange={ (event)=>{ setFirstName(event.target.value)}} required/>
-                    <input type="text"      className="signup-form"     defaultValue={lastName} placeholder={"Last Name"} onChange={ (event)=>{ setLastName(event.target.value)}} required/>
+                    <input type="email" className="signup-form" defaultValue={email} placeholder={"Email"} onChange={ (event)=>{ setEmail(event.target.value)}} required/>
+                    <input type="password" className="signup-form" defaultValue={password} placeholder={"Password"} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
+                    <input type="text" className="signup-form" defaultValue={firstName} placeholder={"First Name"} onChange={ (event)=>{ setFirstName(event.target.value)}} required/>
+                    <input type="text" className="signup-form" defaultValue={lastName} placeholder={"Last Name"} onChange={ (event)=>{ setLastName(event.target.value)}} required/>
                     <select className="form-select" aria-label="Default select example" onChange={ (event)=>{ setCountry(event.target.value)}}>
                         <option value="DE">Allemagne</option>
                         <option value="GB">Angleterre</option>
@@ -111,12 +111,12 @@ const Profil = () => {
                         <option value="PT">Potugal</option>
                         <option value="CH">Suisse</option>
                     </select>
-                    <input type="text"      className="signup-form"     defaultValue={town} placeholder={"Town"} onChange={ (event)=>{ setTown(event.target.value)}} required/>
-                    <input type="text"      className="signup-form"     defaultValue={postalCode} placeholder={"Postal Code"} onChange={ (event)=>{ setPostalCode(event.target.value)}} required/>
-                    <input type="text"      className="signup-form"     defaultValue={adress} placeholder={"Adress"} onChange={ (event)=>{ setAdress(event.target.value)}} required/>
-                    <input type="text"      className="signup-form"     defaultValue={cardData} placeholder={"Card Data"} onChange={ (event)=>{ setCardData(event.target.value)}} required/>
-                    <input type="number"    className="signup-form"     defaultValue={phone} placeholder={"Phone Number"} onChange={ (event)=>{ setPhone(event.target.value)}} required/>
-                    <div type="submit"      className="signup-btn" onClick={ submit } >Update Information</div>
+                    <input type="text" className="signup-form" defaultValue={town} placeholder={"Town"} onChange={ (event)=>{ setTown(event.target.value)}} required/>
+                    <input type="text" className="signup-form" defaultValue={postalCode} placeholder={"Postal Code"} onChange={ (event)=>{ setPostalCode(event.target.value)}} required/>
+                    <input type="text" className="signup-form" defaultValue={adress} placeholder={"Adress"} onChange={ (event)=>{ setAdress(event.target.value)}} required/>
+                    <input type="text" className="signup-form" defaultValue={cardData} placeholder={"Card Data"} onChange={ (event)=>{ setCardData(event.target.value)}} required/>
+                    <input type="number" className="signup-form" defaultValue={phone} placeholder={"Phone Number"} onChange={ (event)=>{ setPhone(event.target.value)}} required/>
+                    <div type="submit" className="signup-btn" onClick={ submit } >Update Information</div>
                 </div>
             </div>        
         </Fragment>
