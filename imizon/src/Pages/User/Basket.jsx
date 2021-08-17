@@ -396,7 +396,7 @@ const Basket = () => {
    
         axios.get('http://localhost:8000/api/shippy/postOrder?params=' + data,{  
         }).then((response) => {
-          let order =  JSON.parse(response.data)
+          let order = JSON.parse(response.data)
            if(order.Result == "OK"){
                let NbOrder = order.NewOrderID
                sendToOrderManifest(idUser, NbOrder, totalPriceBasket)
@@ -413,7 +413,7 @@ const Basket = () => {
                 price : parseInt(totalPrice)
             }).then((response) => {
                 if(response.statusText == "Created"){
-                    deleteBasket(idUser)
+                    deleteBasket(idUser, NbOrder)
                 }
                 
             }).catch((error) => {
@@ -422,22 +422,23 @@ const Basket = () => {
         }
 
 
-
-
         /**
          *  fonction de reinitialisation du basket 
          * 
-         *  changer history.push sur la route tracking order
-         *
+         *  on peut transmettre  des donne via state: { nbOrder: NbOrder }
+         *  
          * @param {*} idUser
          */
 
-        const deleteBasket = (idUser) => {
+        const deleteBasket = (idUser, NbOrder) => {
             axios.get('http://localhost:8000/api/shippy/deleteBasket?params='+ idUser, { 
-            }).then((response) => {
-                console.log(response)       
+            }).then((response) => {     
                 if(response.statusText == "OK"){
-                    history.push("/")
+                    history.push({
+                        pathname: '/tracking',
+                        // search: '?query=abc',
+                        state: { nbOrder: NbOrder }
+                      })
                     window.location.reload();
                 }         
             }).catch((error) => {
@@ -543,7 +544,6 @@ const Basket = () => {
             </div>
           )
       }
-
 
     return (
         <Fragment>
