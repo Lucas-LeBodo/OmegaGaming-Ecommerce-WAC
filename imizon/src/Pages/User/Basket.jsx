@@ -26,6 +26,100 @@ const Basket = () => {
         let list_id = [];
         let list_articles = '';
     
+        const getInformation = () =>{
+            if(localStorage.jwt) {
+                const base64Url = localStorage.jwt.split('.')[1];
+                const base64 = base64Url.replace('-', '+').replace('_', '/');
+                let username = JSON.parse(window.atob(base64)).username;
+                axios.get('http://localhost:8000/api/me', {
+                params: {username: username}
+                }).then((response) => {
+                    let weightTotal = 0.01;
+                    if(list_articles.length > 1){
+                        list_articles.forEach((article) => {
+                            weightTotal = article.weight + weightTotal;
+                        })
+                    }
+                    getRates(response.data, weightTotal)
+                })
+            }else{
+                let weightTotal = 0.01;
+                let infos = {
+                    adress: "Rue d'Avron 116",
+                    postalCode: "75020",
+                    email: "johndoe@gmail.com",
+                    lastName: "John",
+                    firstName: "Doe",
+                    country: "FR"
+                }
+                axios.get('http://localhost:8000/api/baskets/listBasket', {
+                    params: {tabList:list_id},
+                }).then((response) => {
+                    let list_articles = response.data["hydra:member"];
+                    list_articles.forEach((element) => {
+                        weightTotal = element.weight + weightTotal
+                    })
+                    getRates(infos, weightTotal,list_articles)
+                })
+                
+            }
+        }
+        const getRates = (info, W, listArt) => {
+         
+            let data = JSON.stringify({
+                "to_address": {
+                    "name": info.firstName,
+                    "company": "ShippyPro",
+                    "street1": info.adress,
+                    "street2": "",
+                    "city": "Paris",
+                    "state": "Département de Paris",
+                    "zip": info.postalCode,
+                    "country": "FR", // changer l'entree dans le form mettre initial (ex: Fr)
+                    "phone": "5551231234",
+                    "email": info.email
+                },
+                "from_address": {
+                    "name": "Damien Legrand",
+                    "company": "Aucune",
+                    "street1": "Rue d'Avron 116",
+                    "street2": "",
+                    "city": "Paris",
+                    "state": "Département de Paris",
+                    "zip": "75020",
+                    "country": "FR",
+                    "phone": "+33 623525172",
+                    "email": "damienlg06@hotmail.com"
+                },
+                "parcels": [
+                    {
+                        "length": 5,
+                        "width": 5,
+                        "height": 5,
+                        "weight": W
+                    }
+                ],
+                "Insurance": 0,
+                "InsuranceCurrency": "EUR",
+                "CashOnDelivery": 0,
+                "CashOnDeliveryCurrency": "EUR",
+                "ContentDescription": "Shoes",
+                "TotalValue": "50.25 EUR",
+                "ShippingService": "Standard"
+            })
+            
+            if(list_articles != "" || listArt != ""){
+                axios.get('http://localhost:8000/api/shippy/getRates?params=' + data,{  
+                }).then((response) => {
+                    console.log(response);
+                    setRates(response.data.Rates['hydra:member'][0])
+                }).catch((error) => {
+                    
+                })
+            }
+        }
+
+
         if(localStorage.jwt) {
             const base64Url = localStorage.jwt.split('.')[1];
             const base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -51,48 +145,6 @@ const Basket = () => {
         }
     }, [])
 
-    const getInformation = (list_articles) =>{
-        if(localStorage.jwt) {
-            const base64Url = localStorage.jwt.split('.')[1];
-            const base64 = base64Url.replace('-', '+').replace('_', '/');
-            let username = JSON.parse(window.atob(base64)).username;
-            axios.get('http://localhost:8000/api/me', {
-            params: {username: username}
-            }).then((response) => {
-                let weightTotal = 0.01;
-                if(list_articles.length > 1){
-                    list_articles.forEach((article) => {
-                        weightTotal = article.weight + weightTotal;
-                    })
-                    
-                }else {
-                    weightTotal = list_articles[0].weight
-                }
-                getRates(response.data, weightTotal)
-            })
-        }else{
-            let weightTotal = 0.01;
-            let infos = {
-                adress: "Rue d'Avron 116",
-                postalCode: "75020",
-                email: "johndoe@gmail.com",
-                lastName: "John",
-                firstName: "Doe",
-                country: "FR"
-            }
-            axios.get('http://localhost:8000/api/baskets/listBasket', {
-                params: {tabList:list_articles},
-            }).then((response) => {
-                let list_articles = response.data["hydra:member"];
-                if(list_articles.length > 0) {
-                    list_articles.forEach((element) => {
-                        weightTotal = element.weight + weightTotal;
-                    })
-                    getRates(infos, weightTotal, list_articles)
-                }
-            })
-        }
-    }
     const getRates = (info, W, listArt) => {
      
         let data = JSON.stringify({
@@ -440,11 +492,7 @@ const Basket = () => {
             }).then((response) => {
                 console.log(response)       
                 if(response.statusText == "OK"){
-                    history.push({
-                        pathname: '/tracking',
-                        //search: '?query=abc',
-                        //state: { detail: response.data }
-                      })
+                    history.push("/")
                     window.location.reload();
                 }         
             }).catch((error) => {
