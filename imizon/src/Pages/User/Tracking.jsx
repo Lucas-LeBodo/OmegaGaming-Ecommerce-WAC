@@ -11,6 +11,7 @@ export default class tracking extends Component {
                     <Link to={"/"}>← back to home</Link>
                     <div className="tracking">
                         <h1> Shipping in progress </h1>
+                        <p>Command n° xxxx .</p>
                         <img src={truckImg} alt="Delivery Trucks" />
                     </div> 
                     
