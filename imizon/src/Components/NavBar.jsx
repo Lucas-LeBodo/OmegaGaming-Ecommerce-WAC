@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import axios from 'axios';
 import { Link, useLocation } from "react-router-dom";
 import {decode as base64_decode} from 'base-64';
-import {FiLogIn, FiUserPlus, FiUser, FiLogOut, FiSearch} from "react-icons/fi"
+import {FiLogIn, FiUserPlus, FiUser, FiLogOut, FiSearch, FiKey} from "react-icons/fi"
 import { MdShoppingCart } from "react-icons/md"
 
 // Import Components
@@ -100,7 +100,7 @@ function NavBar(props) {
         let info = base64_decode(split[1]);
         info = JSON.parse(info);
         if(info.roles["roles"] === "ROLE_ADMIN") {
-            admin = <Link to={'/admin'} ><FiUser />Admin</Link>
+            admin = <Link to={'/admin'} ><FiKey /> Espace Admin</Link>
         }
     }
          
@@ -120,8 +120,8 @@ function NavBar(props) {
                         <div className="dropdown">
                             <div className="boutonmenuprincipal"><FiUser /></div>
                             <div className="dropdown-child">
-                                {admin}
                                 {user}
+                                {admin}
                                 {loginPath}
                                 {registerPath}
                                 {logout}
