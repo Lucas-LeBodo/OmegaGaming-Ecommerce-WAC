@@ -10,14 +10,16 @@ import NavBar from '../Components/NavBar';
 import Home from '../Pages/User/Home';
 import Register from '../Pages/User/Register';
 import Login from '../Pages/User/Login';
-import Product from '../Pages/User/ProductSheet'
+import Product from '../Pages/User/ProductSheet';
 import BestSeller from '../Pages/User/BestSeller';
 import Discount from '../Pages/User/Discount';
 import Basket from '../Pages/User/Basket';
 import Search from '../Pages/User/Search';
-import Profil from '../Pages/User/Profil';
-import Adress from '../Pages/User/Adress';
 import NewArticles from '../Pages/User/NewArticles';
+import Tracking from '../Pages/User/Tracking';
+import Adress from '../Pages/User/Adress';
+import Profil from '../Pages/User/Profil';
+import Payment from '../Pages/User/PaymentInformation';
 
 
 import HomeAdmin from '../Pages/Admin/Home';
@@ -40,7 +42,6 @@ const AppRouter = () => {
                 {/* <BreadCrumbs /> */}
 
                 <Switch>
-
                     {/* User Router */}
                     <Route path='/' component={Home} exact={true} />
                     <Route path='/register' component={Register} exact={true} />
@@ -53,6 +54,7 @@ const AppRouter = () => {
                     <Route path='/search'  component={Search}  exact={true} />
                     <Route path='/profil/adress' component={Adress} exact={true} /> 
                     <Route path='/profil/:name'  component={Profil} />
+                    <Route path='/tracking' component={Tracking} />
                     
 
                     {/* Admin Router */}
@@ -62,7 +64,6 @@ const AppRouter = () => {
                     <Route path='/admin/show_articles'  component={ShowArticles} exact={true} />
                     <Route path='/admin/create_category'  component={CreateCategory} exact={true} />
                     <Route path='/admin/show_article/update/:id' component={UpdateArticle} /> 
-
                 </Switch>
             </Fragment>
         </BrowserRouter>

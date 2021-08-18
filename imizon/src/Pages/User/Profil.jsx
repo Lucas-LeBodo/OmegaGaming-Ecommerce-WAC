@@ -5,8 +5,6 @@ import {useHistory} from 'react-router-dom';
 
 
 const Profil = () => {
-    //Remplacer l'input pays par un select avec une liste full pays !
-
     const [id, setId] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

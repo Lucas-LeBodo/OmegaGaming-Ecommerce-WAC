@@ -2,7 +2,7 @@ import React, {useEffect, Fragment, useState} from 'react';
 import axios from 'axios';
 
 // Import Components
-import SelectionPanel from '../../Components/SelectionPanel'
+import SelectionPanel from '../../Components/SelectionPanel';
 import CardSearch from '../../Components/CardSearch';
 import Card from '../../Components/ArticleCard';
 
@@ -10,22 +10,21 @@ import Card from '../../Components/ArticleCard';
 const Search = () => {
     const [showArticles, setShowArticles] = useState([]);    
     const [row, setRow] = useState('');
-    const [sort, setSort] = useState('')
+    const [sort, setSort] = useState('');
 
     let result;
     
     const getArticle = (articles) => {
-        
         let allArticles = articles.articles;
-
         let articlesArr = [];
+        
         allArticles.forEach((value, index, array) => {
-            articlesArr.push( <CardSearch value={value} callback={getSort} />)
-        })
+            articlesArr.push( <CardSearch value={value} callback={getSort} />);
+        });
         
         setShowArticles(articlesArr);
         setSort(sort);
-    }
+    };
 
     useEffect(() => {
         function getMostPopular() {
@@ -37,14 +36,7 @@ const Search = () => {
                     let showArticles = [];
                     articles.forEach(element => {
                         showArticles.push(
-                            <Card key={element.id} 
-                                id={element.id}
-                                title={element.Title}
-                                image={element.Image}
-                                description={element.Description}
-                                price={element.Price}
-                                discount={element.discount}
-                            />
+                            <Card key={element.id} id={element.id} title={element.Title} image={element.Image} description={element.Description} price={element.Price} discount={element.discount} />
                         )
                     });
                     setShowArticles(showArticles.sort());
@@ -65,15 +57,15 @@ const Search = () => {
                                 price={element.Price}
                                 discount={element.discount}
                             />
-                        )
+                        );
 
                     });
                     setShowArticles(showArticles.sort());
-                })
-            }
-        }
+                });
+            };
+        };
         getMostPopular();
-    }, [sort])
+    }, [sort]);
 
     useEffect(() => {
         setRow(map());

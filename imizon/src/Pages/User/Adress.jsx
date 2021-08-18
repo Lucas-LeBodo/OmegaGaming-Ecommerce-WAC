@@ -5,7 +5,6 @@ import {useHistory} from 'react-router-dom';
 
 
 const Adress = () => {
-    //Remplacer l'input pays par un select avec une liste full pays !
 
     const [id, setId] = useState('');
     const [country, setCountry] = useState('');
@@ -15,7 +14,7 @@ const Adress = () => {
     const history = useHistory();
     
     useEffect(() => {
-        function check() 
+        function getInformation() 
         {
             const base64Url = localStorage.jwt.split('.')[1];
             const base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -30,8 +29,15 @@ const Adress = () => {
             }).catch((error) => {
                 console.log(error)
             })
+
+            axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
+            }).then((response) => {
+                console.log(response.data)
+            }).catch((error) => {
+                console.log(error)
+            })
         }
-        check();
+        getInformation();
     }, [history])
 
     const submit = () => {

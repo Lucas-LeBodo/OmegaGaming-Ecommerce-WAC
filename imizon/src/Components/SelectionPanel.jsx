@@ -1,7 +1,5 @@
 // Import Libs 
 import React, { Fragment, useState, useEffect } from "react";
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
 
 import axios from 'axios';
 
@@ -28,7 +26,7 @@ export default function AnimatedMulti(props) {
   if(categories !== ""){
     result = categories.map((category) => {
       return(
-        <div key={Math.random().toString(36).substring(7)}><label><input type="checkbox" onChange={event => {setSort(event.target.value)}}/> {category.category_name }</label></div>
+        <div key={Math.random().toString(36).substring(7)}><label><input type="checkbox" value={category.id} onChange={event => {setSelectCategory(event.target.value)}}/> {category.category_name }</label></div>
         )
     })
   }
@@ -42,7 +40,7 @@ export default function AnimatedMulti(props) {
           props.callBack(response.data)
         })
     }
-  }, [selectCategory, props])
+  }, [selectCategory])
 
   if(sort){
     props.sort(sort)
@@ -59,8 +57,8 @@ export default function AnimatedMulti(props) {
                 <div className="sort-control">
                     <h3> Sort </h3>
                     <div className="sort-container">
-                      <div><label><input type="checkbox" value="ASC" onChange={event => {setSort(event.target.value)}}/> A-Z </label></div>
-                      <div><label><input type="checkbox" value="DESC" onChange={event => {setSort(event.target.value)}}/> Z-A </label></div>
+                      <div><label><input type="radio" value="ASC" name="sort" onChange={event => {setSort(event.target.value)}} /> A-Z </label></div>
+                      <div><label><input type="radio" value="DESC" name="sort" onChange={event => {setSort(event.target.value)}}/> Z-A </label></div>
                     </div>
                 </div>
             </div>

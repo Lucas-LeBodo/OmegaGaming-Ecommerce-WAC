@@ -27,7 +27,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
                 'controller' => MeController::class,
                 'read' => false,
             ],
-            'post'
+            'post',
+            'get'
         ],
         normalizationContext: ['groups' => ["user:read"]],
         denormalizationContext: ["groups" => ["user:write"]]
