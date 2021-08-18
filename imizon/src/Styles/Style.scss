@@ -159,8 +159,46 @@ $white: #f6f6f6ff;
 }
 
 // Profile page Style
-.containers-form {
-    
+.Panel {
+
+    .UserPanel-content {
+        display: flex;
+        flex-direction: column;
+        padding-top: 8em;
+        align-items: center;
+        height: 100%;
+
+        h4{
+            color: $white;
+            padding-bottom: 1em;
+        }
+
+        .UserPanel-Link {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 4em;
+            padding-left: 1em;
+            cursor: pointer;
+            
+            & a {
+                color: white;
+                text-decoration: none;
+            }
+
+            &:hover { 
+                background-color: rgb(58, 84, 109); ;
+            }
+            
+        }
+
+        .darkline {
+            display: block;
+            width: 100%;
+            height: 0.1em;
+            background-color: $white;
+        }
+    }
 }
 
 // Nav menu style
