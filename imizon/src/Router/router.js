@@ -16,6 +16,7 @@ import Discount from '../Pages/User/Discount';
 import Basket from '../Pages/User/Basket';
 import Search from '../Pages/User/Search';
 import Profil from '../Pages/User/Profil';
+import Adress from '../Pages/User/Adress';
 import NewArticles from '../Pages/User/NewArticles';
 
 
@@ -50,6 +51,7 @@ const AppRouter = () => {
                     <Route path='/new_articles'  component={NewArticles}  exact={true}/>
                     <Route path='/basket'  component={Basket}  exact={true} />
                     <Route path='/search'  component={Search}  exact={true} />
+                    <Route path='/profil/adress' component={Adress} exact={true} /> 
                     <Route path='/profil/:name'  component={Profil} />
                     
 

@@ -18,6 +18,7 @@ function NavBar(props) {
     let nameUser = localStorage.name
     let user = '';
     let admin = '';
+    let adress = '';
     
     // const infoUser = (jwt) => {
     //     let split = jwt.split('.');
@@ -38,7 +39,7 @@ function NavBar(props) {
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
                 let username = JSON.parse(window.atob(base64)).username;
 
-            axios.get('http://localhost:8000/api/baskets/countArticles', {
+            axios.get('https://localhost:8000/api/baskets/countArticles', {
                 params: {email: username}
             }).then((response) => {
                 count_articles = response.data["hydra:member"].length
@@ -94,6 +95,7 @@ function NavBar(props) {
         logout = <Link to={'/'}  onClick={() => {localStorage.clear();}}><FiLogOut/> Logout</Link>
         user = nameUser.split(' ')
         user = <Link to={'/profil/'+nameUser} ><FiUser /> {user[0]}</Link>
+        adress = <Link to={'/profil/adress'} ><FiUser /> Adress </Link>
         // infoUser(jwt)
 
         let split = jwt.split('.');
@@ -122,6 +124,7 @@ function NavBar(props) {
                             <div className="dropdown-child">
                                 {admin}
                                 {user}
+                                {adress}
                                 {loginPath}
                                 {registerPath}
                                 {logout}

@@ -87,46 +87,6 @@ class User implements UserInterface
      */
     private $lastName;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @Groups({"user:read", "user:write"})
-     */
-    private $country;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @Groups({"user:read", "user:write"})
-     */
-    private $adress;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @Groups({"user:read", "user:write"})
-     */
-    private $cardData;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @Groups({"user:read", "user:write"})
-     */
-    private $postalCode;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"user:read", "user:write"})
-     */
-    private $town;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"user:read", "user:write"})
-     */
-    private $phone;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -251,76 +211,6 @@ class User implements UserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(?string $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getAdress(): ?string
-    {
-        return $this->adress;
-    }
-
-    public function setAdress(?string $adress): self
-    {
-        $this->adress = $adress;
-
-        return $this;
-    }
-
-    public function getCardData(): ?string
-    {
-        return $this->cardData;
-    }
-    public function setCardData(?string $cardData): self
-    {
-        $this->cardData = $cardData;
-        return $this;
-    }
-
-    public function getPostalCode(): ?string
-    {
-        return $this->postalCode;
-    }
-
-    public function setPostalCode(?string $postalCode): self
-    {
-        $this->postalCode = $postalCode;
-
-        return $this;
-    }
-
-    public function getTown(): ?string
-    {
-        return $this->town;
-    }
-
-    public function setTown(?string $town): self
-    {
-        $this->town = $town;
-
-        return $this;
-    }
-
-    public function getPhone(): ?int
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(?int $phone): self
-    {
-        $this->phone = $phone;
 
         return $this;
     }
