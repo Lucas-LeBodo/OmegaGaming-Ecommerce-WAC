@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch,} from "react-router-dom";
 
 // import Components
 import NavBar from '../Components/NavBar';
-// import BreadCrumbs from '../Components/BreadCrumbs';
+import BreadCrumbs from '../Components/BreadCrumbs';
 
 
 // import page
@@ -37,7 +37,7 @@ const AppRouter = () => {
         <BrowserRouter>
             <Fragment>
                 <NavBar />
-                {/* <BreadCrumbs /> */}
+                <BreadCrumbs />
 
                 <Switch>
                     {/* User Router */}
