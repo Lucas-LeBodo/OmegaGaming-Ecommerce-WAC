@@ -26,7 +26,7 @@ const BreadCrumbs = (props) =>  {
     useEffect(() => {
         function getName() {
             
-            axios.get("https://localhost:8000/api/articles/"+id,{
+            axios.get("http://localhost:8000/api/articles/"+id,{
             }).then((response) => { 
                 let information = response.data;
                 setArticle(information)
@@ -36,7 +36,7 @@ const BreadCrumbs = (props) =>  {
         }
         getName();
 
-    }, [window.location.pathname])
+    }, [props])
 
         
     if(pathname === "/"){

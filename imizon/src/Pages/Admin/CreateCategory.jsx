@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, {useState} from 'react';
 import {Container, Form} from 'react-bootstrap';
 
 import axios from 'axios';
@@ -8,7 +8,7 @@ const CreateCategory = () => {
 
      const submit = async () => {
     
-        axios.post('https://localhost:8000/api/categories',{
+        axios.post('http://localhost:8000/api/categories',{
             categoryName: category
         }
         ).then((response) => {

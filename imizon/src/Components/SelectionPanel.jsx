@@ -1,35 +1,21 @@
 // Import Libs 
 import React, { Fragment, useState, useEffect } from "react";
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
 
 import axios from 'axios';
 
 
 export default function AnimatedMulti(props) {
-  const [categories, setCategories] = useState('');
-  const [maxPages, setMaxPages] = useState('');
-  const [pages, setPages] = useState(1);
-  const [selectCategory, setSelectCategory] = useState('');
 
+  const [categories, setCategories] = useState('');
+  const [selectCategory, setSelectCategory] = useState('');
   const [sort, setSort] = useState('')
-  let views;
   
   useEffect(() => {
+    let pages = 1;
     const getCategories = () => {
-      axios.get('https://localhost:8000/api/categories?page='+ pages ,{
+      axios.get('http://localhost:8000/api/categories?page='+ pages ,{
       }).then((response) => {
           setCategories(response.data["hydra:member"]);
-          if(response.data["hydra:view"] !== undefined){
-              views = response.data["hydra:view"];
-          }
-          
-          if(categories !== [] && views !== [] && views !== undefined) {
-              if(views["hydra:last"] !== undefined) {
-                  let max = views["hydra:last"].substr(-1);
-                  setMaxPages(max)
-              }
-          }
       })
     }    
     getCategories();
@@ -37,10 +23,10 @@ export default function AnimatedMulti(props) {
   
   let result;
   let options = [];
-  if(categories != ""){
+  if(categories !== ""){
     result = categories.map((category) => {
       return(
-        <div key={Math.random().toString(36).substring(7)}><label><input type="checkbox" onChange={event => {setSort(event.target.value)}}/> {category.category_name }</label></div>
+        <div key={Math.random().toString(36).substring(7)}><label><input type="checkbox" value={category.id} onChange={event => {setSelectCategory(event.target.value)}}/> {category.category_name }</label></div>
         )
     })
   }
@@ -48,8 +34,8 @@ export default function AnimatedMulti(props) {
 
 
   useEffect(() => {
-    if(selectCategory != ''){
-      axios.get('https://localhost:8000/api/categories/' + selectCategory ,{
+    if(selectCategory !== ''){
+      axios.get('http://localhost:8000/api/categories/' + selectCategory ,{
         }).then((response) => {
           props.callBack(response.data)
         })
@@ -71,8 +57,8 @@ export default function AnimatedMulti(props) {
                 <div className="sort-control">
                     <h3> Sort </h3>
                     <div className="sort-container">
-                      <div><label><input type="checkbox" value="ASC" onChange={event => {setSort(event.target.value)}}/> A-Z </label></div>
-                      <div><label><input type="checkbox" value="DESC" onChange={event => {setSort(event.target.value)}}/> Z-A </label></div>
+                      <div><label><input type="radio" value="ASC" name="sort" onChange={event => {setSort(event.target.value)}} /> A-Z </label></div>
+                      <div><label><input type="radio" value="DESC" name="sort" onChange={event => {setSort(event.target.value)}}/> Z-A </label></div>
                     </div>
                 </div>
             </div>

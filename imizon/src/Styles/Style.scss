@@ -191,7 +191,7 @@ $white: #f6f6f6ff;
             }
             
         }
-
+        
         .darkline {
             display: block;
             width: 100%;
@@ -199,6 +199,16 @@ $white: #f6f6f6ff;
             background-color: $white;
         }
     }
+}
+
+// Tracking Styles
+.tracking {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
 }
 
 // Nav menu style

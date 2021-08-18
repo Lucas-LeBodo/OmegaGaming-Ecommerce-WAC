@@ -29,7 +29,7 @@ const Profil = () => {
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
                 let username = JSON.parse(window.atob(base64)).username;
                 
-                axios.get('https://localhost:8000/api/me', {
+                axios.get('http://localhost:8000/api/me', {
                     params: {username: username}
                 }).then((response) => {
                     console.log(response.data)
@@ -65,13 +65,13 @@ const Profil = () => {
             }
         }
         check();
-    }, [])
+    }, [history])
 
     const submit = () => {
         if(country === "") {
             setCountry("FR")
         }
-        axios.put('https://localhost:8000/api/users/'+id,{
+        axios.put('http://localhost:8000/api/users/'+id,{
                 email : email,
                 password : password,
                 lastName : lastName, 
@@ -81,7 +81,7 @@ const Profil = () => {
                 cardData : cardData,
                 postalCode: postalCode,
                 phone: parseInt(phone),
-                town: town,
+                town: town
             }
             ).then((response) => {
                 console.log(response)

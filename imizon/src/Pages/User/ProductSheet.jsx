@@ -21,7 +21,7 @@ const ProductSheet = (props) => {
         function getInformations() {
             let id = props.match.params.id;
         
-            axios.get("https://localhost:8000/api/articles/"+id,{
+            axios.get("http://localhost:8000/api/articles/"+id,{
             }).then((response) => { 
                 let information = response.data;
                 getSameArticles(information)
@@ -30,17 +30,15 @@ const ProductSheet = (props) => {
                 console.log(error)
             })
 
-            axios.get('https://localhost:8000/api/articles/view', {
+            axios.get('http://localhost:8000/api/articles/view', {
                 params: {id: id}
             }).then((response) => {
-                console.log(response)
             }).catch((error) => {
-                console.log(error)
             })
 
         }
         const getSameArticles = (information) => {
-            axios.get('https://localhost:8000/api/articles/recupChildRef/?sameArticles=' + information.Title , {
+            axios.get('http://localhost:8000/api/articles/recupChildRef/?sameArticles=' + information.Title , {
             }).then((response) => {
                 let allSameArticles = response.data["hydra:member"];
                 setSameArticles(allSameArticles)
@@ -50,9 +48,9 @@ const ProductSheet = (props) => {
         }
 
         getInformations();
-    }, [])
+    }, [props])
 
-    if(article !== ''){
+    if(article !== ""){
         return (
             <Container fluid id="product_sheet">
                 <Row className="style_card">
@@ -90,42 +88,13 @@ const ProductSheet = (props) => {
                 </Row>
             </Container>
         )
+    } else {
+        return (
+            <Container>
+                <p></p>
+            </Container>
+        )
     }
-    return (
-        <Container fluid id="product_sheet">
-            <Row className="style_card">
-                <CarouselProduct img1={article.Image} img2={article.Image}/>
-                <InformationsProduct 
-                    title={article.Title} 
-                    description={article.Description}
-                    price={article.Price}
-                    stock={article.Stock}
-                    otherArticle={sameArticles}
-                    weight={article.weight}
-                />
-                    
-            </Row>
-
-            <Row className="style_card">
-                <Col>
-                    <Row> 
-                        <Col id="title_product">
-                            <div> - Descriptif - </div>
-                            
-                        </Col> 
-                    </Row>
-                    <Row>
-                        <DescriptionLongProduct/>
-                        <ImgDescriptionLongProduct
-                            id="img"
-                            img={article.Image}
-                        />
-                    </Row>
-                </Col>
-                
-            </Row>
-        </Container>
-    )
 }
 
 export default ProductSheet

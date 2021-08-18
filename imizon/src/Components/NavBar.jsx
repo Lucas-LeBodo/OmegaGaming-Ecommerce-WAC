@@ -19,14 +19,14 @@ function NavBar(props) {
     let user = '';
     let admin = '';
     
-    const infoUser = (jwt) => {
-        let split = jwt.split('.');
-        let info = base64_decode(split[1]);
-        info = JSON.parse(info);
+    // const infoUser = (jwt) => {
+    //     let split = jwt.split('.');
+    //     let info = base64_decode(split[1]);
+    //     info = JSON.parse(info);
         
-        var infoRole = info.roles
-        let role = infoRole[0];
-    }
+    //     var infoRole = info.roles
+    //     let role = infoRole[0];
+    // }
 
     const [countArticles, setCountArticles] = useState('')
 
@@ -38,7 +38,7 @@ function NavBar(props) {
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
                 let username = JSON.parse(window.atob(base64)).username;
 
-            axios.get('https://localhost:8000/api/baskets/countArticles', {
+            axios.get('http://localhost:8000/api/baskets/countArticles', {
                 params: {email: username}
             }).then((response) => {
                 count_articles = response.data["hydra:member"].length
@@ -63,7 +63,7 @@ function NavBar(props) {
                 }
             }
         }
-    }, [window.location.pathname])
+    }, [])
 
 
 
