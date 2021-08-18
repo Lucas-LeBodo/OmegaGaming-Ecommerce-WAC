@@ -1,7 +1,7 @@
 // import libs
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 
 
 const Profil = () => {
@@ -58,6 +58,27 @@ const Profil = () => {
 
     return (
         <Fragment>
+            <div className="Panel">
+                <div className="UserPanel-content">
+                    <h4> User Settings </h4>
+                    <div className="UserPanel-Link">
+                        <Link to={'#'} >Account Information</Link>
+                    </div>
+                    <div className="darkline"></div>
+                    <div className="UserPanel-Link">
+                        <Link to={'#'} >Payment Information</Link>
+                    </div>
+                    <div className="darkline"></div>
+                    <div className="UserPanel-Link">
+                        <Link to={'#'} >Addresses</Link>
+                    </div>
+                    <div className="darkline"></div>
+                    <div className="UserPanel-Link">
+                        <Link to={'#'} >History</Link>
+                    </div>
+                </div>
+            </div>
+
             <div className={"containers-form"} style={{background: "blue"}}>
                 <div className={"containers-signup"}>
                     <h3>Update your's informations</h3>
