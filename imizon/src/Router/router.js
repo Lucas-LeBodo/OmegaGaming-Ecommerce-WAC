@@ -53,6 +53,7 @@ const AppRouter = () => {
                     <Route path='/basket'  component={Basket}  exact={true} />
                     <Route path='/search'  component={Search}  exact={true} />
                     <Route path='/profil/adress' component={Adress} exact={true} /> 
+                    <Route path='/profil/payment' component={Payment} exact={true} /> 
                     <Route path='/profil/:name'  component={Profil} />
                     <Route path='/tracking' component={Tracking} />
                     

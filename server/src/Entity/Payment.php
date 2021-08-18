@@ -5,32 +5,46 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PaymentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=PaymentRepository::class)
  */
-#[ApiResource]
+#[  ApiResource(
+    collectionOperations: [
+        'get',
+        'post'
+    ],
+),
+    ApiFilter(SearchFilter::class, properties: ['idUser' => 'exact'])
+ ]
 class Payment
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("user:read")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $cardData;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $cvv;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $date;
 
