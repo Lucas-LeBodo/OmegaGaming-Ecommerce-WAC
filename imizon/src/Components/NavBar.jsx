@@ -88,7 +88,7 @@ function NavBar(props) {
         if(filteredNames.length > 0) {
             filteredNames.forEach(element => {
                 tabDebounce.push(
-                    <p key={element}> {element} </p>
+                    <div className="debounce-element" key={element}> {element} </div>
                 )
             });
         }
