@@ -20,24 +20,12 @@ function NavBar(props) {
     let nameUser = localStorage.name
     let user = '';
     let admin = '';
-    
-    // const infoUser = (jwt) => {
-    //     let split = jwt.split('.');
-    //     let info = base64_decode(split[1]);
-    //     info = JSON.parse(info);
-        
-    //     var infoRole = info.roles
-    //     let role = infoRole[0];
-    // }
 
     const [listTitles, setListTitles] = useState([]);
     const [query, setQuery] = useState("");
     const [countArticles, setCountArticles] = useState('')
 
-    let views;
-
     useEffect(() => {
-
         //Count article in basket
         let count_articles = '';
         if(localStorage.jwt) {
@@ -83,29 +71,6 @@ function NavBar(props) {
                         element.Title.toLowerCase()
                     )
                 });
-                if(response.data["hydra:view"] !== undefined){
-                    views = response.data["hydra:view"];
-                }
-                
-                if(articles !== [] && views !== [] && views !== undefined) {
-                    if(views["hydra:last"] !== undefined) {
-                        let max = parseInt(views["hydra:last"].substr(-1));
-
-                        for(let i = 2; i < max + 1; i++) {
-                            axios.get('https://localhost:8000/api/articles?page='+i, {
-                            }).then((response) => {
-                                articles = response.data["hydra:member"];
-                                articles.forEach(element => {
-                                    titles.push(
-                                        element.Title.toLowerCase()
-                                    )
-                                });
-                            }).catch((error) => {
-                                console.log(error)
-                            })
-                        }
-                    }
-                }
                 setListTitles(titles);
             }).catch((error) => {
                 console.log(error);
@@ -113,22 +78,28 @@ function NavBar(props) {
         }
         getArticles();
     }, [])
-    
-    const infoUser = (jwt) => {
-        let split = jwt.split('.');
-        let info = base64_decode(split[1]);
-        info = JSON.parse(info);
-        
-        var infoRole = info.roles
-        let role = infoRole[0];
-    }
 
-    let filteredNames = listTitles;
-    
-    if (query !== "") {
-        filteredNames = listTitles.filter((listTitle) => {
+    let tabDebounce = [];
+    let showDebounce = "";
+    if(query !== "") {
+        let filteredNames = listTitles.filter((listTitle) => {
             return listTitle.toLowerCase().includes(query.toLowerCase());
         });
+        if(filteredNames.length > 0) {
+            filteredNames.forEach(element => {
+                tabDebounce.push(
+                    <p key={element}> {element} </p>
+                )
+            });
+        }
+        showDebounce = (
+            <div className="debounce-result">
+                {tabDebounce}
+            </div> 
+        )
+    } else {
+        showDebounce = "";
+        tabDebounce = [];
     }
     
     const changeHandler = event => {
@@ -136,7 +107,7 @@ function NavBar(props) {
     };
 
     const debouncedChangeHandler = useMemo(
-      () => debounce(changeHandler, 800)
+      () => debounce(changeHandler, 1000)
     , []);
 
 
@@ -187,9 +158,7 @@ function NavBar(props) {
             <div className="navmenu">
                 <div className="logbox">
                     <Link to={'/'} ><h2>Omega Gaming</h2></Link>
-                    <div className="debounce-result">
-                        {filteredNames.map(name => <div key={name}>{name}</div>)}
-                    </div> 
+                    {showDebounce}
                     <div className="searchBox">
                         <input type="text" className="searchInput" placeholder="Search" onChange={debouncedChangeHandler}/>
                         <Link to="/search"> <button className="searchButton"><FiSearch /></button></Link> 
