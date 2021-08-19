@@ -32,7 +32,7 @@ const Basket = () => {
                 const base64Url = localStorage.jwt.split('.')[1];
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
                 let username = JSON.parse(window.atob(base64)).username;
-                axios.get('http://localhost:8000/api/me', {
+                axios.get('https://localhost:8000/api/me', {
                 params: {username: username}
                 }).then((response) => {
                     let weightTotal = 0.01;
@@ -53,7 +53,7 @@ const Basket = () => {
                     firstName: "Doe",
                     country: "FR"
                 }
-                axios.get('http://localhost:8000/api/baskets/listBasket', {
+                axios.get('https://localhost:8000/api/baskets/listBasket', {
                     params: {tabList:list_id},
                 }).then((response) => {
                     let list_articles = response.data["hydra:member"];
@@ -110,7 +110,7 @@ const Basket = () => {
             })
             
             if(list_articles != "" || listArt != ""){
-                axios.get('http://localhost:8000/api/shippy/getRates?params=' + data,{  
+                axios.get('https://localhost:8000/api/shippy/getRates?params=' + data,{  
                 }).then((response) => {
                     console.log(response);
                     setRates(response.data.Rates['hydra:member'][0])
@@ -126,7 +126,7 @@ const Basket = () => {
             const base64 = base64Url.replace('-', '+').replace('_', '/');
             let username = JSON.parse(window.atob(base64)).username;
             
-            axios.get('http://localhost:8000/api/baskets/countArticles', {
+            axios.get('https://localhost:8000/api/baskets/countArticles', {
                 params: {email: username}
             }).then((response) => {
                 list_articles = response.data["hydra:member"]
@@ -150,7 +150,7 @@ const Basket = () => {
         if(connected === "connected") {
             let check = window.confirm("Are you sure ?");
             if(check === true) {
-                axios.delete('http://localhost:8000/api/baskets/'+id, {
+                axios.delete('https://localhost:8000/api/baskets/'+id, {
                 }).then((response) => {
                     window.location.reload();
                 }).catch((error) => {
@@ -191,7 +191,7 @@ const Basket = () => {
         list_articles.forEach(element => {
             tabList.push(element.idArticles)
         });
-        axios.get('http://localhost:8000/api/baskets/listBasket', {
+        axios.get('https://localhost:8000/api/baskets/listBasket', {
             params: {tabList:tabList},
         }).then((response) => {
             if(response.data !== null) {
@@ -268,7 +268,7 @@ const Basket = () => {
         let showBasket = [];
         let price = 0;
         
-        axios.get('http://localhost:8000/api/baskets/listBasket', {
+        axios.get('https://localhost:8000/api/baskets/listBasket', {
             params: {tabList:listBasketShow},
         }).then((response) => {
             let listBasketShow = response.data["hydra:member"];
@@ -394,7 +394,7 @@ const Basket = () => {
             "Async": false
         })
    
-        axios.get('http://localhost:8000/api/shippy/postOrder?params=' + data,{  
+        axios.get('https://localhost:8000/api/shippy/postOrder?params=' + data,{  
         }).then((response) => {
           let order = JSON.parse(response.data)
            if(order.Result == "OK"){
@@ -406,7 +406,7 @@ const Basket = () => {
         })
 
         const sendToOrderManifest = (idUser, NbOrder, totalPrice) => {
-            axios.post('http://localhost:8000/api/order_manifests', { 
+            axios.post('https://localhost:8000/api/order_manifests', { 
                 orderId : parseInt(NbOrder),
                 content : JSON.stringify(allArticles),
                 userId : parseInt(idUser),
@@ -431,7 +431,7 @@ const Basket = () => {
          */
 
         const deleteBasket = (idUser, NbOrder) => {
-            axios.get('http://localhost:8000/api/shippy/deleteBasket?params='+ idUser, { 
+            axios.get('https://localhost:8000/api/shippy/deleteBasket?params='+ idUser, { 
             }).then((response) => {     
                 if(response.statusText == "OK"){
                     history.push({
@@ -456,7 +456,7 @@ const Basket = () => {
             const base64Url = localStorage.jwt.split('.')[1];
             const base64 = base64Url.replace('-', '+').replace('_', '/');
             let username = JSON.parse(window.atob(base64)).username;
-            axios.get('http://localhost:8000/api/me', {
+            axios.get('https://localhost:8000/api/me', {
             params: {username: username}
         }).then((response) => {
             setCountry(response.data.country)

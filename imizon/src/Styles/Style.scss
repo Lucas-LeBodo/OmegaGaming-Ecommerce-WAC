@@ -228,6 +228,26 @@ $white: #f6f6f6ff;
         align-items: center;
         z-index: 20;
         
+
+        .debounce-result  {
+            display: block;
+            background-color:$white;
+            position: absolute;
+            border: 1px solid black;
+            width: 35vw;
+            min-height: 8em;
+            max-height: 13em;
+            margin-left: 32.5%;
+            margin-top: 2.8%;
+            overflow-y: scroll;
+            color: black;
+
+            .debounce-element{ 
+               cursor: pointer;
+
+            }
+        }
+
         .searchBox {
             display: flex;
             width: 35vw;
@@ -396,7 +416,12 @@ $white: #f6f6f6ff;
     overflow: hidden;
     width: 15em;
     top: 70px;
-    .card-header img {
+    .card-header{
+        min-width: 100%;
+        max-width: 100%;
+        min-height: 12rem;
+    } 
+    img {
         width: 100%;
         height: 12em;
         object-fit: cover;
@@ -458,18 +483,21 @@ $white: #f6f6f6ff;
         width: 100%;
         height: 125px;
         padding-right: 2%;
-        border-radius: 10px;
-        box-shadow: 0 2px 20px $lightgrey;
+        box-shadow: 0 1px 10px $lightgrey;
         margin-bottom: 0.5em;
 
         .article-img {
             display: block;
-            width: 150px;
-            height: 100%;
+            min-width: 150px;
+            min-height: 100%;
+            max-width: 150px;
+            max-height: 100%;
             
             img{
-                border-radius: 10px;
                 width: 100%;
+                height: 100%;
+                object-fit: cover;
+
             }
         }
 
@@ -620,12 +648,16 @@ $white: #f6f6f6ff;
 
         .article-img {
             display: block;
-            width: 15%;
-            height: 100%;
-            border-right: 0.1px black solid;
+            min-width: 150px;
+            min-height: 100%;
+            max-width: 150px;
+            max-height: 100%;
             
             img{
                 width: 100%;
+                height: 100%;
+                object-fit: cover;
+
             }
         }
 

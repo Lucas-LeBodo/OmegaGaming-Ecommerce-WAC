@@ -11,7 +11,7 @@ const NewArticles = () => {
     
     useEffect(() => {
         function getMostPopular() {
-            axios.get('http://localhost:8000/api/articles/newArticles', {
+            axios.get('https://localhost:8000/api/articles/newArticles', {
             }).then((response) => {
                 console.log(response)
                 let articles = response.data["hydra:member"];
