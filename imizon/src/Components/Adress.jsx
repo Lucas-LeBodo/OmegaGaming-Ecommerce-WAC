@@ -1,7 +1,6 @@
 // import libs
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom';
 
 
 const Adress = (props) => {
@@ -11,20 +10,7 @@ const Adress = (props) => {
     const [adress, setAdress] = useState('');
     const [town, setTown] = useState('');
     const [zip, setZip] = useState('');
-    const history = useHistory();
-    
-    useEffect(() => {
-        function getAdresses() 
-        {
-            axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
-            }).then((response) => {
-                console.log(response.data)
-            }).catch((error) => {
-                console.log(error)
-            })
-        }
-        getAdresses();
-    }, [history])
+    const AdressData = props.showAdress;
 
     const submit = () => {
         if(country === "") {
@@ -49,6 +35,7 @@ const Adress = (props) => {
 
     return (
         <Fragment>
+            {AdressData}
             <div className={"containers-form"} style={{background: "blue"}}>
                 <div className={"containers-signup"}>
                     <h3>Update your's informations</h3>
