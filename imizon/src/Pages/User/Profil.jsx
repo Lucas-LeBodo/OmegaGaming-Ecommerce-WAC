@@ -2,6 +2,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
 import {useHistory, useLocation} from 'react-router-dom';
+import { RiDeleteBin5Line } from 'react-icons/ri'
 
 import ProfilNav from '../../Components/ProfilNav';
 import UpdateProfil from '../../Components/UpdateProfil';
@@ -53,12 +54,16 @@ const Profil = () => {
                     let data = response.data["hydra:member"];
                     data.forEach(element => {
                         showAdress.push(
-                            <div key={"div" + element.id}>
-                                <p key={"Adress" + element.id}>Adress : {element.adress} </p>  
-                                <p key={"Town" + element.id}>Town : {element.town} </p>  
-                                <p key={"Zip" + element.id}>Zip : {element.zip} </p>  
-                                <p key={"Country" + element.id}>Country : {element.country} </p>  
-                            </div>
+                            <tbody key={"tboby" + element.id}>
+                                <tr key={"tr" + element.id}>
+                                    <td key={"Adress" + element.id}>{element.adress} </td>
+                                    <td key={"Town" + element.id}>{element.town} </td>
+                                    <td key={"Zip" + element.id}>{element.zip} </td>  
+                                    <td key={"Country" + element.id}>{element.country} </td> 
+                                    <td key={"delete" + element.id}><button id={"remove"}><RiDeleteBin5Line /></button></td> 
+                                    
+                                </tr>
+                            </tbody>
                         )
                     });
                     setAdressData(showAdress);

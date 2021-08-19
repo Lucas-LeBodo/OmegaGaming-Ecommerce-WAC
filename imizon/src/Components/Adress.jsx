@@ -35,7 +35,7 @@ const Adress = (props) => {
 
     return (
         <Fragment>
-            {AdressData}
+            
             <div className={"containers-form"} style={{background: "blue"}}>
                 <div className={"containers-signup"}>
                     <h3>Update your's informations</h3>
@@ -55,7 +55,19 @@ const Adress = (props) => {
                     <input type="text" className="signup-form" placeholder={"Adress"} onChange={ (event)=>{ setAdress(event.target.value)}} required/>
                     <div type="submit" className="signup-btn" onClick={ submit } >Update Information</div>
                 </div>
-            </div>        
+            </div>
+            <table className={'adress-table'}>
+                <thead>
+                    <tr>
+                        <th >Adresse</th>
+                        <th >Town</th>
+                        <th >ZIP Code</th>
+                        <th>Country</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>      
+                {AdressData}  
+            </table>
         </Fragment>
     )
 }
