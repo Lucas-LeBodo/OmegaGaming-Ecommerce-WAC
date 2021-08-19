@@ -1,15 +1,33 @@
 // import libs
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom';
 
 
-const PaymentInformation = () => {
+const PaymentInformation = (props) => {
 
-    const [id, setId] = useState('');
+    const id = props.id
+    const [exist, setExist] = useState(false);
     const [cardData, setCardData] = useState('');
     const [cvv, setCvv] = useState('');
     const [date, setDate] = useState('');
+
+    useEffect(() => {
+        axios.get('https://localhost:8000/api/payments?page=1&idUser='+id,{
+        }
+        ).then((response) => {
+            console.log(response)
+            if(response.data["hydra:member"].length > 0) {
+                let data = response.data["hydra:member"];
+                data = data[0]
+                setCardData(data.cardData)
+                setCvv(data.cvv)
+                setDate(data.date)
+                setExist(true)
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, [props])
 
     const submit = () => {
         let idUser = '\/api\/users\/'+id

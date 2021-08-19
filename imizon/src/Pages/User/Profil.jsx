@@ -90,6 +90,12 @@ const Profil = () => {
                 />
             </Fragment>
         )
+    } else {
+        return (
+            <Fragment>
+                <ProfilNav />
+            </Fragment>
+        )
     }
 }
 
