@@ -14,6 +14,7 @@ const Profil = () => {
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [AdressData, setAdressData] = useState([]);
     const history = useHistory();
 
     useEffect(() => {
@@ -42,7 +43,33 @@ const Profil = () => {
                 history.push("/login")
             }
         }
+
+        function getAdresses() 
+        {
+            axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
+            }).then((response) => {
+                if(response.data["hydra:member"].length > 0) {
+                    let showAdress = [];
+                    let data = response.data["hydra:member"];
+                    data.forEach(element => {
+                        showAdress.push(
+                            <div key={"div" + element.id}>
+                                <p key={"Adress" + element.id}>Adress : {element.adress} </p>  
+                                <p key={"Town" + element.id}>Town : {element.town} </p>  
+                                <p key={"Zip" + element.id}>Zip : {element.zip} </p>  
+                                <p key={"Country" + element.id}>Country : {element.country} </p>  
+                            </div>
+                        )
+                    });
+                    setAdressData(showAdress);
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+
         check();
+        getAdresses();
     }, [history])
 
     
@@ -56,7 +83,7 @@ const Profil = () => {
         UpdateUser = <UpdateProfil id={id} email={email} password={password} firstName={firstName} lastName={lastName} />
     }
     if(pathname.endsWith("adresses")){
-        Adresse = <Adress id={id} />
+        Adresse = <Adress id={id} showAdress={AdressData}/>
     }
     if(pathname.endsWith("historic")){
         Historic =  <Adress id={id} />
@@ -65,19 +92,17 @@ const Profil = () => {
         PaymentInfo = <PaymentInformation id={id} />
     }
 
-    else {
-        return (
-            <Fragment>
-                <ProfilNav />
-                <div className="Settings-container">
-                    {UpdateUser}
-                    {Adresse}
-                    {Historic}
-                    {PaymentInfo}
-                </div>
-            </Fragment>
-        )
-    }
+    return (
+        <Fragment>
+            <ProfilNav />
+            <div className="Settings-container">
+                {UpdateUser}
+                {Adresse}
+                {Historic}
+                {PaymentInfo}
+            </div>
+        </Fragment>
+    )
 }
 
 export default Profil;

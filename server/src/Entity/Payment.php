@@ -59,12 +59,12 @@ class Payment
         return $this->id;
     }
 
-    public function getCardData(): ?int
+    public function getCardData(): ?string
     {
         return $this->cardData;
     }
 
-    public function setCardData(?int $cardData): self
+    public function setCardData(?string $cardData): self
     {
         $this->cardData = $cardData;
 
@@ -83,12 +83,12 @@ class Payment
         return $this;
     }
 
-    public function getDate(): ?int
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
-    public function setDate(?int $date): self
+    public function setDate(?string $date): self
     {
         $this->date = $date;
 
