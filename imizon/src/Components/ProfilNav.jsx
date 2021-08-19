@@ -8,7 +8,7 @@ const ProfilNav = (props) => {
         <Fragment>
             <div className="Panel">
                 <div className="UserPanel-content">
-                    <h4> User Settings </h4>
+                    <Link to={"/profil/"+localStorage.name}><h4> User Settings </h4></Link>
                     <div className="UserPanel-Link">
                         <Link to={"/profil/"+localStorage.name+"/update_information"} >Modify Information</Link>
                     </div>

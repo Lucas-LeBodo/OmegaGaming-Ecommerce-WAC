@@ -60,8 +60,7 @@ const Profil = () => {
                                     <td key={"Town" + element.id}>{element.town} </td>
                                     <td key={"Zip" + element.id}>{element.zip} </td>  
                                     <td key={"Country" + element.id}>{element.country} </td> 
-                                    <td key={"delete" + element.id}><button id={"remove"}><RiDeleteBin5Line /></button></td> 
-                                    
+                                    <td key={"delete" + element.id}><button id={"remove"} onClick={() => deleteAdress(element.id)}><RiDeleteBin5Line /></button></td> 
                                 </tr>
                             </tbody>
                         )
@@ -77,8 +76,20 @@ const Profil = () => {
         getAdresses();
     }, [history])
 
+    const deleteAdress = (id) => {
+        axios.delete('https://localhost:8000/api/adresses/'+id,{
+        }
+        ).then((response) => {
+            console.log(response)
+            window.location.reload()
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
     
     let pathname = useLocation().pathname;
+    let user = '';
     let UpdateUser = '';
     let Adresse = '';
     let Historic = '';
@@ -95,6 +106,14 @@ const Profil = () => {
     }
     if(pathname.endsWith("payment")){
         PaymentInfo = <PaymentInformation id={id} />
+    } else { // AFFICHE LE LUCAS
+        user = (
+            <Fragment>
+                <div className={"containers-form"} style={{background: "blue"}}>
+                    <p>Hello {firstName + " " +lastName}</p>
+                </div>
+            </Fragment>
+        )
     }
 
     return (
@@ -105,6 +124,7 @@ const Profil = () => {
                 {Adresse}
                 {Historic}
                 {PaymentInfo}
+                {user}
             </div>
         </Fragment>
     )
