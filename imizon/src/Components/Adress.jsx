@@ -4,9 +4,9 @@ import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 
 
-const Adress = () => {
+const Adress = (props) => {
 
-    const [id, setId] = useState('');
+    const id = props.id
     const [country, setCountry] = useState('');
     const [adress, setAdress] = useState('');
     const [town, setTown] = useState('');
@@ -14,22 +14,8 @@ const Adress = () => {
     const history = useHistory();
     
     useEffect(() => {
-        function getInformation() 
+        function getAdresses() 
         {
-            const base64Url = localStorage.jwt.split('.')[1];
-            const base64 = base64Url.replace('-', '+').replace('_', '/');
-            let username = JSON.parse(window.atob(base64)).username;
-            
-            axios.get('https://localhost:8000/api/me', {
-                params: {username: username}
-            }).then((response) => {
-                console.log(response.data)
-                let {id} = response.data
-                setId(id)
-            }).catch((error) => {
-                console.log(error)
-            })
-
             axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
             }).then((response) => {
                 console.log(response.data)
@@ -37,7 +23,7 @@ const Adress = () => {
                 console.log(error)
             })
         }
-        getInformation();
+        getAdresses();
     }, [history])
 
     const submit = () => {

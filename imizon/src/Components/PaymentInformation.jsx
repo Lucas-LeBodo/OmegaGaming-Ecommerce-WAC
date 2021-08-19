@@ -10,27 +10,6 @@ const PaymentInformation = () => {
     const [cardData, setCardData] = useState('');
     const [cvv, setCvv] = useState('');
     const [date, setDate] = useState('');
-    const history = useHistory();
-    
-    useEffect(() => {
-        function getInformation() 
-        {
-            const base64Url = localStorage.jwt.split('.')[1];
-            const base64 = base64Url.replace('-', '+').replace('_', '/');
-            let username = JSON.parse(window.atob(base64)).username;
-            
-            axios.get('https://localhost:8000/api/me', {
-                params: {username: username}
-            }).then((response) => {
-                console.log(response.data)
-                let {id} = response.data
-                setId(id)
-            }).catch((error) => {
-                console.log(error)
-            })
-        }
-        getInformation();
-    }, [history])
 
     const submit = () => {
         let idUser = '\/api\/users\/'+id

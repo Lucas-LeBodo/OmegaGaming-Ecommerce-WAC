@@ -1,8 +1,12 @@
 // import libs
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
-import {useHistory, Link} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 
+import ProfilNav from '../../Components/ProfilNav';
+import UpdateProfil from '../../Components/UpdateProfil';
+import Adress from '../../Components/Adress';
+import PaymentInformation from '../../Components/PaymentInformation';
 
 const Profil = () => {
     const [id, setId] = useState('');
@@ -11,6 +15,8 @@ const Profil = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const history = useHistory();
+
+    let pathname = useLocation().pathname;
     
     useEffect(() => {
         // test avec un jwt vide pour voir !
@@ -41,56 +47,50 @@ const Profil = () => {
         check();
     }, [history])
 
-    const submit = () => {
-        axios.put('https://localhost:8000/api/users/'+id,{
-                email : email,
-                password : password,
-                lastName : lastName, 
-                firstName : firstName,
-            }
-            ).then((response) => {
-                console.log(response)
-            }).catch((error) => {
-                console.log(error)
-            })
+    if(pathname.endsWith("update_information")) {
+        return (
+            <Fragment>
+                <ProfilNav />
+                <UpdateProfil
+                    id={id}
+                    email={email}
+                    password={password}
+                    firstName={firstName}
+                    lastName={lastName}
+                />
+            </Fragment>
+        )
+    } 
+    else if(pathname.endsWith("adresses")) {
+        return (
+            <Fragment>
+                <ProfilNav />
+                <Adress
+                    id={id}
+                />
+            </Fragment>
+        )
     }
-
-
-    return (
-        <Fragment>
-            <div className="Panel">
-                <div className="UserPanel-content">
-                    <h4> User Settings </h4>
-                    <div className="UserPanel-Link">
-                        <Link to={'#'} >Account Information</Link>
-                    </div>
-                    <div className="darkline"></div>
-                    <div className="UserPanel-Link">
-                        <Link to={'#'} >Payment Information</Link>
-                    </div>
-                    <div className="darkline"></div>
-                    <div className="UserPanel-Link">
-                        <Link to={'#'} >Addresses</Link>
-                    </div>
-                    <div className="darkline"></div>
-                    <div className="UserPanel-Link">
-                        <Link to={'#'} >History</Link>
-                    </div>
-                </div>
-            </div>
-
-            <div className={"containers-form"} style={{background: "blue"}}>
-                <div className={"containers-signup"}>
-                    <h3>Update your's informations</h3>
-                    <input type="email"     className="signup-form"     defaultValue={email} placeholder={"Email"} onChange={ (event)=>{ setEmail(event.target.value)}} required/>
-                    <input type="password"  className="signup-form"     defaultValue={password} placeholder={"Password"} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
-                    <input type="text"      className="signup-form"     defaultValue={firstName} placeholder={"First Name"} onChange={ (event)=>{ setFirstName(event.target.value)}} required/>
-                    <input type="text"      className="signup-form"     defaultValue={lastName} placeholder={"Last Name"} onChange={ (event)=>{ setLastName(event.target.value)}} required/>
-                    <div type="submit"      className="signup-btn" onClick={ submit } >Update Information</div>
-                </div>
-            </div>        
-        </Fragment>
-    )
+    else if(pathname.endsWith("historic")) {
+        return (
+            <Fragment>
+                <ProfilNav />
+                <Adress
+                    id={id}
+                />
+            </Fragment>
+        )
+    }
+    else if(pathname.endsWith("payment")) {
+        return (
+            <Fragment>
+                <ProfilNav />
+                <PaymentInformation
+                    id={id}
+                />
+            </Fragment>
+        )
+    }
 }
 
-export default Profil
+export default Profil;
