@@ -45,7 +45,7 @@ function NavBar(props) {
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
                 let username = JSON.parse(window.atob(base64)).username;
 
-            axios.get('http://localhost:8000/api/baskets/countArticles', {
+            axios.get('https://localhost:8000/api/baskets/countArticles', {
                 params: {email: username}
             }).then((response) => {
                 count_articles = response.data["hydra:member"].length
@@ -93,6 +93,7 @@ function NavBar(props) {
 
                         for(let i = 2; i < max + 1; i++) {
                             axios.get('https://localhost:8000/api/articles?page='+i, {
+                            // eslint-disable-next-line no-loop-func
                             }).then((response) => {
                                 articles = response.data["hydra:member"];
                                 articles.forEach(element => {
@@ -113,15 +114,6 @@ function NavBar(props) {
         }
         getArticles();
     }, [])
-
-    let pathname = useLocation().pathname;
-    let loginPath = '';
-    let registerPath = '';
-    let navbox = '';
-    let logout ='';
-    let jwt = localStorage.jwt
-    let nameUser = localStorage.name
-    let user = '';
     
     const infoUser = (jwt) => {
         let split = jwt.split('.');
@@ -196,8 +188,9 @@ function NavBar(props) {
             <div className="navmenu">
                 <div className="logbox">
                     <Link to={'/'} ><h2>Omega Gaming</h2></Link>
-                    {filteredNames.map(name => <div key={name}>{name}</div>)}
-
+                    <div className="debounce-result">
+                        {filteredNames.map(name => <div key={name}>{name}</div>)}
+                    </div> 
                     <div className="searchBox">
                         <input type="text" className="searchInput" placeholder="Search" onChange={debouncedChangeHandler}/>
                         <button className="searchButton"><FiSearch /></button>
