@@ -9,10 +9,10 @@ const tracking = (props) => {
     return(
         <Fragment >
             <Container>
-                <Link to={"/"}>← back to home</Link>
+                <Link to={"/profil/"+localStorage.name+"/historic"}>← back to historic</Link>
                 <div className="tracking">
                     <h1> Shipping in progress </h1>
-                    <p>Command n° {props.location.state.nbOrder} .</p>
+                    <p>Command n° {props.match.params.order} .</p>
                     <img src={truckImg} alt="Delivery Trucks" />
                 </div> 
                 

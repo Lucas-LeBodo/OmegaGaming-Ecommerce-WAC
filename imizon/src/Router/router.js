@@ -15,9 +15,9 @@ import BestSeller from '../Pages/User/BestSeller';
 import Discount from '../Pages/User/Discount';
 import Basket from '../Pages/User/Basket';
 import Search from '../Pages/User/Search';
-import Profil from '../Pages/User/Profil';
 import NewArticles from '../Pages/User/NewArticles';
 import Tracking from '../Pages/User/Tracking';
+import Profil from '../Pages/User/Profil';
 
 
 import HomeAdmin from '../Pages/Admin/Home';
@@ -51,7 +51,11 @@ const AppRouter = () => {
                     <Route path='/basket'  component={Basket}  exact={true} />
                     <Route path='/search'  component={Search}  exact={true} />
                     <Route path='/profil/:name'  component={Profil} />
-                    <Route path='/tracking' component={Tracking} />
+                    <Route path='/profil/:name/update_information'  component={Profil} />
+                    <Route path='/profil/:name/adresses'  component={Profil} />
+                    <Route path='/profil/:name/historic'  component={Profil} />
+                    <Route path='/profil/:name/payment'  component={Profil} />
+                    <Route path='/historic/:order' component={Tracking} />
                     
 
                     {/* Admin Router */}

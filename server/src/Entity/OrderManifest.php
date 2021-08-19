@@ -8,6 +8,8 @@ use App\Controller\ShippyShipController;
 use App\Repository\OrderManifestRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=OrderManifestRepository::class)
@@ -29,7 +31,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     normalizationContext: ['groups' => ["OrderManifest:read"]],
     denormalizationContext: ["groups" => ["OrderManifest:write"]]
-)]
+), ApiFilter(SearchFilter::class, properties: ['userId' => 'exact'])
+]
 class OrderManifest
 {
     /**
@@ -41,25 +44,25 @@ class OrderManifest
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups("OrderManifest:write")
+     * @Groups({"OrderManifest:write", "OrderManifest:read"})
      */
     private $orderId;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups("OrderManifest:write")
+     * @Groups({"OrderManifest:write", "OrderManifest:read"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups("OrderManifest:write")
+     * @Groups({"OrderManifest:write", "OrderManifest:read"})
      */
     private $userId;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups("OrderManifest:write")
+     * @Groups({"OrderManifest:write", "OrderManifest:read"})
      */
     private $price;
 

@@ -415,7 +415,6 @@ const Basket = () => {
                 if(response.statusText == "Created"){
                     deleteBasket(idUser, NbOrder)
                 }
-                
             }).catch((error) => {
                 
             })
@@ -435,9 +434,7 @@ const Basket = () => {
             }).then((response) => {     
                 if(response.statusText == "OK"){
                     history.push({
-                        pathname: '/tracking',
-                        // search: '?query=abc',
-                        state: { nbOrder: NbOrder }
+                        pathname: '/historic/'+NbOrder
                       })
                     window.location.reload();
                 }         
@@ -446,10 +443,7 @@ const Basket = () => {
             })
         }
     }
-
     
-
-
     function handleShow() {
         let content = '';
         if(localStorage.jwt) {
