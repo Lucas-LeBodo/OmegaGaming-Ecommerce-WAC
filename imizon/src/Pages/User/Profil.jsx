@@ -16,8 +16,6 @@ const Profil = () => {
     const [lastName, setLastName] = useState('');
     const history = useHistory();
 
-    let pathname = useLocation().pathname;
-    
     useEffect(() => {
         // test avec un jwt vide pour voir !
         function check() 
@@ -47,47 +45,36 @@ const Profil = () => {
         check();
     }, [history])
 
-    if(pathname.endsWith("update_information")) {
-        return (
-            <Fragment>
-                <ProfilNav />
-                <UpdateProfil
-                    id={id}
-                    email={email}
-                    password={password}
-                    firstName={firstName}
-                    lastName={lastName}
-                />
-            </Fragment>
-        )
-    } 
-    else if(pathname.endsWith("adresses")) {
-        return (
-            <Fragment>
-                <ProfilNav />
-                <Adress
-                    id={id}
-                />
-            </Fragment>
-        )
+    
+    let pathname = useLocation().pathname;
+    let UpdateUser = '';
+    let Adresse = '';
+    let Historic = '';
+    let PaymentInfo = '';
+
+    if(pathname.endsWith("update_information")){
+        UpdateUser = <UpdateProfil id={id} email={email} password={password} firstName={firstName} lastName={lastName} />
     }
-    else if(pathname.endsWith("historic")) {
-        return (
-            <Fragment>
-                <ProfilNav />
-                <Adress
-                    id={id}
-                />
-            </Fragment>
-        )
+    if(pathname.endsWith("adresses")){
+        Adresse = <Adress id={id} />
     }
-    else if(pathname.endsWith("payment")) {
+    if(pathname.endsWith("historic")){
+        Historic =  <Adress id={id} />
+    }
+    if(pathname.endsWith("payment")){
+        PaymentInfo = <PaymentInformation id={id} />
+    }
+
+    else {
         return (
             <Fragment>
                 <ProfilNav />
-                <PaymentInformation
-                    id={id}
-                />
+                <div className="Settings-container">
+                    {UpdateUser}
+                    {Adresse}
+                    {Historic}
+                    {PaymentInfo}
+                </div>
             </Fragment>
         )
     } else {
