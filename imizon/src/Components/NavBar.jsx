@@ -93,7 +93,6 @@ function NavBar(props) {
 
                         for(let i = 2; i < max + 1; i++) {
                             axios.get('https://localhost:8000/api/articles?page='+i, {
-                            // eslint-disable-next-line no-loop-func
                             }).then((response) => {
                                 articles = response.data["hydra:member"];
                                 articles.forEach(element => {
@@ -193,7 +192,7 @@ function NavBar(props) {
                     </div> 
                     <div className="searchBox">
                         <input type="text" className="searchInput" placeholder="Search" onChange={debouncedChangeHandler}/>
-                        <button className="searchButton"><FiSearch /></button>
+                        <Link to="/search"> <button className="searchButton"><FiSearch /></button></Link> 
                     </div>
                     <div className={'loglist'}>
                         <div className="dropdown">
