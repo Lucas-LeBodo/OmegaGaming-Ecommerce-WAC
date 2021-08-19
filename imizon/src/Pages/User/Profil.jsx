@@ -1,13 +1,14 @@
 // import libs
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
-import {useHistory, useLocation} from 'react-router-dom';
+import {Link, useHistory, useLocation} from 'react-router-dom';
 import { RiDeleteBin5Line } from 'react-icons/ri'
 
 import ProfilNav from '../../Components/ProfilNav';
 import UpdateProfil from '../../Components/UpdateProfil';
 import Adress from '../../Components/Adress';
 import PaymentInformation from '../../Components/PaymentInformation';
+import HistoricOrder from '../../Components/Historic';
 
 const Profil = () => {
     const [id, setId] = useState('');
@@ -16,6 +17,7 @@ const Profil = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [AdressData, setAdressData] = useState([]);
+    const [historic, setHistoric] = useState([]);
     const history = useHistory();
 
     useEffect(() => {
@@ -30,7 +32,6 @@ const Profil = () => {
                 axios.get('https://localhost:8000/api/me', {
                     params: {username: username}
                 }).then((response) => {
-                    console.log(response.data)
                     let {email, firstName, lastName, id, password} = response.data
                     setId(id)
                     setPassword(password)
@@ -72,8 +73,27 @@ const Profil = () => {
             })
         }
 
+        function getHistoric() {
+            axios.get('https://localhost:8000/api/order_manifests?page=1&userId='+id, {
+            }).then((response) => {
+                if(response.data["hydra:member"].length > 0) {
+                    let showHistoric = [];
+                    let data = response.data["hydra:member"];
+                    data.forEach(element => {
+                        showHistoric.push(
+                            <Link to={"/historic/"+element.orderId} key={element.orderId}>{element.orderId}</Link>
+                        )
+                    });
+                    setHistoric(showHistoric);
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+
         check();
         getAdresses();
+        getHistoric();
     }, [history])
 
     const deleteAdress = (id) => {
@@ -102,18 +122,10 @@ const Profil = () => {
         Adresse = <Adress id={id} showAdress={AdressData}/>
     }
     if(pathname.endsWith("historic")){
-        Historic =  <Adress id={id} />
+        Historic = <HistoricOrder showHistoric={historic} />
     }
     if(pathname.endsWith("payment")){
         PaymentInfo = <PaymentInformation id={id} />
-    } else { // AFFICHE LE LUCAS
-        user = (
-            <Fragment>
-                <div className={"containers-form"} style={{background: "blue"}}>
-                    <p>Hello {firstName + " " +lastName}</p>
-                </div>
-            </Fragment>
-        )
     }
 
     return (

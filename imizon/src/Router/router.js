@@ -55,7 +55,7 @@ const AppRouter = () => {
                     <Route path='/profil/:name/adresses'  component={Profil} />
                     <Route path='/profil/:name/historic'  component={Profil} />
                     <Route path='/profil/:name/payment'  component={Profil} />
-                    <Route path='/tracking' component={Tracking} />
+                    <Route path='/historic/:order' component={Tracking} />
                     
 
                     {/* Admin Router */}
