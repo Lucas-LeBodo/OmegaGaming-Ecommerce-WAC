@@ -2,7 +2,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link, useLocation } from "react-router-dom";
-import {RiVipCrownLine, RiHome2Line } from "react-icons/ri"
+import {RiVipCrownLine, RiHome2Line, RiMoneyDollarBoxLine } from "react-icons/ri"
 import axios from 'axios';
 
 const BreadCrumbs = (props) =>  {
@@ -14,19 +14,17 @@ const BreadCrumbs = (props) =>  {
     let productPath = ' ';
     let bestsellerPath = ' ';
     let id = ' ';
-    
-
+    let discount = '';
+    let path = pathname.split(/[\/]+/g)
     const [article, setArticle] = useState('') 
-
-    //REVOIR 2 à 3 trucs genre l'id si pas sur la page article !
-
+   
+   
     id = pathname.lastIndexOf("/");
     id = pathname.substr(id + 1);
-
+    
     useEffect(() => {
         function getName() {
-            
-            axios.get("https://localhost:8000/api/articles/"+id,{
+            axios.get("http://localhost:8000/api/articles/"+id,{
             }).then((response) => { 
                 let information = response.data;
                 setArticle(information)
@@ -34,11 +32,13 @@ const BreadCrumbs = (props) =>  {
                 console.log(error)
             })
         }
-        getName();
+    
+        if(id.length < 3){
+            getName();
+        }
 
-    }, [props])
-
-        
+    }, [pathname])
+    
     if(pathname === "/"){
         homePath = <Link  to={"/"}> <RiHome2Line/> </Link>;
     }
@@ -51,7 +51,10 @@ const BreadCrumbs = (props) =>  {
         homePath = <Link  to={"/"}> <RiHome2Line/> </Link>;
         bestsellerPath = <Link  to={"/best-seller"}> <RiVipCrownLine/> Best Sellers</Link>;
     }
-
+    if(pathname === "/discount"){
+        homePath = <Link  to={"/"}> <RiHome2Line/> </Link>;
+        discount = <Link  to={"/discount"}> <RiMoneyDollarBoxLine/> Promo</Link>;
+    }
       
     return (
         <Fragment >
@@ -61,7 +64,8 @@ const BreadCrumbs = (props) =>  {
                     {loginPath}
                     {registerPath}
                     {productPath}
-                    {bestsellerPath}        
+                    {bestsellerPath}
+                    {discount}        
                 </Breadcrumbs>
             </div>
         </Fragment>
