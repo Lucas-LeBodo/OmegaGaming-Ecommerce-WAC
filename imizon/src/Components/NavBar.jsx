@@ -123,10 +123,6 @@ function NavBar(props) {
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
     }
-    if(pathname === "/register"){
-        registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
-        loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
-    }
     if(pathname === ("/") && !jwt){
         navbox = <Navbox />
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
@@ -139,7 +135,6 @@ function NavBar(props) {
         logout = <Link to={'/'}  onClick={() => {localStorage.clear();}}><FiLogOut/> Logout</Link>
         user = nameUser.split(' ')
         user = <Link to={'/profil/'+nameUser} ><FiUser /> {user[0]}</Link>
-        // infoUser(jwt)
 
         let split = jwt.split('.');
         let info = base64_decode(split[1]);
@@ -148,7 +143,6 @@ function NavBar(props) {
             admin = <Link to={'/admin'} ><FiKey /> Espace Admin</Link>
         }
     }
-         
 
     //console.log("valeur dans le localstorage ===> ", role)
     //Afficher que si search est non vide ? C'est à toi de voir Lucas !

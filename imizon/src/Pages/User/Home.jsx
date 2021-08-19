@@ -1,6 +1,6 @@
 // Import Libs
 import axios from 'axios';
-import React, { Fragment, useEffect, useState }from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import {Container} from 'react-bootstrap';
 
 
@@ -14,17 +14,6 @@ const Home = () => {
     
     let result;
     useEffect(() => {
-        // function test() {
-        //     axios.get('https://localhost:8000/api/shippy',{
-        //     }).then((response) => {
-        //         console.log(response)
-        //     }).catch((error) => {
-        //         console.log(error)
-        //     })
-        // }
-        // test()
-
-
         function getMostPopular() {
             axios.get('https://localhost:8000/api/articles/popularity', {
                 params: {exist: "oui"}
@@ -42,7 +31,6 @@ const Home = () => {
                               discount={element.discount}
                         />
                     )
-
                 });
                 setShowArticles(showArticles);
             }).catch((error) => {

@@ -199,6 +199,30 @@ $white: #f6f6f6ff;
             background-color: $white;
         }
     }
+
+    
+}
+.adress-table { 
+    width: 100%;
+    font-size: 15px;
+    margin-top: 2em;
+    margin-bottom: 4em;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 20px;
+
+    th {
+        border: 1px solid black;
+    } 
+    tr {
+        border: 1px solid black;
+    }
+}
+
+.Settings-container{
+    display: block;
+    width: 75vw;
+    margin: 0 0 0 20%;
 }
 
 // Tracking Styles

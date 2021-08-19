@@ -1,25 +1,25 @@
 // import libs
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
-import {useHistory, Link} from 'react-router-dom';
+import {Link, useHistory, useLocation} from 'react-router-dom';
+import { RiDeleteBin5Line } from 'react-icons/ri'
 
+import ProfilNav from '../../Components/ProfilNav';
+import UpdateProfil from '../../Components/UpdateProfil';
+import Adress from '../../Components/Adress';
+import PaymentInformation from '../../Components/PaymentInformation';
+import HistoricOrder from '../../Components/Historic';
 
 const Profil = () => {
-    //Remplacer l'input pays par un select avec une liste full pays !
-
-    const [phone, setPhone] = useState('');
     const [id, setId] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [country, setCountry] = useState('');
-    const [adress, setAdress] = useState('');
-    const [town, setTown] = useState('');
-    const [cardData, setCardData] = useState('');
-    const [postalCode, setPostalCode] = useState('');
+    const [AdressData, setAdressData] = useState([]);
+    const [historic, setHistoric] = useState([]);
     const history = useHistory();
-    
+
     useEffect(() => {
         // test avec un jwt vide pour voir !
         function check() 
@@ -32,31 +32,12 @@ const Profil = () => {
                 axios.get('https://localhost:8000/api/me', {
                     params: {username: username}
                 }).then((response) => {
-                    console.log(response.data)
-                    let {email, firstName, lastName, country, adress, cardData, id, password, postalCode, town, phone} = response.data
+                    let {email, firstName, lastName, id, password} = response.data
                     setId(id)
                     setPassword(password)
                     setEmail(email)
                     setFirstName(firstName)
                     setLastName(lastName)
-                    if(country !== null) {
-                        setCountry(country)
-                    }
-                    if(adress !== null) {
-                        setAdress(adress)
-                    }
-                    if(cardData !== null) {
-                        setCardData(cardData)
-                    }
-                    if(postalCode !== null) {
-                        setPostalCode(postalCode)
-                    }
-                    if(town !== null) {
-                        setTown(town)
-                    }
-                    if(phone !== null) {
-                        setPhone(phone)
-                    }
                 }).catch((error) => {
                     console.log(error)
                 })
@@ -64,84 +45,101 @@ const Profil = () => {
                 history.push("/login")
             }
         }
-        check();
-    }, [history])
 
-    const submit = () => {
-        if(country === "") {
-            setCountry("FR")
-        }
-        axios.put('https://localhost:8000/api/users/'+id,{
-                email : email,
-                password : password,
-                lastName : lastName, 
-                firstName : firstName,
-                country : country,
-                adress : adress,
-                cardData : cardData,
-                postalCode: postalCode,
-                phone: parseInt(phone),
-                town: town
-            }
-            ).then((response) => {
-                console.log(response)
+        function getAdresses() 
+        {
+            axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
+            }).then((response) => {
+                if(response.data["hydra:member"].length > 0) {
+                    let showAdress = [];
+                    let data = response.data["hydra:member"];
+                    data.forEach(element => {
+                        showAdress.push(
+                            <tbody key={"tboby" + element.id}>
+                                <tr key={"tr" + element.id}>
+                                    <td key={"Adress" + element.id}>{element.adress} </td>
+                                    <td key={"Town" + element.id}>{element.town} </td>
+                                    <td key={"Zip" + element.id}>{element.zip} </td>  
+                                    <td key={"Country" + element.id}>{element.country} </td> 
+                                    <td key={"delete" + element.id}><button id={"remove"} onClick={() => deleteAdress(element.id)}><RiDeleteBin5Line /></button></td> 
+                                </tr>
+                            </tbody>
+                        )
+                    });
+                    setAdressData(showAdress);
+                }
             }).catch((error) => {
                 console.log(error)
             })
+        }
+
+        function getHistoric() {
+            axios.get('https://localhost:8000/api/order_manifests?page=1&userId='+id, {
+            }).then((response) => {
+                if(response.data["hydra:member"].length > 0) {
+                    let showHistoric = [];
+                    let data = response.data["hydra:member"];
+                    data.forEach(element => {
+                        showHistoric.push(
+                            <Link to={"/historic/"+element.orderId} key={element.orderId}>{element.orderId}</Link>
+                        )
+                    });
+                    setHistoric(showHistoric);
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+
+        check();
+        getAdresses();
+        getHistoric();
+    }, [history])
+
+    const deleteAdress = (id) => {
+        axios.delete('https://localhost:8000/api/adresses/'+id,{
+        }
+        ).then((response) => {
+            console.log(response)
+            window.location.reload()
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 
+    
+    let pathname = useLocation().pathname;
+    let user = '';
+    let UpdateUser = '';
+    let Adresse = '';
+    let Historic = '';
+    let PaymentInfo = '';
+
+    if(pathname.endsWith("update_information")){
+        UpdateUser = <UpdateProfil id={id} email={email} password={password} firstName={firstName} lastName={lastName} />
+    }
+    if(pathname.endsWith("adresses")){
+        Adresse = <Adress id={id} showAdress={AdressData}/>
+    }
+    if(pathname.endsWith("historic")){
+        Historic = <HistoricOrder showHistoric={historic} />
+    }
+    if(pathname.endsWith("payment")){
+        PaymentInfo = <PaymentInformation id={id} />
+    }
 
     return (
         <Fragment>
-            <div className="Panel">
-                <div className="UserPanel-content">
-                    <h4> User Settings </h4>
-                    <div className="UserPanel-Link">
-                        <Link to={'#'} >Account Information</Link>
-                    </div>
-                    <div className="darkline"></div>
-                    <div className="UserPanel-Link">
-                        <Link to={'#'} >Payment Information</Link>
-                    </div>
-                    <div className="darkline"></div>
-                    <div className="UserPanel-Link">
-                        <Link to={'#'} >Addresses</Link>
-                    </div>
-                    <div className="darkline"></div>
-                    <div className="UserPanel-Link">
-                        <Link to={'#'} >History</Link>
-                    </div>
-                </div>
+            <ProfilNav />
+            <div className="Settings-container">
+                {UpdateUser}
+                {Adresse}
+                {Historic}
+                {PaymentInfo}
+                {user}
             </div>
-
-            <div className={"containers-form"} style={{background: "blue"}}>
-                <div className={"containers-signup"}>
-                    <h3>Update your's informations</h3>
-                    <input type="email" className="signup-form" defaultValue={email} placeholder={"Email"} onChange={ (event)=>{ setEmail(event.target.value)}} required/>
-                    <input type="password" className="signup-form" defaultValue={password} placeholder={"Password"} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
-                    <input type="text" className="signup-form" defaultValue={firstName} placeholder={"First Name"} onChange={ (event)=>{ setFirstName(event.target.value)}} required/>
-                    <input type="text" className="signup-form" defaultValue={lastName} placeholder={"Last Name"} onChange={ (event)=>{ setLastName(event.target.value)}} required/>
-                    <select className="form-select" aria-label="Default select example" onChange={ (event)=>{ setCountry(event.target.value)}}>
-                        <option value="DE">Allemagne</option>
-                        <option value="GB">Angleterre</option>
-                        <option value="BE">Belgique</option>
-                        <option value="CA">Canada</option>
-                        <option value="ES">Espagne</option>
-                        <option value="FR">France</option>
-                        <option value="IT">Italie</option>
-                        <option value="PT">Potugal</option>
-                        <option value="CH">Suisse</option>
-                    </select>
-                    <input type="text" className="signup-form" defaultValue={town} placeholder={"Town"} onChange={ (event)=>{ setTown(event.target.value)}} required/>
-                    <input type="text" className="signup-form" defaultValue={postalCode} placeholder={"Postal Code"} onChange={ (event)=>{ setPostalCode(event.target.value)}} required/>
-                    <input type="text" className="signup-form" defaultValue={adress} placeholder={"Adress"} onChange={ (event)=>{ setAdress(event.target.value)}} required/>
-                    <input type="text" className="signup-form" defaultValue={cardData} placeholder={"Card Data"} onChange={ (event)=>{ setCardData(event.target.value)}} required/>
-                    <input type="number" className="signup-form" defaultValue={phone} placeholder={"Phone Number"} onChange={ (event)=>{ setPhone(event.target.value)}} required/>
-                    <div type="submit" className="signup-btn" onClick={ submit } >Update Information</div>
-                </div>
-            </div>        
         </Fragment>
     )
 }
 
-export default Profil
+export default Profil;
