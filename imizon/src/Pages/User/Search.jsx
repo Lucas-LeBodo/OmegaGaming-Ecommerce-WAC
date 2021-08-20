@@ -29,7 +29,7 @@ const Search = () => {
     useEffect(() => {
         function getMostPopular() {
             if(sort === 'DESC'){
-                axios.get('https://localhost:8000/api/articles/OrderByNameDESC?page=1', {
+                axios.get('http://localhost:8000/api/articles/OrderByNameDESC?page=1', {
                     params: {exist: "oui"}
                 }).then((response) => {
                     let articles = response.data["hydra:member"];
@@ -42,7 +42,7 @@ const Search = () => {
                     setShowArticles(showArticles.sort());
                 })
             }else{
-                axios.get('https://localhost:8000/api/articles/OrderByNameASC?page=1', {
+                axios.get('http://localhost:8000/api/articles/OrderByNameASC?page=1', {
                     params: {exist: "oui"}
                 }).then((response) => {
                     let articles = response.data["hydra:member"];

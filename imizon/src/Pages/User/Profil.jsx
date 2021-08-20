@@ -29,7 +29,7 @@ const Profil = () => {
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
                 let username = JSON.parse(window.atob(base64)).username;
                 
-                axios.get('https://localhost:8000/api/me', {
+                axios.get('http://localhost:8000/api/me', {
                     params: {username: username}
                 }).then((response) => {
                     let {email, firstName, lastName, id, password} = response.data
@@ -48,7 +48,7 @@ const Profil = () => {
 
         function getAdresses() 
         {
-            axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
+            axios.get('http://localhost:8000/api/adresses?page=1&id_user='+id, {
             }).then((response) => {
                 if(response.data["hydra:member"].length > 0) {
                     let showAdress = [];
@@ -74,7 +74,7 @@ const Profil = () => {
         }
 
         function getHistoric() {
-            axios.get('https://localhost:8000/api/order_manifests?page=1&userId='+id, {
+            axios.get('http://localhost:8000/api/order_manifests?page=1&userId='+id, {
             }).then((response) => {
                 if(response.data["hydra:member"].length > 0) {
                     let showHistoric = [];
@@ -97,7 +97,7 @@ const Profil = () => {
     }, [history])
 
     const deleteAdress = (id) => {
-        axios.delete('https://localhost:8000/api/adresses/'+id,{
+        axios.delete('http://localhost:8000/api/adresses/'+id,{
         }
         ).then((response) => {
             console.log(response)

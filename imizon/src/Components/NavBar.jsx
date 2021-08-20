@@ -33,7 +33,7 @@ function NavBar(props) {
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
                 let username = JSON.parse(window.atob(base64)).username;
 
-            axios.get('https://localhost:8000/api/baskets/countArticles', {
+            axios.get('http://localhost:8000/api/baskets/countArticles', {
                 params: {email: username}
             }).then((response) => {
                 count_articles = response.data["hydra:member"].length
@@ -63,7 +63,7 @@ function NavBar(props) {
         function getArticles() {
             let page = 1;
             let titles = [];
-            axios.get('https://localhost:8000/api/articles?page='+page, {
+            axios.get('http://localhost:8000/api/articles?page='+page, {
             }).then((response) => {
                 let articles = response.data["hydra:member"];
                 articles.forEach(element => {

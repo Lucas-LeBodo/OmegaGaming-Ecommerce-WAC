@@ -13,7 +13,7 @@ const PaymentInformation = (props) => {
     const [idPayment, setIdPayment] = useState('');
 
     useEffect(() => {
-        axios.get('https://localhost:8000/api/payments?page=1&idUser='+id,{
+        axios.get('http://localhost:8000/api/payments?page=1&idUser='+id,{
         }
         ).then((response) => {
             if(response.data["hydra:member"].length > 0) {
@@ -34,7 +34,7 @@ const PaymentInformation = (props) => {
         let idUser = '\/api\/users\/'+id
 
         if(exist === true && idPayment !== '') {
-            axios.put('https://localhost:8000/api/payments/'+idPayment,{
+            axios.put('http://localhost:8000/api/payments/'+idPayment,{
                 cardData : cardData,
                 cvv : parseInt(cvv),
                 date: date,
@@ -46,7 +46,7 @@ const PaymentInformation = (props) => {
                 console.log(error)
             })
         } else {
-            axios.post('https://localhost:8000/api/payments',{
+            axios.post('http://localhost:8000/api/payments',{
                 cardData : cardData,
                 cvv : parseInt(cvv),
                 date: date,

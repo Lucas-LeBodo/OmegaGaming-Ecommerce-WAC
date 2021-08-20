@@ -9,7 +9,7 @@ const CardSearch = (props) => {
     const [article, setArticle] = useState('')
 
    useEffect(() => {
-        axios.get('https://localhost:8000'+ props.value, {
+        axios.get('http://localhost:8000'+ props.value, {
         }).then((response) => {
             setArticle(response.data);
         }).catch((error) => {

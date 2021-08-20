@@ -12,7 +12,7 @@ const UpdateProfil = (props) => {
     const [lastName, setLastName] = useState(props.lastName);
 
     const submit = () => {
-        axios.put('https://localhost:8000/api/users/'+id,{
+        axios.put('http://localhost:8000/api/users/'+id,{
                 email : email,
                 password : password,
                 lastName : lastName, 
