@@ -253,6 +253,20 @@ $white: #f6f6f6ff;
         }
     }
 }
+.showHistoric {
+    display: flex;  
+    align-items: center;
+    height: 3em;
+    width: 100%;
+    padding-left: 5%;
+    box-shadow: 0 1px 10px $lightgrey;
+    margin-bottom: 0.5em;
+}
+
+.back {
+    width: 100%;
+}
+
 .adress-grid { 
     margin-bottom: 4em;
 

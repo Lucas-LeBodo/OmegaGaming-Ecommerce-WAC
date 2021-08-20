@@ -3,6 +3,8 @@ import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import { RiDeleteBin5Line } from 'react-icons/ri'
+import {Container} from 'react-bootstrap';
+
 
 import ProfilNav from '../../Components/ProfilNav';
 import UpdateProfil from '../../Components/UpdateProfil';
@@ -133,6 +135,9 @@ const Profil = () => {
     return (
         <Fragment>
             <ProfilNav />
+            <Container>
+                    <Link to={"/home"}>← back to home</Link>
+            </Container>
             <div className="Settings-container">
                 {UpdateUser}
                 {Adresse}

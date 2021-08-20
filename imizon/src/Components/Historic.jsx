@@ -1,6 +1,8 @@
 // import libs
 import React, {Fragment} from 'react';
+import {Container} from 'react-bootstrap';
 
+import { Link } from 'react-router-dom';
 
 const Historic = (props) => {
 
@@ -9,9 +11,13 @@ const Historic = (props) => {
 
     return (
         <Fragment>
-             <div className={"containers-form"} style={{background: "blue"}}>
-                {showHistoric}
-            </div>
+            
+                <div className={"containers-form"}>
+                
+                    <div className="showHistoric">
+                        <span>Command n° {showHistoric}</span>
+                    </div>
+                </div>
         </Fragment>
     )
 }
