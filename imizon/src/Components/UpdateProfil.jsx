@@ -28,14 +28,15 @@ const UpdateProfil = (props) => {
 
     return (
         <Fragment>
-            <div className={"containers-form"} style={{background: "blue"}}>
-                <div className={"containers-signup"}>
-                    <h3>Update your's informations</h3>
-                    <input type="email"     className="signup-form"     defaultValue={email} placeholder={"Email"} onChange={ (event)=>{ setEmail(event.target.value)}} required/>
-                    <input type="password"  className="signup-form"     defaultValue={password} placeholder={"Password"} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
-                    <input type="text"      className="signup-form"     defaultValue={firstName} placeholder={"First Name"} onChange={ (event)=>{ setFirstName(event.target.value)}} required/>
-                    <input type="text"      className="signup-form"     defaultValue={lastName} placeholder={"Last Name"} onChange={ (event)=>{ setLastName(event.target.value)}} required/>
-                    <div type="submit"      className="signup-btn" onClick={ submit } >Save change</div>
+            <div className={"containers-form"}>
+                <div className={"containers-profil"}>
+                    <h2>Update your's informations</h2>
+                    <input type="text"      className="profil-input"     defaultValue={firstName} placeholder={"First Name"} onChange={ (event)=>{ setFirstName(event.target.value)}} required/>
+                    <input type="text"      className="profil-input"     defaultValue={lastName} placeholder={"Last Name"} onChange={ (event)=>{ setLastName(event.target.value)}} required/>
+                    <input type="email"     className="profil-input"     defaultValue={email} placeholder={"Email"} onChange={ (event)=>{ setEmail(event.target.value)}} required/>
+                    <input type="password"  className="profil-input"     defaultValue={password} placeholder={"Password"} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
+                    
+                    <div type="submit"      className="profil-btn" onClick={ submit } >Save change</div>
                 </div>
             </div>        
         </Fragment>

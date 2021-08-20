@@ -8,22 +8,15 @@ const ProfilNav = (props) => {
         <Fragment>
             <div className="Panel">
                 <div className="UserPanel-content">
-                    <Link to={"/profil/"+localStorage.name}><h4> User Settings </h4></Link>
-                    <div className="UserPanel-Link">
-                        <Link to={"/profil/"+localStorage.name+"/update_information"} >Modify Information</Link>
-                    </div>
+                        <Link to={"/profil/"+localStorage.name}><div className="UserPanel-Link"> User Settings </div></Link>
                     <div className="darkline"></div>
-                    <div className="UserPanel-Link">
-                        <Link to={"/profil/"+localStorage.name+"/adresses"} >Adresses</Link>
-                    </div>
+                        <Link to={"/profil/"+localStorage.name+"/update_information"} ><div className="UserPanel-Link">Modify Information </div></Link>
                     <div className="darkline"></div>
-                    <div className="UserPanel-Link">
-                        <Link to={"/profil/"+localStorage.name+"/historic"} >Historic</Link>
-                    </div>
+                        <Link to={"/profil/"+localStorage.name+"/adresses"} ><div className="UserPanel-Link">Adresses </div></Link>
                     <div className="darkline"></div>
-                    <div className="UserPanel-Link">
-                        <Link to={"/profil/"+localStorage.name+"/payment"} >Payment informations</Link>
-                    </div>
+                        <Link to={"/profil/"+localStorage.name+"/historic"} ><div className="UserPanel-Link">Historic</div></Link>
+                    <div className="darkline"></div>
+                        <Link to={"/profil/"+localStorage.name+"/payment"} ><div className="UserPanel-Link">Payment informations</div></Link>
                 </div>
             </div>
         </Fragment>
