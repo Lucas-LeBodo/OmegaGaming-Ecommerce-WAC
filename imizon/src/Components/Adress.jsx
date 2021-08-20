@@ -33,27 +33,26 @@ const Adress = (props) => {
     let showTable = "";
     if(AdressData.length > 0) {
         showTable = (
-        <table className={'adress-table'}>
-                <thead>
-                    <tr>
-                        <th>Adresse</th>
-                        <th>Town</th>
-                        <th>ZIP Code</th>
-                        <th>Country</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>      
-                {AdressData}  
-            </table>
+            <div className="adress-grid">
+                <div className={'adress-table'}>
+                    <div className={'adress-table-head'}>
+                        <div className={'adress-table'}>Adresse</div>
+                        <div className={'adress-table'}>Town</div>
+                        <div className={'adress-table'}>ZIP Code</div>
+                        <div className={'adress-table'}>Country</div>
+                    </div>
+                    {AdressData}  
+                </div>
+            </div>
         )
     }
 
     return (
         <Fragment>
-            <div className={"containers-form"} style={{background: "blue"}}>
-                <div className={"containers-signup"}>
-                    <h3>Create an adress</h3>
-                    <select className="form-select" aria-label="Default select example" onChange={ (event)=>{ setCountry(event.target.value)}}>
+            <div className={"containers-form"}>
+                <div className={"containers-profil"}>
+                    <h2>Create an adress</h2>
+                    <select className="profil-input" aria-label="Default select example" onChange={ (event)=>{ setCountry(event.target.value)}}>
                         <option value="DE">Allemagne</option>
                         <option value="GB">Angleterre</option>
                         <option value="BE">Belgique</option>
@@ -64,10 +63,10 @@ const Adress = (props) => {
                         <option value="PT">Potugal</option>
                         <option value="CH">Suisse</option>
                     </select>
-                    <input type="text" className="signup-form" placeholder={"Town"} onChange={ (event)=>{ setTown(event.target.value)}} required/>
-                    <input type="text" className="signup-form" placeholder={"Postal Code"} onChange={ (event)=>{ setZip(event.target.value)}} required/>
-                    <input type="text" className="signup-form" placeholder={"Adress"} onChange={ (event)=>{ setAdress(event.target.value)}} required/>
-                    <div type="submit" className="signup-btn" onClick={ submit } >Create</div>
+                    <input type="text" className="profil-input" placeholder={"Town"} onChange={ (event)=>{ setTown(event.target.value)}} required/>
+                    <input type="text" className="profil-input" placeholder={"Postal Code"} onChange={ (event)=>{ setZip(event.target.value)}} required/>
+                    <input type="text" className="profil-input" placeholder={"Adress"} onChange={ (event)=>{ setAdress(event.target.value)}} required/>
+                    <div type="submit" className="profil-btn" onClick={ submit } >Create</div>
                 </div>
             </div>
             {showTable}
