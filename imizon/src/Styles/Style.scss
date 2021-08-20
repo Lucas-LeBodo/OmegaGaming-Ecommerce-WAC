@@ -557,8 +557,7 @@ $white: #f6f6f6ff;
 // Articles Card Styles
 .card {
     margin: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 20px $lightgrey;
+    box-shadow: 0 2px 10px $lightgrey;
     overflow: hidden;
     width: 15em;
     top: 70px;
@@ -581,11 +580,11 @@ $white: #f6f6f6ff;
         min-height: 11em;
     
         .card-price {
-            background-color: $red;
+            background-color: rgb(107, 252, 107);
             border-radius: 50px;
             font-size: 12px;
             margin: 0;
-            color: $white;
+            color: $darkgrey;
             padding: 2px 10px;
         }
     
