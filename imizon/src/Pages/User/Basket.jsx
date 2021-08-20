@@ -9,7 +9,7 @@ import { useHistory, Link } from 'react-router-dom';
 const Basket = () => {
     const [listBasketShow, setListBasketShow] = useState([]);    
     const [showPrice, setShowPrice] = useState(0);
-    const [contentModal, setContentModal] = useState('')
+    const [contentModal, setContentModal] = useState('');
     const [allArticles, setAllArticles] = useState('');
 
     //Data user Log !
@@ -19,17 +19,20 @@ const Basket = () => {
     const [firstName, setFirstName] = useState('');
 
     // pour les frais de port
-    const [country, setCountry] = useState('')
-    const [adress, setAdress] = useState('')
-    const [postalCode, setPostalCode] = useState('')
-    const [cardData, setCardData] = useState('')
-    const [rates, setRates] = useState('')
+    const [adressData, setAdressData] = useState('');
+    const [country, setCountry] = useState('');
+    const [adress, setAdress] = useState('');
+    const [zip, setZip] = useState('');
+    const [town, setTown] = useState('');
+    const [rates, setRates] = useState('');
     const history = useHistory();
     let showPriceDiv = '';
 
     useEffect(() => {
         let list_id = [];
         let list_articles = '';
+        let i = 0;
+        let input = '';
     
         if(localStorage.jwt) {
             const base64Url = localStorage.jwt.split('.')[1];
@@ -38,9 +41,37 @@ const Basket = () => {
 
             axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
             }).then((response) => {
-                console.log(response)
+                if(response.data["hydra:member"].length > 0) {
+                    let showAdress = [];
+                    let data = response.data["hydra:member"];
+                    setCountry(data[0].country)
+                    setTown(data[0].town)
+                    setAdress(data[0].adress)
+                    setZip(data[0].zip)
+
+                    data.forEach(element => {
+                        if(i === 0) {
+                            input = (<input className={'adress-element-radio'} name={"adress"} key={"input" + element.id} type="radio" value={i}  onChange={(event) => changeAdress(data, event)} defaultChecked />)
+                        } else {
+                            input = (<input className={'adress-element-radio'} name={"adress"} key={"input" + element.id} type="radio" value={i}  onChange={(event) => changeAdress(data, event)}/>)
+                        }
+                        showAdress.push(
+                            <div className={'adress-table-body'} key={"divbody" + element.id}>
+                                <div className={'adress-table-element'} key={"divelement" + element.id}>
+                                    {input}
+                                    <div className={'adress-element'} key={"Adress" + element.id}>{element.adress} </div>
+                                    <div className={'adress-element'} key={"Town" + element.id}>{element.town} </div>
+                                    <div className={'adress-element'} key={"Zip" + element.id}>{element.zip} </div>  
+                                    <div className={'adress-element'} key={"Country" + element.id}>{element.country} </div> 
+                                </div>
+                            </div>
+                        )
+                        i++;
+                    });
+                    setAdressData(showAdress);
+                }
             }).catch((error) => {
-                console.log(error);
+                console.log(error)
             })
             
             axios.get('https://localhost:8000/api/baskets/countArticles', {
@@ -154,6 +185,15 @@ const Basket = () => {
             }
         }
     }, [])
+
+    const changeAdress = (data, event) => {
+        let i = event.target.value
+
+        setCountry(data[i].country)
+        setTown(data[i].town)
+        setAdress(data[i].adress)
+        setZip(data[i].zip)
+    }
 
     const deleteArticles = (id, connected) => {
         if(connected === "connected") {
@@ -447,30 +487,81 @@ const Basket = () => {
         }
     }
 
-    
+    const checkbox = () => {
+        let check  = document.getElementById('form_check').checked;
+        let radio = document.getElementsByClassName("adress-element-radio");
 
+        if(check === true) {
+            document.getElementById("form_country").disabled = false
+            document.getElementById("form_adress").disabled = false
+            document.getElementById("form_zip").disabled = false
+
+            for(let j = 0; j < radio.length; j++) {
+                if(radio[j].checked === true) {
+                    radio[j].checked = false
+                }
+                radio[j].disabled = true
+            }
+        } else {
+            document.getElementById("form_country").disabled = true
+            document.getElementById("form_adress").disabled = true
+            document.getElementById("form_zip").disabled = true
+
+            for(let j = 0; j < radio.length; j++) {
+                radio[j].disabled = false
+            }
+        }
+    }
 
     function handleShow() {
         let content = '';
         if(localStorage.jwt) {
-            console.log()
             content = (
-                <Form onSubmit={(event) => {submit(event)}}>
-                    <Form.Group className="mb-3">
-                        <Form.Control type="hidden" defaultValue={firstName}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Control type="hidden" defaultValue={lastName}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Control type="hidden" defaultValue={email}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Control type="hidden" defaultValue={id}/>
-                    </Form.Group>
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" className="btn btn-primary">Go to Payment</button>
-                </Form>
+                <div>
+                    <div className="adress-grid">
+                        <div className={'adress-table'}>
+                            <div className={'adress-table-head'}>
+                                <div className={'adress-table'}>Adresse</div>
+                                <div className={'adress-table'}>Town</div>
+                                <div className={'adress-table'}>ZIP Code</div>
+                                <div className={'adress-table'}>Country</div>
+                            </div>
+                            <form>
+                                {adressData}  
+                            </form>
+                        </div>
+                    </div>
+                    <Form onSubmit={(event) => {submit(event)}}>
+                        <input type="checkbox" onChange={() => checkbox()} id={"form_check"}/>
+                        <label>Put an Other Adress</label>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Pays</Form.Label>
+                            <Form.Control type="text" id={"form_country"} onChange={(event) => { setCountry(event.target.value) }} placeholder="Enter Country" disabled/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Adresse</Form.Label>
+                            <Form.Control type="text" id={"form_adress"} onChange={(event) => { setAdress(event.target.value) }} placeholder="Enter Adress" disabled/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Code Postal</Form.Label>
+                            <Form.Control type="text" id={"form_zip"} onChange={(event) => { setZip(event.target.value) }} placeholder="Enter Postal Code" disabled/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Control type="hidden" defaultValue={firstName}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Control type="hidden" defaultValue={lastName}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Control type="hidden" defaultValue={email}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Control type="hidden" defaultValue={id}/>
+                        </Form.Group>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" className="btn btn-primary">Go to Payment</button>
+                    </Form>
+                </div>
             )
             setContentModal(content)
         } else {
@@ -490,11 +581,7 @@ const Basket = () => {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Code Postal</Form.Label>
-                            <Form.Control type="text" onChange={(event) => { setPostalCode(event.target.value) }} placeholder="Enter Postal Code" />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Paiement</Form.Label>
-                            <Form.Control type="text" onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
+                            <Form.Control type="text" onChange={(event) => { setZip(event.target.value) }} placeholder="Enter Postal Code" />
                         </Form.Group>
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" className="btn btn-primary">Save changes</button>
