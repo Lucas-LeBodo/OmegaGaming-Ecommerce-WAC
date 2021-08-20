@@ -5,6 +5,9 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { Form } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 
+//import functions
+import FormOrder from '../../Components/shippyPro/FormOrder';
+import SendOrder from '../../Components/shippyPro/SendOrder'
 
 const Basket = () => {
     const [listBasketShow, setListBasketShow] = useState([]);    
@@ -17,7 +20,8 @@ const Basket = () => {
     const [email, setEmail] = useState('');
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
-
+    const [basketNotCo, setBasketNotCo] = useState('')
+    
     // pour les frais de port
     const [adressData, setAdressData] = useState('');
     const [country, setCountry] = useState('');
@@ -124,6 +128,7 @@ const Basket = () => {
                     params: {tabList:list_id},
                 }).then((response) => {
                     let list_articles = response.data["hydra:member"];
+                    setBasketNotCo(list_articles)
                     list_articles.forEach((element) => {
                         weightTotal = element.weight + weightTotal
                     })
@@ -313,6 +318,7 @@ const Basket = () => {
         })
     }
 
+
     const requestNotConnected = (listBasketShow) => {
         let showBasket = [];
         let price = 0;
@@ -361,131 +367,6 @@ const Basket = () => {
             console.log(error)
         })
     }
- 
-    /**
-     *  fonction de submit de command
-     * 
-     * @param {*} e
-     */
-    const submit = (e) => {
-        e.preventDefault()
-        let country = e.target[0];
-        let address = e.target[1];
-        let zip = e.target[2];
-        let payment =  e.target[3];
-        let idUser = id
-        let totalPriceBasket = showPrice;
-        let weight = 0.01;
-
-        if(allArticles.length === 1){
-            weight = allArticles[0].weight;
-        }else{
-            allArticles.forEach(element => {
-                weight = element.weight + weight
-            })
-        }
-
-        let data = JSON.stringify({
-            "to_address": {
-                "name": firstName + " " + lastName,
-                "company": "ShippyPro",
-                "street1": address.value, // change when validate payment
-                "street2": "",
-                "city": "Paris",
-                "state": "Département de Paris",
-                "zip": zip.value, // change when validate payment
-                "country": "FR",
-                "phone": "5551231234",
-                "email": email
-            },
-            "from_address": {
-                "name": "Damien Legrand",
-                "company": "Aucune",
-                "street1": "Rue d'Avron 116",
-                "street2": "",
-                "city": "Paris",
-                "state": "Département de Paris",
-                "zip": "75020",
-                "country": "FR",
-                "phone": "+33 623525172",
-                "email": "damienlg06@hotmail.com"
-            },
-            "parcels": [
-                {
-                    "length": 5,
-                    "width": 5,
-                    "height": 5,
-                    "weight": weight
-                }
-            ],
-            "TotalValue":  totalPriceBasket + " EUR",
-            "TransactionID": "ORDER2365",
-            "ContentDescription": "Multi_Articles",
-            "Insurance": 0,
-            "InsuranceCurrency": "EUR",
-            "CashOnDelivery": 0,
-            "CashOnDeliveryCurrency": "EUR",
-            "CashOnDeliveryType": 0,
-            "CarrierName": "Generic",
-            "CarrierService": "Standard",
-            "CarrierID": 2747,
-            "OrderID": "",
-            "RateID": "",
-            "Incoterm": "DAP",
-            "BillAccountNumber": "",
-            "Note": "Ship by 06/08/2021",
-            "Async": false
-        })
-   
-        axios.get('https://localhost:8000/api/shippy/postOrder?params=' + data,{  
-        }).then((response) => {
-          let order = JSON.parse(response.data)
-           if(order.Result === "OK"){
-               let NbOrder = order.NewOrderID
-               sendToOrderManifest(idUser, NbOrder, totalPriceBasket)
-           }
-        }).catch((error) => {
-            
-        })
-
-        const sendToOrderManifest = (idUser, NbOrder, totalPrice) => {
-            axios.post('https://localhost:8000/api/order_manifests', { 
-                orderId : parseInt(NbOrder),
-                content : JSON.stringify(allArticles),
-                userId : parseInt(idUser),
-                price : parseInt(totalPrice)
-            }).then((response) => {
-                if(response.statusText == "Created"){
-                    deleteBasket(idUser, NbOrder)
-                }
-            }).catch((error) => {
-                
-            })
-        }
-
-        /**
-         *  fonction de reinitialisation du basket 
-         * 
-         *  on peut transmettre  des donne via state: { nbOrder: NbOrder }
-         *  
-         * @param {*} idUser
-         */
-        const deleteBasket = (idUser, NbOrder) => {
-            axios.get('https://localhost:8000/api/shippy/deleteBasket?params='+ idUser, { 
-            }).then((response) => {     
-                if(response.statusText == "OK"){
-                    history.push({
-                        pathname: '/tracking',
-                        // search: '?query=abc',
-                        state: { nbOrder: NbOrder }
-                      })
-                    window.location.reload();
-                }         
-            }).catch((error) => {
-                
-            })
-        }
-    }
 
     const checkbox = () => {
         let check  = document.getElementById('form_check').checked;
@@ -512,10 +393,55 @@ const Basket = () => {
             }
         }
     }
+ 
+    /**
+     *  fonction de submit de command
+     * 
+     * @param {*} e
+     */
+    const submit = (e, co) => {
+        e.preventDefault()
+        let totalPriceBasket = showPrice;
+        let weight = 0.01 ;
+        let idUser = e.target[7].value
+        let data;
+        let confirmOrderSend;
+        if(co == 'co'){
+            if(allArticles.length === 1){
+                weight = allArticles[0].weight;
+            }else{
+                allArticles.forEach(element => {
+                    weight = element.weight + weight
+                })
+            }
+            data = FormOrder(weight, co, e, totalPriceBasket)
+            if(data != ""){
+                SendOrder(data, idUser, totalPriceBasket, allArticles)
+            }
+        }
+        else{
+            let co = 'not';
+            if(basketNotCo.length == 1){
+                weight = basketNotCo[0].weight;
+            }
+            else{
+                basketNotCo.forEach(element => {
+                    weight = element.weight + weight
+                })
+            }
+            data = FormOrder(weight, co, e, totalPriceBasket)
+            
+            if(data != ""){
+                SendOrder(data, idUser, totalPriceBasket, basketNotCo)
+            }
+            
+        }
+    }
 
     function handleShow() {
         let content = '';
         if(localStorage.jwt) {
+            let co = "co"
             content = (
                 <div>
                     <div className="adress-grid">
@@ -531,7 +457,7 @@ const Basket = () => {
                             </form>
                         </div>
                     </div>
-                    <Form onSubmit={(event) => {submit(event)}}>
+                    <Form onSubmit={(event) => {submit(event, co)}}>
                         <input type="checkbox" onChange={() => checkbox()} id={"form_check"}/>
                         <label>Put an Other Adress</label>
                         <Form.Group className="mb-3">
@@ -569,8 +495,9 @@ const Basket = () => {
             if(check === true) {
                 history.push("/login")
             } else {
+                let notCo = "notCo"
                 content = (
-                    <Form onSubmit={submit}>
+                    <Form onSubmit={(event) => {submit(event, notCo)}}>
                         <Form.Group className="mb-3">
                             <Form.Label>Pays</Form.Label>
                             <Form.Control type="text" onChange={(event) => { setCountry(event.target.value) }} placeholder="Enter Country" />
@@ -582,6 +509,18 @@ const Basket = () => {
                         <Form.Group className="mb-3">
                             <Form.Label>Code Postal</Form.Label>
                             <Form.Control type="text" onChange={(event) => { setZip(event.target.value) }} placeholder="Enter Zip" />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Control type="hidden" defaultValue='john'/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Control type="hidden" defaultValue='doe'/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Control type="hidden" defaultValue='toto@'/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Control type="hidden" defaultValue='0'/>
                         </Form.Group>
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" className="btn btn-primary">Save changes</button>
