@@ -8,7 +8,9 @@ import ShowArticles from '../../Pages/Admin/ShowArticles';
 import UpdateArticle from '../../Pages/Admin/UpdateArticle';
 import CreateCategory from '../../Pages/Admin/CreateCategory';
 
-export default function Auth(props){
+import GetTokenInformation from '../../Components/tools/GetTokenInformation';
+
+export default function Auth(){
     const [ok, setOk] = useState("");
     
     let username = '';
@@ -16,21 +18,19 @@ export default function Auth(props){
     let token = localStorage.jwt;
     let auth = false;
     let pathName = window.location.pathname
-    let testVerif = "";
     let roleRequest = "";
 
-    if(token){
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        username = JSON.parse(window.atob(base64)).username;
-        rolesToken = JSON.parse(window.atob(base64)).roles;
-        console.log(rolesToken)
-        if(rolesToken["roles"] === "ROLE_ADMIN") {
-            auth = true
-        } 
-    }
-
+    
     useEffect(() => {
+        if(token){
+            let data = GetTokenInformation(true)
+            rolesToken = data.rolesToken
+            username = data.username
+    
+            if(rolesToken["roles"] === "ROLE_ADMIN") {
+                auth = true
+            } 
+        }
         verifAuth()
     }, [window.location.pathname])
 
@@ -39,16 +39,9 @@ export default function Auth(props){
             await axios.get('https://localhost:8000/api/me', {
                 params: {username: username}
             }).then((response) => {
-                console.log(response.data.roles)
                 roleRequest = response.data.roles["roles"]
-    
-                console.log(rolesToken)
-                console.log(roleRequest)
-                console.log(rolesToken["roles"])
-                if(rolesToken["roles"] === roleRequest && auth === true){
-                    console.log("la")
-                    console.log(pathName)
 
+                if(rolesToken["roles"] === roleRequest && auth === true){
                     if(pathName.includes("update") === true) {
                         setOk(<Route path={"/admin/show_article/update/:id"} component={UpdateArticle} />)
                     } else {
@@ -72,9 +65,4 @@ export default function Auth(props){
         }
     } 
    return <div>{ok}</div>
-   
-
-    
-    
-    
 }

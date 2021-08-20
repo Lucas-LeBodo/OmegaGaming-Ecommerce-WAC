@@ -5,12 +5,12 @@ import {Link, useHistory, useLocation} from 'react-router-dom';
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import {Container} from 'react-bootstrap';
 
-
 import ProfilNav from '../../Components/ProfilNav';
 import UpdateProfil from '../../Components/UpdateProfil';
 import Adress from '../../Components/Adress';
 import PaymentInformation from '../../Components/PaymentInformation';
 import HistoricOrder from '../../Components/Historic';
+import GetTokenInformation from '../../Components/tools/GetTokenInformation';
 
 const Profil = () => {
     const [id, setId] = useState('');
@@ -27,9 +27,7 @@ const Profil = () => {
         function check() 
         {
             if(localStorage.jwt){
-                const base64Url = localStorage.jwt.split('.')[1];
-                const base64 = base64Url.replace('-', '+').replace('_', '/');
-                let username = JSON.parse(window.atob(base64)).username;
+                let username = GetTokenInformation(false)
                 
                 axios.get('https://localhost:8000/api/me', {
                     params: {username: username}

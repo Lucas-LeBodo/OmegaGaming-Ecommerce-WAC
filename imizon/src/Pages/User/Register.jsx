@@ -9,6 +9,4 @@ export default class register extends Component {
             </Fragment>
         )
     }
-
-
 }

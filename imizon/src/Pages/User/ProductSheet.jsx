@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { Container, Row, Col } from "react-bootstrap";
 import axios from 'axios';
 
-
 import '../../Styles/ProductSheet.scss';
 
 // Components
@@ -65,7 +64,6 @@ const ProductSheet = (props) => {
                         weight={article.weight}
                         discount={article.discount}
                     />
-                        
                 </Row>
 
                 <Row className="style_card">
@@ -73,7 +71,6 @@ const ProductSheet = (props) => {
                         <Row> 
                             <Col id="title_product">
                                 <div> - Descriptif - </div>
-                                
                             </Col> 
                         </Row>
                         <Row>
@@ -84,7 +81,6 @@ const ProductSheet = (props) => {
                             />
                         </Row>
                     </Col>
-                    
                 </Row>
             </Container>
         )

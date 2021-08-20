@@ -5,6 +5,8 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { Form } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 
+import GetTokenInformation from '../../Components/tools/GetTokenInformation';
+
 const Basket = () => {
     const [listBasketShow, setListBasketShow] = useState([]);    
     const [showPrice, setShowPrice] = useState(0);
@@ -35,9 +37,7 @@ const Basket = () => {
         let input = '';
     
         if(localStorage.jwt) {
-            const base64Url = localStorage.jwt.split('.')[1];
-            const base64 = base64Url.replace('-', '+').replace('_', '/');
-            let username = JSON.parse(window.atob(base64)).username;
+            let username = GetTokenInformation(false)
 
             axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
             }).then((response) => {

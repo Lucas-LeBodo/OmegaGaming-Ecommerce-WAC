@@ -1,8 +1,7 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment} from 'react';
 import {Container} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import truckImg from '../../Assets/delivery-truck.png';
-
 
 const tracking = (props) => {
     return(
@@ -14,7 +13,6 @@ const tracking = (props) => {
                     <p>Command n° {props.match.params.order} .</p>
                     <img src={truckImg} alt="Delivery Trucks" />
                 </div> 
-                
             </Container>
         </Fragment>
     )

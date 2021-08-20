@@ -28,7 +28,7 @@ import UpdateArticle from '../Pages/Admin/UpdateArticle';
 import CreateCategory from '../Pages/Admin/CreateCategory';
 import ShowCategories from '../Pages/Admin/ShowCategories';
 import UpdateCategory from '../Pages/Admin/UpdateCategory'
-// import ProtectedRoute from './Components/ProtectedRoute';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 
 
@@ -63,7 +63,7 @@ const AppRouter = () => {
                     
 
                     {/* Admin Router */}
-                    {/* <ProtectedRoute/> */}
+                    <ProtectedRoute/>
                     <Route path='/admin'  component={HomeAdmin} exact={true} />
                     <Route path='/admin/create_article'  component={CreateArticle} exact={true} />
                     <Route path='/admin/show_articles'  component={ShowArticles} exact={true} />
