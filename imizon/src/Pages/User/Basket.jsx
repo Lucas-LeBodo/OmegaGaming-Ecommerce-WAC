@@ -112,7 +112,6 @@ const Basket = () => {
             if(list_articles != "" || listArt != ""){
                 axios.get('http://localhost:8000/api/shippy/getRates?params=' + data,{  
                 }).then((response) => {
-                    console.log(response);
                     setRates(response.data.Rates['hydra:member'][0])
                 }).catch((error) => {
                     
@@ -434,16 +433,49 @@ const Basket = () => {
             axios.get('http://localhost:8000/api/shippy/deleteBasket?params='+ idUser, { 
             }).then((response) => {     
                 if(response.statusText == "OK"){
-                    history.push({
-                        pathname: '/tracking',
-                        // search: '?query=abc',
-                        state: { nbOrder: NbOrder }
-                      })
-                    window.location.reload();
+                    substractStock(NbOrder)
+                    // history.push({
+                    //     pathname: '/tracking',
+                    //     // search: '?query=abc',
+                    //     state: { nbOrder: NbOrder }
+                    //   })
+                    // window.location.reload();
                 }         
             }).catch((error) => {
                 
             })
+        }
+
+        const substractStock = (NbOrder) => {
+
+            allArticles.forEach((element) => {
+                let newStock = (element.Stock - 1);
+                axios.patch('http://localhost:8000/api/articles/'+ element.id, { 
+                    Title: element.Title,
+                    Description: element.Description,
+                    Image: element.Image,
+                    Feature: element.Feature,
+                    Price: element.Price,
+                    Stock: newStock,
+                    //category:  element.category,
+                    sameArticles:  element.sameArticles,
+                    weight: element.weight,
+                    discount: element.discount
+                }).then((response) => {     
+                    if(response.statusText == "OK"){
+                        history.push({
+                            pathname: '/tracking',
+                            // search: '?query=abc',
+                            state: { nbOrder: NbOrder }
+                          })
+                        window.location.reload();
+                    }         
+                }).catch((error) => {
+                    
+                })
+            })
+
+            
         }
     }
 
