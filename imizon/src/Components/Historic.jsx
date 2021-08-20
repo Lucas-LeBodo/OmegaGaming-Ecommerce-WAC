@@ -5,9 +5,11 @@ const Historic = (props) => {
 
     const Historic = props.showHistoric
 
+    let i = 0;
     let showHistoric = [];
     Historic.forEach(element => {
-        showHistoric.push(<span>Command n° {element}</span>)    
+        showHistoric.push(<span key={element+" " + i}>Command n° {element}</span>);
+        i++  ;
     });
 
     return (
