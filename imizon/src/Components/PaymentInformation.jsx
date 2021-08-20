@@ -63,13 +63,13 @@ const PaymentInformation = (props) => {
 
     return (
         <Fragment>
-            <div className={"containers-form"} style={{background: "blue"}}>
-                <div className={"containers-signup"}>
-                    <h3>Update your's payment informations</h3>
-                    <input type="text" className="signup-form"   defaultValue={cardData} placeholder={"Card Data"} onChange={ (event)=>{ setCardData(event.target.value)}} required/>
-                    <input type="number" className="signup-form" defaultValue={cvv} placeholder={"CVV"} onChange={ (event)=>{ setCvv(event.target.value)}} max="3" required/>
-                    <input type="text" className="signup-form"   defaultValue={date} placeholder={"Date"} onChange={ (event)=>{ setDate(event.target.value)}} required/>
-                    <div type="submit" className="signup-btn" onClick={ submit } >Update Information</div>
+            <div className={"containers-form"}>
+                <div className={"containers-profil"}>
+                    <h2>Update your's payment informations</h2>
+                    <input type="text" className="profil-input"   defaultValue={cardData} placeholder={"Card Data"} onChange={ (event)=>{ setCardData(event.target.value)}} required/>
+                    <input type="number" className="profil-input" defaultValue={cvv} placeholder={"CVV"} onChange={ (event)=>{ setCvv(event.target.value)}} max="3" required/>
+                    <input type="text" className="profil-input"   defaultValue={date} placeholder={"Date"} onChange={ (event)=>{ setDate(event.target.value)}} required/>
+                    <div type="submit" className="profil-btn" onClick={ submit } >Update Information</div>
                 </div>
             </div>        
         </Fragment>
