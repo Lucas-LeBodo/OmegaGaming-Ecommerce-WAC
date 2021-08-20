@@ -55,15 +55,17 @@ const Profil = () => {
                     let data = response.data["hydra:member"];
                     data.forEach(element => {
                         showAdress.push(
-                            <tbody key={"tboby" + element.id}>
-                                <tr key={"tr" + element.id}>
-                                    <td key={"Adress" + element.id}>{element.adress} </td>
-                                    <td key={"Town" + element.id}>{element.town} </td>
-                                    <td key={"Zip" + element.id}>{element.zip} </td>  
-                                    <td key={"Country" + element.id}>{element.country} </td> 
-                                    <td key={"delete" + element.id}><button id={"remove"} onClick={() => deleteAdress(element.id)}><RiDeleteBin5Line /></button></td> 
-                                </tr>
-                            </tbody>
+                            <div className={'adress-table-body'} key={"divbody" + element.id}>
+                                <div className={'adress-table-element'} key={"divelement" + element.id}>
+                                    <div className={'adress-element'} key={"Adress" + element.id}>{element.adress} </div>
+                                    <div className={'adress-element'} key={"Town" + element.id}>{element.town} </div>
+                                    <div className={'adress-element'} key={"Zip" + element.id}>{element.zip} </div>  
+                                    <div className={'adress-element'} key={"Country" + element.id}>{element.country} </div> 
+                                    <div className={'adress-delete-box'} key={"deletebox" + element.id}>
+                                        <div className={'adress-delete'} key={"delete" + element.id}><button id={"remove"} onClick={() => deleteAdress(element.id)}><RiDeleteBin5Line /></button></div> 
+                                    </div>
+                                </div>
+                            </div>
                         )
                     });
                     setAdressData(showAdress);

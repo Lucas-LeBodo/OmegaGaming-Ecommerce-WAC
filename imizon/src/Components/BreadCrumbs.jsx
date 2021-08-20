@@ -52,7 +52,7 @@ const BreadCrumbs = (props) =>  {
         bestsellerPath = <Link  to={"/best-seller"}> <RiVipCrownLine/> Best Sellers</Link>;
     }
     if(pathname === "/discount"){
-        homePath = <Link  to={"/"}> <RiHome2Line/> </Link>;
+        homePath = <Link  to={"/"}> <RiHome2Line/> Home </Link>;
         discount = <Link  to={"/discount"}> <RiMoneyDollarBoxLine/> Promo</Link>;
     }
       
