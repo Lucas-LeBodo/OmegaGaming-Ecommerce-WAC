@@ -1,17 +1,51 @@
-import React, {Fragment, useEffect} from 'react';
+import axios from 'axios';
+import React, {Fragment, useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 
-const Payment = (props) => {
-    const history = useHistory();
-    console.log(props)
+//import functions
+import FormOrder from '../../Components/shippyPro/FormOrder';
+import SendOrder from '../../Components/shippyPro/SendOrder';
+import PaymentView from '../../Components/PaymentBasket';
 
+const Payment = (props) => {
+
+    const [showForm, setShowForm] = useState('');
+    const history = useHistory();
+    
     useEffect(() => {
-        // history.push("/basket")
-    }, [])
+        if(props.history.location.state === undefined) {
+            history.push("/basket")
+        } else {
+            let sendData = props.history.location.state.sendData;
+            if(sendData.co === "co") {
+                axios.get('https://localhost:8000/api/payments?page=1&idUser='+sendData.id, {
+                }).then((response) => {
+                    if(response.data["hydra:member"].length > 0) {
+                        let dataPayment = response.data["hydra:member"][0];
+                        let cvv = window.prompt("Would you paid with your cvv ?")
+                        if(parseInt(cvv) === dataPayment.cvv){
+                            let dataShippy = FormOrder(sendData)
+                            if(dataShippy != ""){
+                                SendOrder(dataShippy, sendData.id, sendData, sendData.allArticles)
+                            }
+                        } else {
+                            setShowForm(PaymentView("warning", sendData))
+                        }
+                    } else {
+                        setShowForm(PaymentView("nope", sendData))
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                })
+            } else {
+                setShowForm(PaymentView("nope", sendData))
+            }
+        }
+    }, [props])
     
     return(
         <Fragment >
-            <p>Hi</p>
+            {showForm}
         </Fragment>
     )
 }

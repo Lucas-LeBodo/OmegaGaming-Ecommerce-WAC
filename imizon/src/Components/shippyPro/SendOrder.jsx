@@ -1,19 +1,20 @@
 import axios from 'axios';
 
-const SendOrder = (data, idUser, totalPrice, basket) => {
+const SendOrder = (dataShippy, idUser, allData, basket) => {
         
-    axios.get('https://localhost:8000/api/shippy/postOrder?params=' + data,{  
+    axios.get('https://localhost:8000/api/shippy/postOrder?params=' + dataShippy,{  
     }).then((response) => {
         let order = JSON.parse(response.data)
         if(order.Result == "OK"){
             let NbOrder = order.NewOrderID
-            sendToOrderManifest(idUser, NbOrder, totalPrice, basket)
+            sendToOrderManifest(idUser, NbOrder, allData.totalPriceBasket, basket)
         }
     }).catch((error) => {
         
     })
-
+    
     const sendToOrderManifest = (idUser, NbOrder, totalPrice, basket) => {
+        console.log(idUser, NbOrder, totalPrice, basket)
         axios.post('https://localhost:8000/api/order_manifests', { 
             orderId : parseInt(NbOrder),
             content : JSON.stringify(basket),
@@ -29,23 +30,24 @@ const SendOrder = (data, idUser, totalPrice, basket) => {
     /**
      *  fonction de reinitialisation du basket 
      * 
-     *  on peut transmettre  des donne via state: { nbOrder: NbOrder }
+     *  on peut transmettre des données via state: { nbOrder: NbOrder }
      *  
      * @param {*} idUser
      */
     
     const deleteBasket = (idUser, NbOrder, basket) => {
-        localStorage.removeItem('shoppingUserNoLog')
+        if(localStorage.shoppingUserNoLog) {
+            localStorage.removeItem('shoppingUserNoLog')
+        }
         axios.get('https://localhost:8000/api/shippy/deleteBasket?params='+ idUser, { 
         }).then((response) => {     
-                substractStock(NbOrder, basket)
+            substractStock(NbOrder, basket)
         }).catch((error) => {
             
         })
     }
 
     const substractStock = (NbOrder, basket) => {
-        
         basket.forEach((element) => {
             let newStock = (element.Stock - 1);
             axios.patch('https://localhost:8000/api/articles/'+ element.id, { 

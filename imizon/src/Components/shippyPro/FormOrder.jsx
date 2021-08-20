@@ -1,30 +1,23 @@
 import React, { useEffect } from "react";
 
-const FormOrder = (weight, co, e, totalPriceBasket) => {
-    let country = e.target[0];
-    let address = e.target[1];
-    let zip = e.target[2];
-    let payment =  e.target[3];
-    let firstname = e.target[4]
-    let lastname = e.target[5]
-    let email = e.target[6]
+const FormOrder = (allData) => {
     let data;
-    if(co == 'co'){
+    if(allData.co == 'co'){
         data = JSON.stringify({
             "to_address": {
-                "name": "Eddy Malou",
-                "company": "ShippyPro",
-                "street1": "4 rue d'Alger",
+                "name": allData.lastName + " " + allData.firstName,
+                "company": "Aucune",
+                "street1": allData.adress,
                 "street2": "",
-                "city": "Paris", //add city
+                "city": allData.town, 
                 "state": "Département de Paris",
-                "zip": "44000",
-                "country": "FR",
+                "zip": String(allData.zip),
+                "country": allData.country,
                 "phone": "5551231234",
-                "email": "dequoijememêle@toncul.com"
+                "email": allData.email
             },
             "from_address": {
-                "name": "Damien Legrand",
+                "name": "Pou Tine",
                 "company": "Aucune",
                 "street1": "Rue d'Avron 116",
                 "street2": "",
@@ -40,10 +33,10 @@ const FormOrder = (weight, co, e, totalPriceBasket) => {
                     "length": 5,
                     "width": 5,
                     "height": 5,
-                    "weight": weight
+                    "weight": allData.weight
                 }
             ],
-            "TotalValue":  totalPriceBasket + " EUR",
+            "TotalValue": allData.totalPriceBasket + " EUR",
             "TransactionID": "ORDER2365",
             "ContentDescription": "Multi_Articles",
             "Insurance": 0,
@@ -66,12 +59,12 @@ const FormOrder = (weight, co, e, totalPriceBasket) => {
             "to_address": {
                 "name": 'john',
                 "company": "ShippyPro",
-                "street1": "address",
+                "street1": allData.adress,
                 "street2": "",
-                "city": "Paris", //add city
+                "city": allData.town,
                 "state": "Département de Paris",
-                "zip": '44000',
-                "country": "FR",
+                "zip": String(allData.zip),
+                "country": allData.country,
                 "phone": "5551231234",
                 "email":"john@doe"
             },
@@ -92,10 +85,10 @@ const FormOrder = (weight, co, e, totalPriceBasket) => {
                     "length": 5,
                     "width": 5,
                     "height": 5,
-                    "weight": weight
+                    "weight": allData.weight
                 }
             ],
-            "TotalValue":  totalPriceBasket + " EUR",
+            "TotalValue":  allData.totalPriceBasket + " EUR",
             "TransactionID": "ORDER2365",
             "ContentDescription": "Multi_Articles",
             "Insurance": 0,
