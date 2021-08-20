@@ -128,7 +128,7 @@ function NavBar(props) {
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
     }
-    if(pathname === ("/basket") && !jwt){
+    if(pathname === ('/basket') && !jwt){
         navbox = "";  
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>

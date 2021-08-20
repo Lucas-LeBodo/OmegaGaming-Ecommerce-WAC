@@ -6,11 +6,11 @@ import axios from 'axios';
 const Adress = (props) => {
 
     const id = props.id
-    const [country, setCountry] = useState('FR');
+    const [country, setCountry] = useState('DE');
     const [adress, setAdress] = useState('');
     const [town, setTown] = useState('');
     const [zip, setZip] = useState('');
-    const AdressData = props.showAdress;
+    const adressData = props.showAdress;
 
     const submit = () => {
         let idUser = '\/api\/users\/'+id
@@ -31,7 +31,7 @@ const Adress = (props) => {
     }
 
     let showTable = "";
-    if(AdressData.length > 0) {
+    if(adressData.length > 0) {
         showTable = (
             <div className="adress-grid">
                 <div className={'adress-table'}>
@@ -41,7 +41,7 @@ const Adress = (props) => {
                         <div className={'adress-table'}>ZIP Code</div>
                         <div className={'adress-table'}>Country</div>
                     </div>
-                    {AdressData}  
+                    {adressData}  
                 </div>
             </div>
         )
