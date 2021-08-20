@@ -2,7 +2,6 @@
 import React, {Fragment, useState} from 'react';
 import axios from 'axios';
 
-
 const Adress = (props) => {
 
     const id = props.id

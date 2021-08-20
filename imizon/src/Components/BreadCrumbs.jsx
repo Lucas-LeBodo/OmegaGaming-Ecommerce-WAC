@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import {RiVipCrownLine, RiHome2Line, RiMoneyDollarBoxLine } from "react-icons/ri"
 import axios from 'axios';
 
-const BreadCrumbs = (props) =>  {
+const BreadCrumbs = () =>  {
 
     let pathname = useLocation().pathname;
     let homePath = ' ';
@@ -16,11 +16,11 @@ const BreadCrumbs = (props) =>  {
     let id = ' ';
     let discount = '';
     let path = pathname.split(/[\/]+/g)
-    const [article, setArticle] = useState('') 
-   
-   
+    
     id = pathname.lastIndexOf("/");
     id = pathname.substr(id + 1);
+    
+    const [article, setArticle] = useState('') 
     
     useEffect(() => {
         function getName() {

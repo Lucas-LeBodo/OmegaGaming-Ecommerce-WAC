@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {Container, Form} from 'react-bootstrap';
-
 import axios from 'axios';
 
 const CreateArticle = () => {
@@ -15,7 +14,6 @@ const CreateArticle = () => {
     const [selectCategory, setSelectCategory] = useState('');
     const [weight, setWeight] = useState('');
 
-
     //affichage des categories
     const [categories, setCategories] = useState('');
 
@@ -26,7 +24,6 @@ const CreateArticle = () => {
     const [titleRef, setTitleRef] = useState('')
 
    useEffect(() => {
-
         // recup categories
         let pages = 1;
         const recupCategory = () => {
@@ -78,7 +75,6 @@ const CreateArticle = () => {
         }
     }
 
-    
     const desactivateCheckbox = (event) => {
         let select = event.target.value
         if(select !== ''){
@@ -88,14 +84,12 @@ const CreateArticle = () => {
         }
     }
     
-    
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
     });
-
 
     const submit = async () => {
         const file = document.getElementById('myFile').files[0];
@@ -211,7 +205,6 @@ const CreateArticle = () => {
                         <input id="featureSup" type="textarea" className="form-control" placeholder={feature} onChange={ (event)=>{ setFeatureSup(event.target.value)}} required/>
                     </label>
                 </div>
-
                 <div className="btn btn-primary btn-block btn-custom" onClick={ submit } >Create</div>
             </Form>
         </Container>

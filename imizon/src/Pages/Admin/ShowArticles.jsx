@@ -5,16 +5,13 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {AiFillDelete, AiFillEdit} from 'react-icons/ai';
 
-
-
-
 const ShowArticles = () => {
     const [articlesShow, setArticlesShow] = useState('');
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
     
     useEffect(() => {
-        let views
+        let views;
 
         function getArticles() {
             axios.get('https://localhost:8000/api/articles?page='+page, {
@@ -80,7 +77,6 @@ const ShowArticles = () => {
                 });
                 setArticlesShow(tabArticles);
             }).catch((error) => {
-                console.log(error);
             })
         }
         getArticles();
@@ -115,7 +111,6 @@ const ShowArticles = () => {
         }).then((response) => {
             window.location.reload()
         }).catch((error) => {
-            console.log(error)
         })
     }
  

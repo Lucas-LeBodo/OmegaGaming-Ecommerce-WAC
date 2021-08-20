@@ -48,13 +48,12 @@ const UpdateArticle = (props) => {
         const recupCategory = () => {
             let pages = 1;
             axios.get('https://localhost:8000/api/categories?page='+ pages ,{
-                
             }).then((response) => {
                 setCategories(response.data["hydra:member"]);
             })
         }
-        recupCategory();
 
+        recupCategory();
         getInformations();
     }, [props])
 
@@ -68,8 +67,6 @@ const UpdateArticle = (props) => {
             )
         })
     }
-    
-
 
     const submit = (event) => {
         event.preventDefault();
@@ -104,9 +101,6 @@ const UpdateArticle = (props) => {
         event.preventDefault();
         window.location.reload()
     }
-
-    // METTRE les images à part en BDD !
-    // CSS du bouton input file
 
     return (
         <Fragment>

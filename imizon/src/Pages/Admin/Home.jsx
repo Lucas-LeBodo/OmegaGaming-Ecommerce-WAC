@@ -3,9 +3,6 @@ import React, { Fragment }from 'react'
 import {Container} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
-
-//import style 
-
 const HomeAdmin = () => {
     return (
         <Fragment>

@@ -6,11 +6,10 @@ import {FiLogIn, FiUserPlus, FiUser, FiLogOut, FiSearch, FiKey} from "react-icon
 import { MdShoppingCart } from "react-icons/md"
 import debounce from 'lodash.debounce';
 
-
 // Import Components
 import Navbox from "./Nav/NavBox";
 
-function NavBar(props) {
+function NavBar() {
     let pathname = useLocation().pathname;
     let loginPath = '';
     let registerPath = '';
@@ -110,10 +109,7 @@ function NavBar(props) {
       () => debounce(changeHandler, 1000)
     , []);
 
-
-
     // conditional display btn login / register
-
     // User déconnecté 
     if(pathname === "/login"){
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
@@ -147,22 +143,16 @@ function NavBar(props) {
         if(info.roles["roles"] === "ROLE_ADMIN") {
             admin = <Link to={'/admin'} ><FiKey /> Espace Admin</Link>
         }
-
         if(pathname.startsWith("/profil")){
             navbox = "";  
         }
-
         if(pathname.startsWith("/basket")){
             navbox = "";  
         }
-
         if(pathname.startsWith("/admin")){
             navbox = "";  
         }
     }
-
-    //console.log("valeur dans le localstorage ===> ", role)
-    //Afficher que si search est non vide ? C'est à toi de voir Lucas !
 
     return (
         <Fragment>

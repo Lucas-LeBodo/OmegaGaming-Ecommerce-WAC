@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
 
+import GetTokenInformation from './tools/GetTokenInformation';
+
+
 export default function FormSignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -11,23 +14,20 @@ export default function FormSignIn() {
     const submit = () => {
         // fetch a faire a l'api 
         axios.post('https://localhost:8000/authentication_token',{
-                email : email,
-                password : password
-            }
-            ).then((response) => {
-                localStorage.setItem("jwt", response.data.token);
-                parseJwt(response.data.token);
-            }).catch((error) => {
-                console.log(error)
-            })
+            email : email,
+            password : password
+        }
+        ).then((response) => {
+            localStorage.setItem("jwt", response.data.token);
+            parseJwt(response.data.token);
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 
     function parseJwt(token) {
         if (!token) { return; }
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        let username = JSON.parse(window.atob(base64)).username;
-        // let roles = JSON.parse(window.atob(base64)).roles;
+        let username = GetTokenInformation(false)
         
         axios.get('https://localhost:8000/api/me', {
             params: {username: username}
@@ -62,9 +62,7 @@ export default function FormSignIn() {
             }
             history.push("/");
         }).catch((error) => {
-            console.log(error);
         })
-
     }
 
     return (

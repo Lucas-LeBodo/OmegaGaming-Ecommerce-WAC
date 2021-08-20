@@ -2,8 +2,7 @@
 import React, { Fragment } from "react";
 import {Link} from 'react-router-dom';
 
-const ProfilNav = (props) => {
-
+const ProfilNav = () => {
     return (
         <Fragment>
             <div className="Panel">
@@ -22,5 +21,4 @@ const ProfilNav = (props) => {
         </Fragment>
     )
 } 
-
 export default ProfilNav;

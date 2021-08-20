@@ -1,18 +1,15 @@
 import React, {useState} from 'react';
 import {Container, Form} from 'react-bootstrap';
-
 import axios from 'axios';
 
 const CreateCategory = () => {
      const [category, setCategory] = useState('');
 
      const submit = async () => {
-    
         axios.post('https://localhost:8000/api/categories',{
             categoryName: category
         }
         ).then((response) => {
-            console.log(response)
             window.location.reload();
         }).catch((error) => {
             console.log(error)
@@ -29,7 +26,6 @@ const CreateCategory = () => {
                     <input type="text" className="form-control" placeholder={category} onChange={ (event)=>{ setCategory(event.target.value)}} required/>
                 </div>
                 <div className="btn btn-primary btn-block btn-custom" onClick={ submit } >Create</div>
-
             </Form>
         </Container>
     )

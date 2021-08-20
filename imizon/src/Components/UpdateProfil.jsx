@@ -25,7 +25,6 @@ const UpdateProfil = (props) => {
             })
     }
 
-
     return (
         <Fragment>
             <div className={"containers-form"}>
@@ -35,7 +34,6 @@ const UpdateProfil = (props) => {
                     <input type="text"      className="profil-input"     defaultValue={lastName} placeholder={"Last Name"} onChange={ (event)=>{ setLastName(event.target.value)}} required/>
                     <input type="email"     className="profil-input"     defaultValue={email} placeholder={"Email"} onChange={ (event)=>{ setEmail(event.target.value)}} required/>
                     <input type="password"  className="profil-input"     defaultValue={password} placeholder={"Password"} onChange={ (event)=>{ setPassword(event.target.value)}} required/>
-                    
                     <div type="submit"      className="profil-btn" onClick={ submit } >Save change</div>
                 </div>
             </div>        

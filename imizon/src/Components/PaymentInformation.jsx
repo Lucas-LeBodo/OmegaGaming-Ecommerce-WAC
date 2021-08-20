@@ -2,7 +2,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from 'axios';
 
-
 const PaymentInformation = (props) => {
 
     const id = props.id
@@ -26,7 +25,6 @@ const PaymentInformation = (props) => {
                 setIdPayment(data.id)
             }
         }).catch((error) => {
-            console.log(error)
         })
     }, [props])
 
@@ -41,9 +39,7 @@ const PaymentInformation = (props) => {
                 idUser: idUser
             }
             ).then((response) => {
-                console.log(response)
             }).catch((error) => {
-                console.log(error)
             })
         } else {
             axios.post('https://localhost:8000/api/payments',{
@@ -53,13 +49,10 @@ const PaymentInformation = (props) => {
                 idUser: idUser
             }
             ).then((response) => {
-                console.log(response)
             }).catch((error) => {
-                console.log(error)
             })
         }
     }
-
 
     return (
         <Fragment>

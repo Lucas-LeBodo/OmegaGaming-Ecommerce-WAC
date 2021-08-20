@@ -2,7 +2,6 @@
 import React, {Fragment} from 'react';
 
 const Historic = (props) => {
-
     const Historic = props.showHistoric
 
     let i = 0;

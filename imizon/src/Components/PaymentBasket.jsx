@@ -18,7 +18,6 @@ const PaymentBasket = (warning, sendData) => {
                 SendOrder(dataShippy, sendData.id, sendData, sendData.basketNotCo)
             }
         }
-
     }
 
     if(warning === "warning") {
