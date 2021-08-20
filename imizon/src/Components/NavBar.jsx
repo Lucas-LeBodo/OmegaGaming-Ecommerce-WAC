@@ -128,6 +128,11 @@ function NavBar(props) {
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
     }
+    if(pathname === ("/basket") && !jwt){
+        navbox = "";  
+        registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
+        loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
+    }
 
     // User connecté
     if(jwt){
@@ -141,6 +146,18 @@ function NavBar(props) {
         info = JSON.parse(info);
         if(info.roles["roles"] === "ROLE_ADMIN") {
             admin = <Link to={'/admin'} ><FiKey /> Espace Admin</Link>
+        }
+
+        if(pathname.startsWith("/profil")){
+            navbox = "";  
+        }
+
+        if(pathname.startsWith("/basket")){
+            navbox = "";  
+        }
+
+        if(pathname.startsWith("/admin")){
+            navbox = "";  
         }
     }
 
