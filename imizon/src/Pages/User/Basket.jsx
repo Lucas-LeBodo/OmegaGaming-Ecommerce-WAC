@@ -6,12 +6,17 @@ import { Form } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 
 
-
 const Basket = () => {
     const [listBasketShow, setListBasketShow] = useState([]);    
     const [showPrice, setShowPrice] = useState(0);
     const [contentModal, setContentModal] = useState('')
     const [allArticles, setAllArticles] = useState('');
+
+    //Data user Log !
+    const [id, setId] = useState('');
+    const [email, setEmail] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [firstName, setFirstName] = useState('');
 
     // pour les frais de port
     const [country, setCountry] = useState('')
@@ -26,15 +31,46 @@ const Basket = () => {
         let list_id = [];
         let list_articles = '';
     
-    
-        const getInformation = () =>{
+        if(localStorage.jwt) {
+            const base64Url = localStorage.jwt.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            let username = JSON.parse(window.atob(base64)).username;
+
+            axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
+            }).then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error);
+            })
+            
+            axios.get('https://localhost:8000/api/baskets/countArticles', {
+                params: {email: username}
+            }).then((response) => {
+                list_articles = response.data["hydra:member"]
+                requestConnected(list_articles)
+                getInformation(list_articles, username)
+            }).catch((error) => {
+                console.log(error);
+            })
+        } else {
+            if(localStorage.shoppingUserNoLog) {
+                list_id = localStorage.shoppingUserNoLog;
+                list_id = list_id.split(" ");
+                requestNotConnected(list_id)
+                getInformation(list_id, "John")
+            }
+        }
+        
+        const getInformation = (list_articles, username) =>{
             if(localStorage.jwt) {
-                const base64Url = localStorage.jwt.split('.')[1];
-                const base64 = base64Url.replace('-', '+').replace('_', '/');
-                let username = JSON.parse(window.atob(base64)).username;
                 axios.get('https://localhost:8000/api/me', {
-                params: {username: username}
+                    params: {username: username}
                 }).then((response) => {
+                    setId(response.data.id)
+                    setEmail(response.data.email)
+                    setLastName(response.data.lastName)
+                    setFirstName(response.data.firstName)
+
                     let weightTotal = 0.01;
                     if(list_articles.length > 1){
                         list_articles.forEach((article) => {
@@ -65,18 +101,18 @@ const Basket = () => {
                 
             }
         }
+
         const getRates = (info, W, listArt) => {
-         
             let data = JSON.stringify({
                 "to_address": {
                     "name": info.firstName,
                     "company": "ShippyPro",
-                    "street1": info.adress,
+                    "street1": "Rue d'Avron 116",
                     "street2": "",
                     "city": "Paris",
                     "state": "Département de Paris",
-                    "zip": info.postalCode,
-                    "country": "FR", // changer l'entree dans le form mettre initial (ex: Fr)
+                    "zip": "75020",
+                    "country": "FR",
                     "phone": "5551231234",
                     "email": info.email
                 },
@@ -112,36 +148,9 @@ const Basket = () => {
             if(list_articles != "" || listArt != ""){
                 axios.get('https://localhost:8000/api/shippy/getRates?params=' + data,{  
                 }).then((response) => {
-                    console.log(response);
                     setRates(response.data.Rates['hydra:member'][0])
                 }).catch((error) => {
-                    
                 })
-            }
-        }
-
-
-        if(localStorage.jwt) {
-            const base64Url = localStorage.jwt.split('.')[1];
-            const base64 = base64Url.replace('-', '+').replace('_', '/');
-            let username = JSON.parse(window.atob(base64)).username;
-            
-            axios.get('https://localhost:8000/api/baskets/countArticles', {
-                params: {email: username}
-            }).then((response) => {
-                list_articles = response.data["hydra:member"]
-                requestConnected(list_articles)
-                getInformation(list_articles)
-            }).catch((error) => {
-                console.log(error);
-            })
-    
-        } else {
-            if(localStorage.shoppingUserNoLog) {
-                list_id = localStorage.shoppingUserNoLog;
-                list_id = list_id.split(" ");
-                requestNotConnected(list_id)
-                getInformation(list_id)
             }
         }
     }, [])
@@ -312,29 +321,23 @@ const Basket = () => {
             console.log(error)
         })
     }
-
-
  
     /**
      *  fonction de submit de command
      * 
      * @param {*} e
      */
-
     const submit = (e) => {
         e.preventDefault()
         let country = e.target[0];
         let address = e.target[1];
         let zip = e.target[2];
         let payment =  e.target[3];
-        let firstname = e.target[4]
-        let lastname = e.target[5]
-        let email = e.target[6]
-        let idUser = e.target[7].value
+        let idUser = id
         let totalPriceBasket = showPrice;
-        let weight = 0 ;
+        let weight = 0.01;
 
-        if(allArticles.length == 1){
+        if(allArticles.length === 1){
             weight = allArticles[0].weight;
         }else{
             allArticles.forEach(element => {
@@ -344,16 +347,16 @@ const Basket = () => {
 
         let data = JSON.stringify({
             "to_address": {
-                "name": firstname.value + " " + lastname.value,
+                "name": firstName + " " + lastName,
                 "company": "ShippyPro",
-                "street1": address.value,
+                "street1": address.value, // change when validate payment
                 "street2": "",
-                "city": "Paris", //add city
+                "city": "Paris",
                 "state": "Département de Paris",
-                "zip": zip.value,
+                "zip": zip.value, // change when validate payment
                 "country": "FR",
                 "phone": "5551231234",
-                "email": email.value
+                "email": email
             },
             "from_address": {
                 "name": "Damien Legrand",
@@ -397,7 +400,7 @@ const Basket = () => {
         axios.get('https://localhost:8000/api/shippy/postOrder?params=' + data,{  
         }).then((response) => {
           let order = JSON.parse(response.data)
-           if(order.Result == "OK"){
+           if(order.Result === "OK"){
                let NbOrder = order.NewOrderID
                sendToOrderManifest(idUser, NbOrder, totalPriceBasket)
            }
@@ -420,7 +423,6 @@ const Basket = () => {
             })
         }
 
-
         /**
          *  fonction de reinitialisation du basket 
          * 
@@ -428,13 +430,14 @@ const Basket = () => {
          *  
          * @param {*} idUser
          */
-
         const deleteBasket = (idUser, NbOrder) => {
             axios.get('https://localhost:8000/api/shippy/deleteBasket?params='+ idUser, { 
             }).then((response) => {     
                 if(response.statusText == "OK"){
                     history.push({
-                        pathname: '/historic/'+NbOrder
+                        pathname: '/tracking',
+                        // search: '?query=abc',
+                        state: { nbOrder: NbOrder }
                       })
                     window.location.reload();
                 }         
@@ -443,58 +446,33 @@ const Basket = () => {
             })
         }
     }
+
     
+
+
     function handleShow() {
         let content = '';
         if(localStorage.jwt) {
-            const base64Url = localStorage.jwt.split('.')[1];
-            const base64 = base64Url.replace('-', '+').replace('_', '/');
-            let username = JSON.parse(window.atob(base64)).username;
-            axios.get('https://localhost:8000/api/me', {
-            params: {username: username}
-        }).then((response) => {
-            setCountry(response.data.country)
-            setAdress(response.data.adress)
-            setPostalCode(response.data.postalCode)
-            setCardData(response.data.cardData)
+            console.log()
             content = (
                 <Form onSubmit={(event) => {submit(event)}}>
                     <Form.Group className="mb-3">
-                        <Form.Label>Pays</Form.Label>
-                        <Form.Control type="text" defaultValue={response.data.country} onChange={(event) => { setCountry(event.target.value) }} placeholder="Enter Country" />
+                        <Form.Control type="hidden" defaultValue={firstName}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Adresse</Form.Label>
-                        <Form.Control type="text" defaultValue={response.data.adress} onChange={(event) => { setAdress(event.target.value) }} placeholder="Enter Adress" />
+                        <Form.Control type="hidden" defaultValue={lastName}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Code Postal</Form.Label>
-                        <Form.Control type="text" defaultValue={response.data.postalCode} onChange={(event) => { setPostalCode(event.target.value) }} placeholder="Enter Postal Code" />
+                        <Form.Control type="hidden" defaultValue={email}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Paiement</Form.Label>
-                        <Form.Control type="text" defaultValue={response.data.cardData} onChange={(event) => { setCardData(event.target.value) }} placeholder="Enter your card !" />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Control type="hidden" defaultValue={response.data.firstName}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Control type="hidden" defaultValue={response.data.lastName}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Control type="hidden" defaultValue={response.data.email}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Control type="hidden" defaultValue={response.data.id}/>
+                        <Form.Control type="hidden" defaultValue={id}/>
                     </Form.Group>
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" className="btn btn-primary">Save changes</button>
+                    <button type="submit" className="btn btn-primary">Go to Payment</button>
                 </Form>
             )
             setContentModal(content)
-        }).catch((error) => {
-            console.log(error);
-        })
         } else {
             let check = window.confirm("Avez-vous un compte ? Si vous voulez vous connecter !")
             if(check === true) {
@@ -531,7 +509,7 @@ const Basket = () => {
           showPriceDiv = (
             <div>
                 <p>{showPrice + "€"}</p>
-                <p>{"Frais de port : " + rates.rate + "€"}</p>
+                {/* <p>{"Frais de port : " + rates.rate + "€"}</p> */}
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
                     Payer
                 </button>

@@ -128,6 +128,11 @@ function NavBar(props) {
         registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
         loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
     }
+    if(pathname === ('/basket') && !jwt){
+        navbox = <Navbox />
+        registerPath = <Link to={'/login'} ><FiLogIn/> Sign In</Link>
+        loginPath = <Link to={'/register'} ><FiUserPlus /> Sign Up</Link>
+    }
 
     // User connecté
     if(jwt){
