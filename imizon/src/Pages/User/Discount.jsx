@@ -11,7 +11,7 @@ const BestSeller = () => {
     
     useEffect(() => {
         function getMostPopular() {
-            axios.get('http://localhost:8000/api/articles/discount', {
+            axios.get('https://localhost:8000/api/articles/discount', {
             }).then((response) => {
                 console.log(response)
                 let articles = response.data["hydra:member"];

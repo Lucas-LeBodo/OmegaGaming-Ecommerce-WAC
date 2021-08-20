@@ -40,19 +40,19 @@ const BreadCrumbs = (props) =>  {
     }, [pathname])
     
     if(pathname === "/"){
-        homePath = <Link  to={"/"}> <RiHome2Line/> </Link>;
+        homePath = <Link  to={"/"}> <RiHome2Line/> Home </Link>;
     }
 
     if(pathname.startsWith("/product")){
-        homePath = <Link  to={"/"}> <RiHome2Line/> </Link>;
+        homePath = <Link  to={"/"}> <RiHome2Line/> Home </Link>;
         productPath = <Link  to={`/product/${id}`}> {article.Title} </Link>;
     }
     if(pathname === "/best-seller"){
-        homePath = <Link  to={"/"}> <RiHome2Line/> </Link>;
+        homePath = <Link  to={"/"}> <RiHome2Line/> Home </Link>;
         bestsellerPath = <Link  to={"/best-seller"}> <RiVipCrownLine/> Best Sellers</Link>;
     }
     if(pathname === "/discount"){
-        homePath = <Link  to={"/"}> <RiHome2Line/> </Link>;
+        homePath = <Link  to={"/"}> <RiHome2Line/> Home </Link>;
         discount = <Link  to={"/discount"}> <RiMoneyDollarBoxLine/> Promo</Link>;
     }
       
