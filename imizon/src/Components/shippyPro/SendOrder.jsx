@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const SendOrder = (dataShippy, idUser, allData, basket) => {
-        
     axios.get('https://localhost:8000/api/shippy/postOrder?params=' + dataShippy,{  
     }).then((response) => {
         let order = JSON.parse(response.data)
