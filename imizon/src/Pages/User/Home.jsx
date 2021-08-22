@@ -32,7 +32,6 @@ const Home = () => {
                 });
                 setShowArticles(showArticles);
             }).catch((error) => {
-                console.log(error);
             })
         }
         

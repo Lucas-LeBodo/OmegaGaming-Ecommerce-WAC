@@ -14,7 +14,6 @@ const SendOrder = (dataShippy, idUser, allData, basket) => {
     })
     
     const sendToOrderManifest = (idUser, NbOrder, totalPrice, basket) => {
-        console.log(idUser, NbOrder, totalPrice, basket)
         axios.post('https://localhost:8000/api/order_manifests', { 
             orderId : parseInt(NbOrder),
             content : JSON.stringify(basket),

@@ -19,9 +19,7 @@ const UpdateProfil = (props) => {
                 firstName : firstName,
             }
             ).then((response) => {
-                console.log(response)
             }).catch((error) => {
-                console.log(error)
             })
     }
 

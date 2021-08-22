@@ -26,7 +26,6 @@ const ProductSheet = (props) => {
                 getSameArticles(information)
                 setArticle(information)
             }).catch((error) => {
-                console.log(error)
             })
 
             axios.get('https://localhost:8000/api/articles/view', {
@@ -42,7 +41,6 @@ const ProductSheet = (props) => {
                 let allSameArticles = response.data["hydra:member"];
                 setSameArticles(allSameArticles)
             }).catch((error) => {
-                console.log(error)
             })
         }
 

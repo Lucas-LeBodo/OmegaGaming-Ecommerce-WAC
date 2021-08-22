@@ -71,7 +71,6 @@ const Basket = () => {
                     setAdressData(showAdress);
                 }
             }).catch((error) => {
-                console.log(error)
             })
             
             axios.get('https://localhost:8000/api/baskets/countArticles', {
@@ -81,7 +80,6 @@ const Basket = () => {
                 requestConnected(list_articles)
                 getInformation(list_articles, username)
             }).catch((error) => {
-                console.log(error);
             })
         } else {
             if(localStorage.shoppingUserNoLog) {
@@ -196,7 +194,6 @@ const Basket = () => {
                 }).then((response) => {
                     window.location.reload();
                 }).catch((error) => {
-                    console.log(error)
                 })
             }
         } else {
@@ -301,7 +298,6 @@ const Basket = () => {
             }
             
         }).catch((error) => {
-            console.log(error)
         })
     }
 
@@ -350,7 +346,6 @@ const Basket = () => {
             setListBasketShow(showBasket);
             setShowPrice(price)
         }).catch((error) => {
-            console.log(error)
         })
     }
 

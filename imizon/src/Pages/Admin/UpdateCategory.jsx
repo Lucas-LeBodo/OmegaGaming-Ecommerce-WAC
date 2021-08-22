@@ -14,7 +14,6 @@ const UpdateCategory = (props) => {
             }).then((response) => {
                 setCategory(response.data)
             }).catch((error) => {
-                console.log(error)
             })
         }
         getInformations()
@@ -27,7 +26,6 @@ const UpdateCategory = (props) => {
         }).then((response) => {
             window.location.reload()
         }).catch((error) => {
-            console.log(error);
         })
     }
 

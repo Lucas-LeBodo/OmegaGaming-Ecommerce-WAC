@@ -42,7 +42,6 @@ function NavBar() {
                     setCountArticles('')
                 }
             }).catch((error) => {
-                console.log(error);
             })
 
         } else {
@@ -72,7 +71,6 @@ function NavBar() {
                 });
                 setListTitles(titles);
             }).catch((error) => {
-                console.log(error);
             })
         }
         getArticles();

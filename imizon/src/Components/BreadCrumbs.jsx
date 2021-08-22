@@ -28,7 +28,6 @@ const BreadCrumbs = () =>  {
                 let information = response.data;
                 setArticle(information)
             }).catch((error) => {
-                console.log(error)
             })
         }
     

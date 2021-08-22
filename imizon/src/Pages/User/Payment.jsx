@@ -35,7 +35,6 @@ const Payment = (props) => {
                         setShowForm(PaymentView("nope", sendData))
                     }
                 }).catch((error) => {
-                    console.log(error)
                 })
             } else {
                 setShowForm(PaymentView("nope", sendData))

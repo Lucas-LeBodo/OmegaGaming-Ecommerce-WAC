@@ -42,7 +42,6 @@ const UpdateArticle = (props) => {
                 setDiscount(information.discount)
                 setWeight(information.weight)
             }).catch((error) => {
-                console.log(error)
             })
         }
 
@@ -83,7 +82,6 @@ const UpdateArticle = (props) => {
         }).then((response) => {
             window.location.reload()
         }).catch((error) => {
-            console.log(error);
         })
     }
 
@@ -94,7 +92,6 @@ const UpdateArticle = (props) => {
         }).then((response) => {
             history.push("/admin/show_articles");
         }).catch((error) => {
-            console.log(error)
         })
     }
 

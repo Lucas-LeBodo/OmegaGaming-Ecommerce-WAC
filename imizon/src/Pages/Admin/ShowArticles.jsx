@@ -105,7 +105,6 @@ const ShowArticles = () => {
     );
 
     const deleteArticles = (id) => {
-        console.log(id)
         axios.delete('https://localhost:8000/api/articles/'+id, {
             data : {id:id}
         }).then((response) => {

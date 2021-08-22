@@ -13,7 +13,6 @@ export default function informationProduct(props){
     if(sameArticle)
     {
         result = sameArticle.map((child) => {
-            console.log(child)
             return(
                 <a key={Math.random().toString(36).substring(7)} href={child.id} >{child.Title} : {child.featureDiff} : {child.Price} <BiEuro /></a>
             )
@@ -40,7 +39,6 @@ export default function informationProduct(props){
                 id_user = response.data.id
                 addToBasketBDD(id_user);
             }).catch((error) => {
-                console.log(error)
             })
         } else {
             if(localStorage.shoppingUserNoLog) {
@@ -55,17 +53,14 @@ export default function informationProduct(props){
 
     function addToBasketBDD(id_user) {
         let id_art = props.id;
-        console.log(props.weight)
         axios.post('https://localhost:8000/api/baskets', {
                 price: parseInt(props.price),
                 idUser: parseInt(id_user),
                 idArticles: parseInt(id_art),
                 weight : parseInt(props.weight)
             }).then((response) => {
-                console.log(response)
                 window.location.reload()
             }).catch((error) => {
-                console.log(error)
             })
     }
 

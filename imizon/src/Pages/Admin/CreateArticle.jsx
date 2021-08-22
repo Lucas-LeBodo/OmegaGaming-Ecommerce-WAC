@@ -112,7 +112,6 @@ const CreateArticle = () => {
                 discount: parseInt(discount)
             }
             ).then((response) => {
-                console.log(response)
                 window.location.reload();
             }).catch((error) => {
             })
