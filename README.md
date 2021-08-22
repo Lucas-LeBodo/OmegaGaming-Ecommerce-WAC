@@ -18,7 +18,7 @@ then go to the ``/imizon`` folder and perform the ``npm install`` command, once 
 once the installations are finished, we will perform the migrations.
 go back to the ``/server`` folder, and perform the following commands:
 
-``php bin/console make:migration``
+``php bin/console make:migration``<br/>
 ``php bin/console doctrine:migrations:migrate``
 
 once this is done we can finally launch the project, in the ``/server`` folder use the ``symfony start`` command, then in the ``/imizon`` folder carry out the ``npm start`` command
