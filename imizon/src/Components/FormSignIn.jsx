@@ -21,7 +21,6 @@ export default function FormSignIn() {
             localStorage.setItem("jwt", response.data.token);
             parseJwt(response.data.token);
         }).catch((error) => {
-            console.log(error)
         })
     }
 
@@ -34,7 +33,6 @@ export default function FormSignIn() {
         }).then((response) => {
             let name = response.data.firstName + " " + response.data.lastName
             localStorage.setItem("name", name);
-            console.log(response)
             let id_user = response.data.id;
             let list_id = localStorage.shoppingUserNoLog;
 
@@ -44,19 +42,15 @@ export default function FormSignIn() {
                 list_id.forEach(element => {
                     axios.get('https://localhost:8000/api/articles/'+element, {
                     }).then((response) => {
-                        console.log(response)
                         axios.post('https://localhost:8000/api/baskets', {
                             price: parseInt(response.data.Price),
                             idUser: parseInt(id_user),
                             idArticles: parseInt(element),
                         }).then((response) => {
-                            console.log(response)
                         }).catch((error) => {
-                            console.log(error)
                         })
                         localStorage.removeItem('shoppingUserNoLog');
                     }).catch((error) => {
-                        console.log(error)
                     })
                 });
             }

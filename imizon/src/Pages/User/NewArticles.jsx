@@ -13,7 +13,6 @@ const NewArticles = () => {
         function getMostPopular() {
             axios.get('https://localhost:8000/api/articles/newArticles', {
             }).then((response) => {
-                console.log(response)
                 let articles = response.data["hydra:member"];
                 let showArticles = [];
                 articles.forEach(element => {

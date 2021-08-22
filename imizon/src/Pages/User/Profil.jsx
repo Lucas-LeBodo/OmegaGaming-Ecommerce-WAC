@@ -39,7 +39,6 @@ const Profil = () => {
                     setFirstName(firstName)
                     setLastName(lastName)
                 }).catch((error) => {
-                    console.log(error)
                 })
             } else {
                 history.push("/login")
@@ -71,7 +70,6 @@ const Profil = () => {
                     setAdressData(showAdress);
                 }
             }).catch((error) => {
-                console.log(error)
             })
         }
 
@@ -89,23 +87,20 @@ const Profil = () => {
                     setHistoric(showHistoric);
                 }
             }).catch((error) => {
-                console.log(error)
             })
         }
 
         check();
         getAdresses();
         getHistoric();
-    }, [history])
+    }, [history, id])
 
     const deleteAdress = (id) => {
         axios.delete('https://localhost:8000/api/adresses/'+id,{
         }
         ).then((response) => {
-            console.log(response)
             window.location.reload()
         }).catch((error) => {
-            console.log(error)
         })
     }
 

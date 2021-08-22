@@ -40,8 +40,8 @@ const UpdateArticle = (props) => {
                 setStock(information.Stock)
                 setImage(information.Image)
                 setDiscount(information.discount)
+                setWeight(information.weight)
             }).catch((error) => {
-                console.log(error)
             })
         }
 
@@ -63,7 +63,7 @@ const UpdateArticle = (props) => {
     if(categories !== ''){
         result = categories.map((category) => {
             return(
-                <option value={'\/api\/categories\/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
+                <option value={'/api/categories/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
             )
         })
     }
@@ -82,7 +82,6 @@ const UpdateArticle = (props) => {
         }).then((response) => {
             window.location.reload()
         }).catch((error) => {
-            console.log(error);
         })
     }
 
@@ -93,7 +92,6 @@ const UpdateArticle = (props) => {
         }).then((response) => {
             history.push("/admin/show_articles");
         }).catch((error) => {
-            console.log(error)
         })
     }
 

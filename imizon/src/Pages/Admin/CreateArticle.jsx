@@ -48,7 +48,7 @@ const CreateArticle = () => {
     if(categories !== ''){
         result = categories.map((category) => {
             return(
-                <option value={'\/api\/categories\/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
+                <option value={'/api/categories/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
             )
         })
     }
@@ -112,10 +112,8 @@ const CreateArticle = () => {
                 discount: parseInt(discount)
             }
             ).then((response) => {
-                console.log(response)
                 window.location.reload();
             }).catch((error) => {
-                console.log(error)
             })
         }else {
             axios.post('https://localhost:8000/api/articles',{
@@ -134,7 +132,6 @@ const CreateArticle = () => {
             ).then((response) => {
                 window.location.reload();
             }).catch((error) => {
-                console.log(error)
             })
         }
        

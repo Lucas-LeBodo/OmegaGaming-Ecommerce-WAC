@@ -14,11 +14,10 @@ const UpdateCategory = (props) => {
             }).then((response) => {
                 setCategory(response.data)
             }).catch((error) => {
-                console.log(error)
             })
         }
         getInformations()
-    },[])
+    }, [id])
 
     const submit = (event) => {
         event.preventDefault();
@@ -27,7 +26,6 @@ const UpdateCategory = (props) => {
         }).then((response) => {
             window.location.reload()
         }).catch((error) => {
-            console.log(error);
         })
     }
 

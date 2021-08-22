@@ -25,7 +25,7 @@ const Payment = (props) => {
                         let cvv = window.prompt("Would you paid with your cvv ?")
                         if(parseInt(cvv) === dataPayment.cvv){
                             let dataShippy = FormOrder(sendData)
-                            if(dataShippy != ""){
+                            if(dataShippy !== ""){
                                 SendOrder(dataShippy, sendData.id, sendData, sendData.allArticles)
                             }
                         } else {
@@ -35,12 +35,12 @@ const Payment = (props) => {
                         setShowForm(PaymentView("nope", sendData))
                     }
                 }).catch((error) => {
-                    console.log(error)
                 })
             } else {
                 setShowForm(PaymentView("nope", sendData))
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props])
     
     return(

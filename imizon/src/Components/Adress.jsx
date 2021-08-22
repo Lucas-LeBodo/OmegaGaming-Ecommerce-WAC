@@ -12,7 +12,7 @@ const Adress = (props) => {
     const adressData = props.showAdress;
 
     const submit = () => {
-        let idUser = '\/api\/users\/'+id
+        let idUser = '/api/users/'+id
 
         axios.post('https://localhost:8000/api/adresses',{
             country : country,
@@ -22,10 +22,8 @@ const Adress = (props) => {
             idUser: idUser
         }
         ).then((response) => {
-            console.log(response)
             window.location.reload()
         }).catch((error) => {
-            console.log(error)
         })
     }
 
@@ -59,7 +57,7 @@ const Adress = (props) => {
                         <option value="ES">Espagne</option>
                         <option value="FR">France</option>
                         <option value="IT">Italie</option>
-                        <option value="PT">Potugal</option>
+                        <option value="PT">Portugal</option>
                         <option value="CH">Suisse</option>
                     </select>
                     <input type="text" className="profil-input" placeholder={"Town"} onChange={ (event)=>{ setTown(event.target.value)}} required/>
