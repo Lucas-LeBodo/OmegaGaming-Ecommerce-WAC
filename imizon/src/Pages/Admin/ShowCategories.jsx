@@ -16,6 +16,7 @@ const ShowCategories = () => {
                 categories.forEach((cat) => {
                     listCategory.push(
                         <div key={ Math.random().toString(36).substring(7)}  className="container-card" >
+                            
                                 <h3 key={Math.random().toString(36).substring(7)} >{cat.category_name} <Link to={'/admin/show_category/update/'+ cat.id}><AiFillEdit/></Link></h3>
                         </div>
                     )
@@ -28,6 +29,7 @@ const ShowCategories = () => {
 
     return (
         <Fragment>
+            <Link to={"/admin/"}> 	&lt; Back to home</Link>   
             {allCategories}
         </Fragment>
     )

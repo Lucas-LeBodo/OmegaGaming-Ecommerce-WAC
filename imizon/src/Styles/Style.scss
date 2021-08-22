@@ -875,6 +875,7 @@ $white: #f6f6f6ff;
     .flex-head {
         display: flex;
         flex-direction: column;
+        width: 100% ;
     
         .flex-head-bottom {
             display: flex;
@@ -884,16 +885,22 @@ $white: #f6f6f6ff;
     
         .flex-head-top {
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            flex-direction: column;
+            width: 100%;
+           
     
             #title {
                 width: 30rem;
             }
+
+            #textarea {
+                text-align: none;
+                height: 15em;
+            }
         }
     
         input {
-            width: 5rem;
+            width: 100%;
             margin: 5px 5px 5px 0;
         }
         
@@ -1023,6 +1030,33 @@ $white: #f6f6f6ff;
     }
 }
 
+//Home 
+.navMenu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    a {
+        color: $darkgrey;
+        text-decoration: none;
+        font-size: 1em;
+        text-transform: uppercase;
+        font-weight: 500;
+        display: inline-block;
+        width: auto;
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+      }
+
+      &:hover {
+        color: #fddb3a;
+      }
+
+  }
+
+  
 
 
 // --------------------------------- Media query ---------------------------------- //

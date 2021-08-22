@@ -122,6 +122,7 @@ const ShowArticles = () => {
     return (
         <Fragment>
             <div className="container-card">
+            <Link to={"/admin/"}> 	&lt; Back to home</Link>    
                 {articlesShow}
                 {paginationBasic}
             </div>
