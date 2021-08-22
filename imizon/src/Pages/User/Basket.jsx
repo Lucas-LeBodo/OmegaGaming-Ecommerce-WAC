@@ -503,15 +503,27 @@ const Basket = () => {
       }
 
       if(listBasketShow.length > 0) {
-          showPriceDiv = (
-            <div>
-                <p>{showPrice + "€"}</p>
-                <p>{"Frais de port : " + rates.rate + "€"}</p>
-                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
-                    Payer
-                </button>
-            </div>
-          )
+          if(rates === undefined) {
+              showPriceDiv = (
+                <div>
+                    <p>{showPrice + "€"}</p>
+                    <p>Frais de port : 0€</p>
+                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
+                        Payer
+                    </button>
+                </div>
+              )
+          } else {
+              showPriceDiv = (
+                <div>
+                    <p>{showPrice + "€"}</p>
+                    <p>{"Frais de port : " + rates.rate + "€"}</p>
+                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
+                        Payer
+                    </button>
+                </div>
+              )
+          }
       }
 
     return (

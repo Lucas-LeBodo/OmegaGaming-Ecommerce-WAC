@@ -74,7 +74,7 @@ function NavBar() {
             })
         }
         getArticles();
-    }, [])
+    }, [pathname])
 
     let tabDebounce = [];
     let showDebounce = "";
