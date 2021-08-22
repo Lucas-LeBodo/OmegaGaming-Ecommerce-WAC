@@ -503,7 +503,7 @@ const Basket = () => {
       }
 
       if(listBasketShow.length > 0) {
-          if(rates === undefined) {
+          if(rates === undefined || rates.rate === undefined) {
               showPriceDiv = (
                 <div>
                     <p>{showPrice + "€"}</p>

@@ -139,7 +139,7 @@ const CreateArticle = () => {
 
     return (
         <div className="container-form">
-            <Link to={"/admin/show_articles"}> 	&lt; Back to list</Link>
+            <Link to={"/admin"}> &lt; Back to home Admin</Link>
             <div className="flex-head">
                 <div className="flex-head-top">
                     <input type="text" className="form-control" placeholder={"title"} onChange={ (event)=>{ setTitle(event.target.value)}} required/>
@@ -156,7 +156,7 @@ const CreateArticle = () => {
                     <input type="file" id="myFile" className="form-control" required/>
                 </div>
                 </div>
-                <input type="number" className="form-control" placeholder={"discount"} min="0" max="100" onChange={ (event)=>{ setDiscount(event.target.value)}} required/>
+                <input type="number" className="form-control" defaultValue="0" placeholder={"discount"} min="0" max="100" onChange={ (event)=>{ setDiscount(event.target.value)}} required/>
                 <div className="form-group">
                         Create a reference :
                         <input type="checkbox" id="ref_checke" name="ref" onClick={() => {cocher()}}/> 
