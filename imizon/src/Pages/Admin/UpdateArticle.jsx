@@ -122,13 +122,9 @@ const UpdateArticle = (props) => {
                                 <div className="flex-bottom">
                                     <div className="flex-img-button"> 
                                         <input type="file" id="myFile" className="form-control" required/>
-                                        <Link to={"#"} id="delete"> <RiDeleteBin5Line/> Delete All </Link>
+
                                     </div>
-                                    <div className="other-img">
-                                        <div className="image"></div>
-                                        <div className="image"></div>
-                                        <div className="image"></div>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>

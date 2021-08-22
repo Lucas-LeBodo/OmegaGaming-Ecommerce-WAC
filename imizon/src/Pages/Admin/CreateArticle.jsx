@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {Container, Form} from 'react-bootstrap';
 import axios from 'axios';
 
 const CreateArticle = () => {
@@ -138,73 +137,41 @@ const CreateArticle = () => {
     }
 
     return (
-        <Container fluid className="signup">
-            <Form>
-                <h3>Create Article</h3>
-                <hr id="hr-form"></hr>
-                <div className="form-group">
-                    <label>Title</label>
-                    <input type="text" className="form-control" placeholder={title} onChange={ (event)=>{ setTitle(event.target.value)}} required/>
-                </div>
-                <div className="form-group">
-                    <label>Category</label>
+        <div className="container-form">
+            <Link to={"/admin/show_articles"}> 	&lt; Back to list</Link>
+            <div className="flex-head">
+                <div className="flex-head-top">
+                    <input type="text" className="form-control" placeholder={"title"} onChange={ (event)=>{ setTitle(event.target.value)}} required/>
+                    <input type="textarea" className="form-control" id={'textarea'}placeholder={"description"} onChange={ (event)=>{ setDescription(event.target.value)}} required/>
+                    <input type="textarea" className="form-control" id={'textarea'} placeholder={"feature"} onChange={ (event)=>{ setFeature(event.target.value)}} required/>
+                    <input type="number" className="form-control" placeholder={"stock"} min="0" onChange={ (event)=>{ setStock(event.target.value)}} required/>
+                    <input type="number" className="form-control" placeholder={"price"} onChange={ (event)=>{ setPrice(event.target.value)}} min="0" required/>
+                    <input type="number" className="form-control" placeholder={"weight"} onChange={ (event)=>{ setWeight(event.target.value)}} min="0" required/>
+                    <div className="form-group">
                     <select name="category" className="form-control" onChange={ (event)=>{ setSelectCategory(event.target.value)}}>
                         <option value="">-- Category --</option>
                         {result}
                     </select>
-                </div>
-                <div className="form-group">
-                    <label>Image</label>
                     <input type="file" id="myFile" className="form-control" required/>
                 </div>
-                <div className="form-group">
-                    <label>Description</label>
-                    <input type="textarea" className="form-control" placeholder={description} onChange={ (event)=>{ setDescription(event.target.value)}} required/>
                 </div>
+                <input type="number" className="form-control" placeholder={"discount"} min="0" max="100" onChange={ (event)=>{ setDiscount(event.target.value)}} required/>
                 <div className="form-group">
-                    <label>Features</label>
-                    <input type="textarea" className="form-control" placeholder={feature} onChange={ (event)=>{ setFeature(event.target.value)}} required/>
-                </div>
-                <div className="form-group">
-                    <label>Stock</label>
-                    <input type="number" className="form-control" placeholder={stock} min="0" onChange={ (event)=>{ setStock(event.target.value)}} required/>
-                </div>
-                <div className="form-group">
-                    <label>Price (€)</label>
-                    <input type="number" className="form-control" placeholder={price} onChange={ (event)=>{ setPrice(event.target.value)}} min="0" required/>
-                </div>
-                <div className="form-group">
-                    <label>Weight (Kg)</label>
-                    <input type="number" className="form-control" placeholder={weight} onChange={ (event)=>{ setWeight(event.target.value)}} min="0" required/>
-                </div>
-                <div className="form-group">
-                    <label>Discount (%)</label>
-                    <input type="number" className="form-control" placeholder={discount} min="0" max="100" onChange={ (event)=>{ setDiscount(event.target.value)}} required/>
-                </div>
-                <div className="form-group">
-                    <label>
                         Create a reference :
                         <input type="checkbox" id="ref_checke" name="ref" onClick={() => {cocher()}}/> 
-                    </label>
                 </div>
                 <div className="form-group">
-                    <label>
-                        Add to a reference :
                         <select name="reference" id="selectRef" className="form-control" onChange={ (event)=>{ desactivateCheckbox(event); setTitleRef(event.target.value)}} >
                             <option value="">-- Chose reference --</option>
                             {resultRef}
                         </select>
-                    </label>
                 </div>
                 <div className="form-group">
-                    <label>
-                        Additional feature  :
-                        <input id="featureSup" type="textarea" className="form-control" placeholder={feature} onChange={ (event)=>{ setFeatureSup(event.target.value)}} required/>
-                    </label>
+                        <input id="featureSup" type="textarea" className="form-control" placeholder={"feature"} onChange={ (event)=>{ setFeatureSup(event.target.value)}} required/>
                 </div>
                 <div className="btn btn-primary btn-block btn-custom" onClick={ submit } >Create</div>
-            </Form>
-        </Container>
+            </div>
+        </div>
     )
 }
 
