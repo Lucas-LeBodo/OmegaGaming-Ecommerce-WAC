@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
-
 const FormOrder = (allData) => {
     let data;
-    if(allData.co == 'co'){
+    if(allData.co === 'co'){
         data = JSON.stringify({
             "to_address": {
                 "name": allData.lastName + " " + allData.firstName,

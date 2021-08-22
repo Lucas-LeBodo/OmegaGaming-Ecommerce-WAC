@@ -96,7 +96,7 @@ const Profil = () => {
         check();
         getAdresses();
         getHistoric();
-    }, [history])
+    }, [history, id])
 
     const deleteAdress = (id) => {
         axios.delete('https://localhost:8000/api/adresses/'+id,{

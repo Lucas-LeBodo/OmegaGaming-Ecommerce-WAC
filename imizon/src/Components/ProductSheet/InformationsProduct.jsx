@@ -116,11 +116,6 @@ export default function informationProduct(props){
                         <Button id="btn_panier" onClick={addToBasket}> <MdAddShoppingCart/> Ajouter au panier </Button>
                     </div> 
                 </Col>
-                <Col>
-                    <div id="buy" className="margin"> 
-                        <Button id="btn_panier"> <MdAddShoppingCart/> Acheter maintenant </Button>
-                    </div> 
-                </Col>
             </Row>
             <Row>
                 <div id="stock" className="margin">

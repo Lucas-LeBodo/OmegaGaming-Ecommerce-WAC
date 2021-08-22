@@ -7,6 +7,8 @@ import CreateArticle from '../../Pages/Admin/CreateArticle';
 import ShowArticles from '../../Pages/Admin/ShowArticles';
 import UpdateArticle from '../../Pages/Admin/UpdateArticle';
 import CreateCategory from '../../Pages/Admin/CreateCategory';
+import ShowCategories from '../../Pages/Admin/ShowCategories';
+import UpdateCategory from '../../Pages/Admin/UpdateCategory';
 
 import GetTokenInformation from '../../Components/tools/GetTokenInformation';
 
@@ -19,19 +21,18 @@ export default function Auth(){
     let auth = false;
     let pathName = window.location.pathname
     let roleRequest = "";
+    if(token){
+        let data = GetTokenInformation(true)
+        rolesToken = data.rolesToken
+        username = data.username
+        if(rolesToken["roles"] === "ROLE_ADMIN") {
+            auth = true
+        } 
+    }
 
-    
     useEffect(() => {
-        if(token){
-            let data = GetTokenInformation(true)
-            rolesToken = data.rolesToken
-            username = data.username
-    
-            if(rolesToken["roles"] === "ROLE_ADMIN") {
-                auth = true
-            } 
-        }
         verifAuth()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [window.location.pathname])
 
     const verifAuth = async () => {
@@ -49,9 +50,12 @@ export default function Auth(){
                        let route = 
                        {  
                            "/admin":  <Route exact path="/admin" component={HomeAdmin} />,
-                           "/admin/show_articles":  <Route exact path="/admin/show_articles" component={ShowArticles} />,
                            "/admin/create_article":  <Route exact path="/admin/create_article" component={CreateArticle} />,
-                           "/admin/createCategory": <Route path='/admin/createCategory'  component={CreateCategory} exact={true} />,
+                           "/admin/show_articles":  <Route exact path="/admin/show_articles" component={ShowArticles} />,
+                           "/admin/show_article/update/:id": <Route path='/admin/show_article/update/:id' component={UpdateArticle} />,
+                           "/admin/create_category": <Route path='/admin/create_category'  component={CreateCategory} exact={true} />,
+                           "/admin/show_category": <Route path='/admin/show_category'  component={ShowCategories} exact={true} />,
+                           "/admin/show_category/update/:id": <Route path='/admin/show_category/update/:id' component={UpdateCategory} />, 
                        }
                        setOk(route[pathName])       
                     }

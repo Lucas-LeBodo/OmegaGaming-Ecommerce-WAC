@@ -18,7 +18,7 @@ const UpdateCategory = (props) => {
             })
         }
         getInformations()
-    },[])
+    }, [id])
 
     const submit = (event) => {
         event.preventDefault();

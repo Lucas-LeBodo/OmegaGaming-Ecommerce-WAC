@@ -26,10 +26,10 @@ const PaymentInformation = (props) => {
             }
         }).catch((error) => {
         })
-    }, [props])
+    }, [props, id])
 
     const submit = () => {
-        let idUser = '\/api\/users\/'+id
+        let idUser = '/api/users/'+id
 
         if(exist === true && idPayment !== '') {
             axios.put('https://localhost:8000/api/payments/'+idPayment,{

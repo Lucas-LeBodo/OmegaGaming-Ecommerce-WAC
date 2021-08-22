@@ -69,6 +69,7 @@ const Search = () => {
 
     useEffect(() => {
         setRow(map());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showArticles]);
     
     const getSort = (sort) => {

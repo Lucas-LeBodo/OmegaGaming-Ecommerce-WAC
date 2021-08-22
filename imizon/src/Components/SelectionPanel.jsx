@@ -37,7 +37,7 @@ export default function AnimatedMulti(props) {
           props.callBack(response.data)
         })
     }
-  }, [selectCategory])
+  }, [selectCategory, props])
 
   if(sort){
     props.sort(sort)

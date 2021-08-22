@@ -27,7 +27,7 @@ import ShowArticles from '../Pages/Admin/ShowArticles';
 import UpdateArticle from '../Pages/Admin/UpdateArticle';
 import CreateCategory from '../Pages/Admin/CreateCategory';
 import ShowCategories from '../Pages/Admin/ShowCategories';
-import UpdateCategory from '../Pages/Admin/UpdateCategory'
+import UpdateCategory from '../Pages/Admin/UpdateCategory';
 import ProtectedRoute from './Components/ProtectedRoute';
 
 

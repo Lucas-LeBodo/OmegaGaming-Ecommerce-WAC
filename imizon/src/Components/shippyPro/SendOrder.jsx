@@ -5,7 +5,7 @@ const SendOrder = (dataShippy, idUser, allData, basket) => {
     axios.get('https://localhost:8000/api/shippy/postOrder?params=' + dataShippy,{  
     }).then((response) => {
         let order = JSON.parse(response.data)
-        if(order.Result == "OK"){
+        if(order.Result === "OK"){
             let NbOrder = order.NewOrderID
             sendToOrderManifest(idUser, NbOrder, allData.totalPriceBasket, basket)
         }

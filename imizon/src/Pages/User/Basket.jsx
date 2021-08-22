@@ -91,8 +91,8 @@ const Basket = () => {
                 getInformation(list_id, "John")
             }
         }
-        
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id])
 
     const getInformation = (list_articles, username) =>{
         let weightTotal = 0;
@@ -170,7 +170,7 @@ const Basket = () => {
             "ShippingService": "Standard"
         })
         
-        if(listArt != ""){
+        if(listArt !== ""){
             axios.get('https://localhost:8000/api/shippy/getRates?params=' + data,{  
             }).then((response) => {
                 setRates(response.data.Rates['hydra:member'][0])
@@ -393,7 +393,7 @@ const Basket = () => {
         let weight = 0.01 ;
         let sendData;
         
-        if(co == 'co'){
+        if(co === 'co'){
             if(allArticles.length === 1){
                 weight = allArticles[0].weight;
             }else{
@@ -411,7 +411,7 @@ const Basket = () => {
         else{
             let id = 0;
             let co = 'not';
-            if(basketNotCo.length == 1){
+            if(basketNotCo.length === 1){
                 weight = basketNotCo[0].weight;
             }
             else{

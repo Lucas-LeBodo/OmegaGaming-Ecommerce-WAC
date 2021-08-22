@@ -15,7 +15,6 @@ const BreadCrumbs = () =>  {
     let bestsellerPath = ' ';
     let id = ' ';
     let discount = '';
-    let path = pathname.split(/[\/]+/g)
     
     id = pathname.lastIndexOf("/");
     id = pathname.substr(id + 1);
@@ -33,16 +32,15 @@ const BreadCrumbs = () =>  {
             })
         }
     
-        if(id.length < 3){
+        if(pathname.startsWith("/product/")){
             getName();
         }
 
-    }, [pathname])
+    }, [pathname, id])
     
     if(pathname === "/"){
         homePath = <Link  to={"/"}> <RiHome2Line/> Home </Link>;
     }
-
     if(pathname.startsWith("/product")){
         homePath = <Link  to={"/"}> <RiHome2Line/> Home </Link>;
         productPath = <Link  to={`/product/${id}`}> {article.Title} </Link>;
