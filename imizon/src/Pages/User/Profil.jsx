@@ -49,8 +49,9 @@ const Profil = () => {
         {
             axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
             }).then((response) => {
+                let showAdress = []
                 if(response.data["hydra:member"].length > 0) {
-                    let showAdress = [];
+                    showAdress = [];
                     let data = response.data["hydra:member"];
                     data.forEach(element => {
                         showAdress.push(
@@ -67,8 +68,8 @@ const Profil = () => {
                             </div>
                         )
                     });
-                    setAdressData(showAdress);
                 }
+                setAdressData(showAdress);
             }).catch((error) => {
             })
         }
@@ -76,8 +77,8 @@ const Profil = () => {
         function getHistoric() {
             axios.get('https://localhost:8000/api/order_manifests?page=1&userId='+id, {
             }).then((response) => {
+                let showHistoric = [];
                 if(response.data["hydra:member"].length > 0) {
-                    let showHistoric = [];
                     let data = response.data["hydra:member"];
                     data.forEach(element => {
                         showHistoric.push(
@@ -91,8 +92,10 @@ const Profil = () => {
         }
 
         check();
-        getAdresses();
-        getHistoric();
+        if(id !== "") {
+            getAdresses();
+            getHistoric();
+        }
     }, [history, id])
 
     const deleteAdress = (id) => {
