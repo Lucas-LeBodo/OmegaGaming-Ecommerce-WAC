@@ -5,7 +5,6 @@ import truckImg from '../../Assets/delivery-truck.png';
 
 
 const tracking = (props) => {
-    console.log(props)
     return(
         <Fragment >
             <Container>
