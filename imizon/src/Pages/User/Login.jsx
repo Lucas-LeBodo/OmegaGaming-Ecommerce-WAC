@@ -1,11 +1,12 @@
-import React from 'react'
+import React, {Component,Fragment} from 'react';
+import FormSignIn from '../../Components/FormSignIn'
 
-const Login = () => {
-    return (
-        <div>
-            
-        </div>
-    )
+export default class login extends Component {
+    render(){
+        return(
+            <Fragment >
+                <FormSignIn/>
+            </Fragment>
+        )
+    }
 }
-
-export default Login

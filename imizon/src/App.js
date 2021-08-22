@@ -1,10 +1,20 @@
-import './Styles/Style.scss';
+// Import Libs
+import React, { Fragment } from 'react';
+
+// Import Components 
 import Router from './Router/router';
 
+// Import Styles
+import './Styles/Style.scss';
+
 function App() {
-  return (
+  
+return (
+  <Fragment>
     <Router/>
-  )
+    
+  </Fragment>
+)
  
 }
 
