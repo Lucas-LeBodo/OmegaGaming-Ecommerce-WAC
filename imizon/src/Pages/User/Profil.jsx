@@ -5,12 +5,12 @@ import {Link, useHistory, useLocation} from 'react-router-dom';
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import {Container} from 'react-bootstrap';
 
-
 import ProfilNav from '../../Components/ProfilNav';
 import UpdateProfil from '../../Components/UpdateProfil';
 import Adress from '../../Components/Adress';
 import PaymentInformation from '../../Components/PaymentInformation';
 import HistoricOrder from '../../Components/Historic';
+import GetTokenInformation from '../../Components/tools/GetTokenInformation';
 
 const Profil = () => {
     const [id, setId] = useState('');
@@ -27,9 +27,7 @@ const Profil = () => {
         function check() 
         {
             if(localStorage.jwt){
-                const base64Url = localStorage.jwt.split('.')[1];
-                const base64 = base64Url.replace('-', '+').replace('_', '/');
-                let username = JSON.parse(window.atob(base64)).username;
+                let username = GetTokenInformation(false)
                 
                 axios.get('https://localhost:8000/api/me', {
                     params: {username: username}
@@ -41,7 +39,6 @@ const Profil = () => {
                     setFirstName(firstName)
                     setLastName(lastName)
                 }).catch((error) => {
-                    console.log(error)
                 })
             } else {
                 history.push("/login")
@@ -52,8 +49,9 @@ const Profil = () => {
         {
             axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
             }).then((response) => {
+                let showAdress = []
                 if(response.data["hydra:member"].length > 0) {
-                    let showAdress = [];
+                    showAdress = [];
                     let data = response.data["hydra:member"];
                     data.forEach(element => {
                         showAdress.push(
@@ -70,18 +68,17 @@ const Profil = () => {
                             </div>
                         )
                     });
-                    setAdressData(showAdress);
                 }
+                setAdressData(showAdress);
             }).catch((error) => {
-                console.log(error)
             })
         }
 
         function getHistoric() {
             axios.get('https://localhost:8000/api/order_manifests?page=1&userId='+id, {
             }).then((response) => {
+                let showHistoric = [];
                 if(response.data["hydra:member"].length > 0) {
-                    let showHistoric = [];
                     let data = response.data["hydra:member"];
                     data.forEach(element => {
                         showHistoric.push(
@@ -91,23 +88,22 @@ const Profil = () => {
                     setHistoric(showHistoric);
                 }
             }).catch((error) => {
-                console.log(error)
             })
         }
 
         check();
-        getAdresses();
-        getHistoric();
-    }, [history])
+        if(id !== "") {
+            getAdresses();
+            getHistoric();
+        }
+    }, [history, id])
 
     const deleteAdress = (id) => {
         axios.delete('https://localhost:8000/api/adresses/'+id,{
         }
         ).then((response) => {
-            console.log(response)
             window.location.reload()
         }).catch((error) => {
-            console.log(error)
         })
     }
 

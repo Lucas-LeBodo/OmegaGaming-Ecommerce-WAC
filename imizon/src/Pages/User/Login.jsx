@@ -9,6 +9,4 @@ export default class login extends Component {
             </Fragment>
         )
     }
-
-
 }

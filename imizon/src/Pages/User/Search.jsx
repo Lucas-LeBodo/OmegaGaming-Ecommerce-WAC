@@ -69,6 +69,7 @@ const Search = () => {
 
     useEffect(() => {
         setRow(map());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showArticles]);
     
     const getSort = (sort) => {
@@ -120,8 +121,6 @@ const Search = () => {
 
     if(row !== ''){
         result = row.map((cards, index) => {
-            // console.log("cards : ")
-            // console.log(cards)
             return(
                 <div key={ Math.random().toString(36).substring(7)} className="row">
                     {renderCards(cards)}

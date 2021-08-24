@@ -13,7 +13,6 @@ const CardSearch = (props) => {
         }).then((response) => {
             setArticle(response.data);
         }).catch((error) => {
-            console.log(error);
         })
    }, [props])
 

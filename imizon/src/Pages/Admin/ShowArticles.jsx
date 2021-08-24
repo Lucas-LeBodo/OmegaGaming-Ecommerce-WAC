@@ -5,16 +5,13 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {AiFillDelete, AiFillEdit} from 'react-icons/ai';
 
-
-
-
 const ShowArticles = () => {
     const [articlesShow, setArticlesShow] = useState('');
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
     
     useEffect(() => {
-        let views
+        let views;
 
         function getArticles() {
             axios.get('https://localhost:8000/api/articles?page='+page, {
@@ -80,7 +77,6 @@ const ShowArticles = () => {
                 });
                 setArticlesShow(tabArticles);
             }).catch((error) => {
-                console.log(error);
             })
         }
         getArticles();
@@ -109,20 +105,18 @@ const ShowArticles = () => {
     );
 
     const deleteArticles = (id) => {
-        console.log(id)
         axios.delete('https://localhost:8000/api/articles/'+id, {
             data : {id:id}
         }).then((response) => {
             window.location.reload()
         }).catch((error) => {
-            console.log(error)
         })
     }
  
     return (
         <Fragment>
             <div className="container-card">
-            <Link to={"/admin/"}> 	&lt; Back to home</Link>    
+            <Link to={"/admin"}> 	&lt; Back to home</Link>    
                 {articlesShow}
                 {paginationBasic}
             </div>

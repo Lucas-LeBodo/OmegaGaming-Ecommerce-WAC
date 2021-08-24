@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 const CreateArticle = () => {
 
@@ -14,7 +14,6 @@ const CreateArticle = () => {
     const [selectCategory, setSelectCategory] = useState('');
     const [weight, setWeight] = useState('');
 
-
     //affichage des categories
     const [categories, setCategories] = useState('');
 
@@ -25,7 +24,6 @@ const CreateArticle = () => {
     const [titleRef, setTitleRef] = useState('')
 
    useEffect(() => {
-
         // recup categories
         let pages = 1;
         const recupCategory = () => {
@@ -50,7 +48,7 @@ const CreateArticle = () => {
     if(categories !== ''){
         result = categories.map((category) => {
             return(
-                <option value={'\/api\/categories\/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
+                <option value={'/api/categories/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
             )
         })
     }
@@ -77,7 +75,6 @@ const CreateArticle = () => {
         }
     }
 
-    
     const desactivateCheckbox = (event) => {
         let select = event.target.value
         if(select !== ''){
@@ -87,14 +84,12 @@ const CreateArticle = () => {
         }
     }
     
-    
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
     });
-
 
     const submit = async () => {
         const file = document.getElementById('myFile').files[0];
@@ -117,10 +112,8 @@ const CreateArticle = () => {
                 discount: parseInt(discount)
             }
             ).then((response) => {
-                console.log(response)
                 window.location.reload();
             }).catch((error) => {
-                console.log(error)
             })
         }else {
             axios.post('https://localhost:8000/api/articles',{
@@ -139,7 +132,6 @@ const CreateArticle = () => {
             ).then((response) => {
                 window.location.reload();
             }).catch((error) => {
-                console.log(error)
             })
         }
        
@@ -147,7 +139,7 @@ const CreateArticle = () => {
 
     return (
         <div className="container-form">
-            <Link to={"/admin/show_articles"}> 	&lt; Back to list</Link>
+            <Link to={"/admin"}> &lt; Back to home Admin</Link>
             <div className="flex-head">
                 <div className="flex-head-top">
                     <input type="text" className="form-control" placeholder={"title"} onChange={ (event)=>{ setTitle(event.target.value)}} required/>
@@ -164,7 +156,7 @@ const CreateArticle = () => {
                     <input type="file" id="myFile" className="form-control" required/>
                 </div>
                 </div>
-                <input type="number" className="form-control" placeholder={"discount"} min="0" max="100" onChange={ (event)=>{ setDiscount(event.target.value)}} required/>
+                <input type="number" className="form-control" defaultValue="0" placeholder={"discount"} min="0" max="100" onChange={ (event)=>{ setDiscount(event.target.value)}} required/>
                 <div className="form-group">
                         Create a reference :
                         <input type="checkbox" id="ref_checke" name="ref" onClick={() => {cocher()}}/> 
@@ -178,7 +170,6 @@ const CreateArticle = () => {
                 <div className="form-group">
                         <input id="featureSup" type="textarea" className="form-control" placeholder={"feature"} onChange={ (event)=>{ setFeatureSup(event.target.value)}} required/>
                 </div>
-
                 <div className="btn btn-primary btn-block btn-custom" onClick={ submit } >Create</div>
             </div>
         </div>

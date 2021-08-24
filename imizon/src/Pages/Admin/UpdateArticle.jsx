@@ -40,21 +40,20 @@ const UpdateArticle = (props) => {
                 setStock(information.Stock)
                 setImage(information.Image)
                 setDiscount(information.discount)
+                setWeight(information.weight)
             }).catch((error) => {
-                console.log(error)
             })
         }
 
         const recupCategory = () => {
             let pages = 1;
             axios.get('https://localhost:8000/api/categories?page='+ pages ,{
-                
             }).then((response) => {
                 setCategories(response.data["hydra:member"]);
             })
         }
-        recupCategory();
 
+        recupCategory();
         getInformations();
     }, [props])
 
@@ -64,12 +63,10 @@ const UpdateArticle = (props) => {
     if(categories !== ''){
         result = categories.map((category) => {
             return(
-                <option value={'\/api\/categories\/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
+                <option value={'/api/categories/'+category.id} key={Math.random().toString(36).substring(7)}>{category.categoryName}</option>
             )
         })
     }
-    
-
 
     const submit = (event) => {
         event.preventDefault();
@@ -85,7 +82,6 @@ const UpdateArticle = (props) => {
         }).then((response) => {
             window.location.reload()
         }).catch((error) => {
-            console.log(error);
         })
     }
 
@@ -96,7 +92,6 @@ const UpdateArticle = (props) => {
         }).then((response) => {
             history.push("/admin/show_articles");
         }).catch((error) => {
-            console.log(error)
         })
     }
 
@@ -104,9 +99,6 @@ const UpdateArticle = (props) => {
         event.preventDefault();
         window.location.reload()
     }
-
-    // METTRE les images à part en BDD !
-    // CSS du bouton input file
 
     return (
         <Fragment>

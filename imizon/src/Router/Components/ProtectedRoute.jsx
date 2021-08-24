@@ -7,8 +7,12 @@ import CreateArticle from '../../Pages/Admin/CreateArticle';
 import ShowArticles from '../../Pages/Admin/ShowArticles';
 import UpdateArticle from '../../Pages/Admin/UpdateArticle';
 import CreateCategory from '../../Pages/Admin/CreateCategory';
+import ShowCategories from '../../Pages/Admin/ShowCategories';
+import UpdateCategory from '../../Pages/Admin/UpdateCategory';
 
-export default function Auth(props){
+import GetTokenInformation from '../../Components/tools/GetTokenInformation';
+
+export default function Auth(){
     const [ok, setOk] = useState("");
     
     let username = '';
@@ -16,15 +20,11 @@ export default function Auth(props){
     let token = localStorage.jwt;
     let auth = false;
     let pathName = window.location.pathname
-    let testVerif = "";
     let roleRequest = "";
-
     if(token){
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        username = JSON.parse(window.atob(base64)).username;
-        rolesToken = JSON.parse(window.atob(base64)).roles;
-        console.log(rolesToken)
+        let data = GetTokenInformation(true)
+        rolesToken = data.rolesToken
+        username = data.username
         if(rolesToken["roles"] === "ROLE_ADMIN") {
             auth = true
         } 
@@ -32,6 +32,7 @@ export default function Auth(props){
 
     useEffect(() => {
         verifAuth()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [window.location.pathname])
 
     const verifAuth = async () => {
@@ -39,16 +40,9 @@ export default function Auth(props){
             await axios.get('https://localhost:8000/api/me', {
                 params: {username: username}
             }).then((response) => {
-                console.log(response.data.roles)
                 roleRequest = response.data.roles["roles"]
-    
-                console.log(rolesToken)
-                console.log(roleRequest)
-                console.log(rolesToken["roles"])
-                if(rolesToken["roles"] === roleRequest && auth === true){
-                    console.log("la")
-                    console.log(pathName)
 
+                if(rolesToken["roles"] === roleRequest && auth === true){
                     if(pathName.includes("update") === true) {
                         setOk(<Route path={"/admin/show_article/update/:id"} component={UpdateArticle} />)
                     } else {
@@ -56,9 +50,12 @@ export default function Auth(props){
                        let route = 
                        {  
                            "/admin":  <Route exact path="/admin" component={HomeAdmin} />,
-                           "/admin/show_articles":  <Route exact path="/admin/show_articles" component={ShowArticles} />,
                            "/admin/create_article":  <Route exact path="/admin/create_article" component={CreateArticle} />,
-                           "/admin/createCategory": <Route path='/admin/createCategory'  component={CreateCategory} exact={true} />,
+                           "/admin/show_articles":  <Route exact path="/admin/show_articles" component={ShowArticles} />,
+                           "/admin/show_article/update/:id": <Route path='/admin/show_article/update/:id' component={UpdateArticle} />,
+                           "/admin/create_category": <Route path='/admin/create_category'  component={CreateCategory} exact={true} />,
+                           "/admin/show_category": <Route path='/admin/show_category'  component={ShowCategories} exact={true} />,
+                           "/admin/show_category/update/:id": <Route path='/admin/show_category/update/:id' component={UpdateCategory} />, 
                        }
                        setOk(route[pathName])       
                     }
@@ -72,9 +69,4 @@ export default function Auth(props){
         }
     } 
    return <div>{ok}</div>
-   
-
-    
-    
-    
 }

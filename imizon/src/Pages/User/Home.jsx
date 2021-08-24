@@ -3,10 +3,8 @@ import axios from 'axios';
 import React, { Fragment, useEffect, useState } from 'react'
 import {Container} from 'react-bootstrap';
 
-
 // Import Components
 import Card from '../../Components/ArticleCard';
-
 
 const Home = () => {
 
@@ -34,7 +32,6 @@ const Home = () => {
                 });
                 setShowArticles(showArticles);
             }).catch((error) => {
-                console.log(error);
             })
         }
         
@@ -69,8 +66,6 @@ const Home = () => {
                 }
             }
         }
-        // console.log("map_def")
-        // console.log(map_def)
         return map_def 
     }
 
@@ -85,23 +80,16 @@ const Home = () => {
         return renderCardRow
     }
 
-
     let row = map();
-   
     if(row){
         result = row.map((cards, index) => {
-            // console.log("cards : ")
-            // console.log(cards)
             return(
                 <div key={ Math.random().toString(36).substring(7)} className="row">
                     {renderCards(cards)}
                 </div>
             )
         })
-        
     }
-
-
 
     return (
         <Fragment>

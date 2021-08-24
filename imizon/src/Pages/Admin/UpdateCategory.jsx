@@ -1,14 +1,11 @@
 // Import Libs
 import axios from 'axios';
 import React, { Fragment, useEffect, useState }from 'react'
-import { RiDeleteBin5Line } from 'react-icons/ri';
 import { FiSave, FiXCircle} from 'react-icons/fi';
-import { Link, useHistory } from 'react-router-dom';
 
 const UpdateCategory = (props) => {
     const [category, setCategory] = useState('')
     const [newCategory, setNewCategory] = useState('')
-    const history = useHistory();
 
     let id = props.match.params.id
     useEffect(() => {
@@ -17,12 +14,10 @@ const UpdateCategory = (props) => {
             }).then((response) => {
                 setCategory(response.data)
             }).catch((error) => {
-                console.log(error)
             })
         }
         getInformations()
-    },[])
-    
+    }, [id])
 
     const submit = (event) => {
         event.preventDefault();
@@ -31,7 +26,6 @@ const UpdateCategory = (props) => {
         }).then((response) => {
             window.location.reload()
         }).catch((error) => {
-            console.log(error);
         })
     }
 

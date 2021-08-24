@@ -13,8 +13,7 @@ export default function FormSignUp () {
 
     const submit = () => {
     // fetch a faire a l'api 
-    if (password === confPassword) 
-        {
+    if (password === confPassword) {
             axios.post('https://localhost:8000/api/users',{
                 lastName : lastName, 
                 firstName : name,
@@ -24,7 +23,6 @@ export default function FormSignUp () {
             ).then((response) => {
                 history.push("/login");
             }).catch((error) => {
-                console.log(error)
             })
         }
         setEmail('');
@@ -32,7 +30,7 @@ export default function FormSignUp () {
         setLastName('');
         setPassword('');
         setConfPassword(''); 
-  }
+    }
 
     return (
         <Fragment>

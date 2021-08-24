@@ -3,7 +3,7 @@ import { Row, Col, Button } from "react-bootstrap";
 //import icon euro
 import { BiEuro } from 'react-icons/bi';
 import { MdAddShoppingCart } from 'react-icons/md';
-import { FcOk } from 'react-icons/fc';
+import { FcOk, FcHighPriority } from 'react-icons/fc';
 import axios from "axios";
 
 export default function informationProduct(props){
@@ -13,7 +13,6 @@ export default function informationProduct(props){
     if(sameArticle)
     {
         result = sameArticle.map((child) => {
-            console.log(child)
             return(
                 <a key={Math.random().toString(36).substring(7)} href={child.id} >{child.Title} : {child.featureDiff} : {child.Price} <BiEuro /></a>
             )
@@ -40,7 +39,6 @@ export default function informationProduct(props){
                 id_user = response.data.id
                 addToBasketBDD(id_user);
             }).catch((error) => {
-                console.log(error)
             })
         } else {
             if(localStorage.shoppingUserNoLog) {
@@ -55,17 +53,14 @@ export default function informationProduct(props){
 
     function addToBasketBDD(id_user) {
         let id_art = props.id;
-        console.log(props.weight)
         axios.post('https://localhost:8000/api/baskets', {
                 price: parseInt(props.price),
                 idUser: parseInt(id_user),
                 idArticles: parseInt(id_art),
                 weight : parseInt(props.weight)
             }).then((response) => {
-                console.log(response)
                 window.location.reload()
             }).catch((error) => {
-                console.log(error)
             })
     }
 
@@ -94,6 +89,43 @@ export default function informationProduct(props){
         )
     }
 
+    let stock = ""
+    if(props.stock > 0) {
+        stock = (
+            <div>
+                <Row> 
+                    <Col>
+                        <div id="buy" className="margin" > 
+                            <Button id="btn_panier" onClick={addToBasket}> <MdAddShoppingCart/> Ajouter au panier </Button>
+                        </div> 
+                    </Col>
+                </Row>
+                <Row>
+                    <div id="stock" className="margin">
+                        <p> {props.stock} En stock <FcOk/> </p>
+                    </div>
+                </Row>
+            </div>
+        )
+    } else {
+        stock = (
+            <div>
+                <Row> 
+                    <Col>
+                        <div id="buy" className="margin" > 
+                            <Button id="btn_panier" onClick={addToBasket} disabled> <MdAddShoppingCart/> Ajouter au panier </Button>
+                        </div> 
+                    </Col>
+                </Row>
+                <Row>
+                    <div id="stock" className="margin">
+                        <p> {props.stock} Indisponible <FcHighPriority/> </p>
+                    </div>
+                </Row>
+            </div>
+        )
+    }
+
     return(
         <Col>
             <Row> 
@@ -110,23 +142,7 @@ export default function informationProduct(props){
             <Row> 
                 {discountPrice}
             </Row>
-            <Row> 
-                <Col>
-                    <div id="buy" className="margin" > 
-                        <Button id="btn_panier" onClick={addToBasket}> <MdAddShoppingCart/> Ajouter au panier </Button>
-                    </div> 
-                </Col>
-                <Col>
-                    <div id="buy" className="margin"> 
-                        <Button id="btn_panier"> <MdAddShoppingCart/> Acheter maintenant </Button>
-                    </div> 
-                </Col>
-            </Row>
-            <Row>
-                <div id="stock" className="margin">
-                    <p> {props.stock} En stock <FcOk/> </p>
-                </div>
-            </Row>
+                {stock}
             <Row>
                 <div id="otherArticles" className="margin">
                     <p> {result} </p>

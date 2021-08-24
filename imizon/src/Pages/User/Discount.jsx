@@ -13,7 +13,6 @@ const BestSeller = () => {
         function getMostPopular() {
             axios.get('https://localhost:8000/api/articles/discount', {
             }).then((response) => {
-                console.log(response)
                 let articles = response.data["hydra:member"];
                 let showArticles = [];
                 articles.forEach(element => {
@@ -30,7 +29,6 @@ const BestSeller = () => {
                 });
                 setShowArticles(showArticles);
             }).catch((error) => {
-                //console.log(error);
             })
         }
         getMostPopular();
@@ -64,10 +62,9 @@ const BestSeller = () => {
                 }
             }
         }
-        // console.log("map_def")
-        // console.log(map_def)
         return map_def 
     }
+
     const renderCards = (cards) => {
         let renderCardRow = cards.map((card, index) => {
             return(
@@ -79,20 +76,15 @@ const BestSeller = () => {
         return renderCardRow
     }
 
-
     let row  = map();
-   
     if(row){
         result = row.map((cards, index) => {
-            // console.log("cards : ")
-            // console.log(cards)
             return(
                 <div key={ Math.random().toString(36).substring(7)} className="row">
                     {renderCards(cards)}
                 </div>
             )
         })
-        
     }
 
     return (

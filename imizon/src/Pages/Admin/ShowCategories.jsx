@@ -1,13 +1,13 @@
 // Import Libs 
 import React, { useState, useEffect, Fragment } from "react";
-import {AiFillDelete, AiFillEdit} from 'react-icons/ai';
+import {AiFillEdit} from 'react-icons/ai';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 const ShowCategories = () => {
-    const [page, setPage] = useState(1);
     const [allCategories, setAllCategories] = useState('')
     useEffect(() => {
+        let page = 1
         axios.get('https://localhost:8000/api/categories?page='+page, {
         }).then((response) => {
             let categories = response.data["hydra:member"];
@@ -25,7 +25,6 @@ const ShowCategories = () => {
             }
         })
     }, [])
-    console.log(allCategories)
 
     return (
         <Fragment>

@@ -5,6 +5,8 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { Form } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 
+import GetTokenInformation from '../../Components/tools/GetTokenInformation';
+
 const Basket = () => {
     const [listBasketShow, setListBasketShow] = useState([]);    
     const [showPrice, setShowPrice] = useState(0);
@@ -35,9 +37,7 @@ const Basket = () => {
         let input = '';
     
         if(localStorage.jwt) {
-            const base64Url = localStorage.jwt.split('.')[1];
-            const base64 = base64Url.replace('-', '+').replace('_', '/');
-            let username = JSON.parse(window.atob(base64)).username;
+            let username = GetTokenInformation(false)
 
             axios.get('https://localhost:8000/api/adresses?page=1&id_user='+id, {
             }).then((response) => {
@@ -71,7 +71,6 @@ const Basket = () => {
                     setAdressData(showAdress);
                 }
             }).catch((error) => {
-                console.log(error)
             })
             
             axios.get('https://localhost:8000/api/baskets/countArticles', {
@@ -81,7 +80,6 @@ const Basket = () => {
                 requestConnected(list_articles)
                 getInformation(list_articles, username)
             }).catch((error) => {
-                console.log(error);
             })
         } else {
             if(localStorage.shoppingUserNoLog) {
@@ -91,8 +89,8 @@ const Basket = () => {
                 getInformation(list_id, "John")
             }
         }
-        
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id])
 
     const getInformation = (list_articles, username) =>{
         let weightTotal = 0;
@@ -170,7 +168,7 @@ const Basket = () => {
             "ShippingService": "Standard"
         })
         
-        if(listArt != ""){
+        if(listArt !== ""){
             axios.get('https://localhost:8000/api/shippy/getRates?params=' + data,{  
             }).then((response) => {
                 setRates(response.data.Rates['hydra:member'][0])
@@ -196,7 +194,6 @@ const Basket = () => {
                 }).then((response) => {
                     window.location.reload();
                 }).catch((error) => {
-                    console.log(error)
                 })
             }
         } else {
@@ -301,7 +298,6 @@ const Basket = () => {
             }
             
         }).catch((error) => {
-            console.log(error)
         })
     }
 
@@ -350,7 +346,6 @@ const Basket = () => {
             setListBasketShow(showBasket);
             setShowPrice(price)
         }).catch((error) => {
-            console.log(error)
         })
     }
 
@@ -393,7 +388,7 @@ const Basket = () => {
         let weight = 0.01 ;
         let sendData;
         
-        if(co == 'co'){
+        if(co === 'co'){
             if(allArticles.length === 1){
                 weight = allArticles[0].weight;
             }else{
@@ -411,7 +406,7 @@ const Basket = () => {
         else{
             let id = 0;
             let co = 'not';
-            if(basketNotCo.length == 1){
+            if(basketNotCo.length === 1){
                 weight = basketNotCo[0].weight;
             }
             else{
@@ -508,15 +503,27 @@ const Basket = () => {
       }
 
       if(listBasketShow.length > 0) {
-          showPriceDiv = (
-            <div>
-                <p>{showPrice + "€"}</p>
-                <p>{"Frais de port : " + rates.rate + "€"}</p>
-                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
-                    Payer
-                </button>
-            </div>
-          )
+          if(rates === undefined || rates.rate === undefined) {
+              showPriceDiv = (
+                <div>
+                    <p>{showPrice + "€"}</p>
+                    <p>Frais de port : 0€</p>
+                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
+                        Payer
+                    </button>
+                </div>
+              )
+          } else {
+              showPriceDiv = (
+                <div>
+                    <p>{showPrice + "€"}</p>
+                    <p>{"Frais de port : " + rates.rate + "€"}</p>
+                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleShow}>
+                        Payer
+                    </button>
+                </div>
+              )
+          }
       }
 
     return (

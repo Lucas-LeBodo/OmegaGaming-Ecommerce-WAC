@@ -9,16 +9,15 @@ const PaymentBasket = (warning, sendData) => {
     const submit = () => {
         if(sendData.co === "co") {
             let dataShippy = FormOrder(sendData)
-            if(dataShippy != ""){
+            if(dataShippy !== ""){
                 SendOrder(dataShippy, sendData.id, sendData, sendData.allArticles)
             }
         } else {
             let dataShippy = FormOrder(sendData)
-            if(dataShippy != ""){
+            if(dataShippy !== ""){
                 SendOrder(dataShippy, sendData.id, sendData, sendData.basketNotCo)
             }
         }
-
     }
 
     if(warning === "warning") {
